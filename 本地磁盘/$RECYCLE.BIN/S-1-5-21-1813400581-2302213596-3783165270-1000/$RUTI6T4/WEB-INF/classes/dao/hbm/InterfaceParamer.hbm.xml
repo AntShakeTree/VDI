@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.tibetone.ztkjhim.bean.InterfaceParamer"
+		table="InterfaceParamer_" catalog="dlgs">
+
+		<id name="Id" type="long" column="id">
+			<generator class="increment"></generator>
+		</id>
+		<property name="Detail" type="java.lang.String">
+			<column name="detail_"></column>
+		</property>
+		<property name="IsSucces" type="java.lang.String">
+			<column name="issucces_"></column>
+		</property>
+		<property name="Phone" type="string">
+			<column name="phone_"></column>
+		</property>
+		<property name="Operator" type="string">
+			<column name="operator_"></column>
+		</property>
+		<property name="State" type="string">
+			<column name="state_"></column>
+		</property>
+		<property name="Key" column="key_" type="string"></property>
+		<property name="YBNumbers" column="ybNumbers_" type="string"></property>
+	</class>
+</hibernate-mapping>

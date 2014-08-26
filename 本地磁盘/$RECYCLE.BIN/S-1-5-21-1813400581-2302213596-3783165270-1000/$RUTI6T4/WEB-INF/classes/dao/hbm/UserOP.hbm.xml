@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.tibetone.ztkjhim.bean.UserOP" table="UserOP_"
+		catalog="dlgs">
+
+		<id name="upid" column="upid" length="16">
+			<generator class="assigned"></generator>
+		</id>
+		<property name="endTime"  length="19">
+			<column name="endTime_"></column>
+		</property>
+
+		<property name="opST"  length="6">
+			<column name="opST_"></column>
+		</property>
+
+		<property name="sta">
+			<column name="sta_"></column>
+		</property>
+		</class>
+</hibernate-mapping>

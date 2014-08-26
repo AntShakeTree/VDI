@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.tibetone.ztkjhim.bean.Sms" table="sms"
+		catalog="dlgs">
+
+		<id name="id" type="long" column="id">
+			<generator class="increment"></generator>
+		</id>
+
+		<property name="hostName" type="java.lang.String">
+			<column name="hostName_"></column>
+		</property>
+
+		<property name="port" type="int">
+			<column name="port_"></column>
+		</property>
+
+		<property name="spCode" type="string">
+			<column name="spCode_"></column>
+		</property>
+		<property name="status" column="status_" type="int"
+			length="5">
+		</property>
+		<property name="type" column="type_" type="boolean"></property>
+		<property name="icpId" type="string">
+			<column name="icpId_"></column>
+		</property>
+
+		<property name="password">
+			<column name="password_"></column>
+		</property>
+		
+		<property name="smstime" type="string">
+			<column name="smstime_"></column>
+		</property>
+
+		<property name="serviceId" type="string">
+			<column name="serviceId_"></column>
+		</property>
+
+
+
+		<property name="sourceAddr" type="string">
+			<column name="sourceAddr_"></column>
+		</property>
+
+		<property name="feeTerminalId" type="java.lang.String">
+			<column name="feeTerminalId_"></column>
+		</property>
+		<property name="content" type="string" column="content_"></property>
+		<property name="rule" type="string" column="rule_"></property>
+		<property name="msgid" type="string" column="msgid_"></property>
+		<property name="isReport" type="int" column="isReport_"></property>
+		<property name="statusMsgIdStr" type="string"
+			column="statusMsgIdStr_">
+		</property>
+		<property name="srcAddress" type="string"
+			column="srcAddress_">
+		</property>
+		<property name="destAddress" type="string"
+			column="destAddress_">
+		</property>
+		<property name="cardDesc" type="string" column="cardDesc_"></property>
+
+		<many-to-one name="customer" column="customerid_"
+			class="com.tibetone.ztkjhim.bean.Customer">
+		</many-to-one>
+
+	</class>
+</hibernate-mapping>

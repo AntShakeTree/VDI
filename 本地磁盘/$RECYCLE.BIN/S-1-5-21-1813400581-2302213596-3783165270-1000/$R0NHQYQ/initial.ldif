@@ -1,0 +1,5 @@
+dn: o=opzoon,c=com
+objectClass: dcObject
+objectClass: organization
+o: opzoon
+dc: opzoon

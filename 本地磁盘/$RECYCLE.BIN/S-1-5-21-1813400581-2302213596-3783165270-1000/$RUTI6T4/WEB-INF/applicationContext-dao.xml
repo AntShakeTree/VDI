@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	- Application context definition for JPetStore's business layer.
+	- Contains bean references to the transaction manager and to the DAOs in
+	- dataAccessContext-local/jta.xml (see web.xml's "contextConfigLocation").
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+           
+	<bean id="smsDao" class="com.tibetone.ztkjhim.dao.impl.SmsDaoImpl" scope="singleton">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+		<bean id="userOPDao" class="com.tibetone.ztkjhim.dao.impl.UserOPDaoImpl" scope="singleton">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+		<bean id="adminuserDao" class="com.tibetone.ztkjhim.dao.impl.AdminUserDaoImpl" scope="singleton">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	   </bean>
+	<bean id="autoSendDao" class="com.tibetone.ztkjhim.dao.impl.AutoSendSmsDaoImpl" scope="singleton">
+	<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+	<bean id="autoSendbackDao" class="com.tibetone.ztkjhim.dao.impl.AutoSendSmsbackDaoImpl" scope="singleton">
+	<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+	<bean id="customerDao" class="com.tibetone.ztkjhim.dao.impl.CustomerDaoImpl" scope="singleton">
+	<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+	<bean id="businessDao" class="com.tibetone.ztkjhim.dao.impl.BusinessDaoImpl" scope="singleton">
+	<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+	<bean id="interfaceParamerDao" class="com.tibetone.ztkjhim.dao.impl.InterfaceParamerDaoImp">
+	<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+	<bean id="logDao" class="com.tibetone.ztkjhim.dao.impl.LogDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+	<bean id="auditRecordDao" class="com.tibetone.ztkjhim.dao.impl.AuditRecordDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+</beans>

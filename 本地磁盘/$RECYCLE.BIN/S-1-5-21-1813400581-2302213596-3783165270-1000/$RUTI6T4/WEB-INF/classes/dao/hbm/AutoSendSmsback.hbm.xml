@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.tibetone.ztkjhim.bean.AutoSendSmsback" table="smsback_"
+		catalog="dlgs">
+
+		<id name="id" type="long" column="id">
+			<generator class="increment"></generator>
+		</id>
+
+		<property name="msgContent1" type="java.lang.String">
+			<column name="msgContent1"></column>
+		</property>
+	       <property name="endTime"  length="19">
+			<column name="endTime_"></column>
+		</property>
+		<property name="destnumber" type="java.lang.String">
+			<column name="destnumber" length="20"></column>
+		</property>
+		<!-- star -->
+		<property name="feeType" type="java.lang.String">
+			<column name="feetype_" length="12"></column>
+		</property>
+		<property name="feecode" type="java.lang.String">
+			<column name="feecode_" length="15"></column>
+		</property>
+		<property name="serviceID" type="java.lang.String">
+			<column name="serviceid_" length="16"></column>
+		</property>
+			<property name="recordTime" type="java.lang.String">
+			<column name="recordTime" length="20"></column>
+		</property>
+		<property name="status" type="integer">
+			<column name="status_" length="5"></column>
+		</property>
+		<property name="businessFlag" type="integer">
+			<column name="businessFlag" length="3"></column>
+		</property>
+		<property name="oracleid" type="long">
+			<column name="oracleid" ></column>
+		</property>
+
+		<many-to-one name="customer" column="customerId_"
+			class="com.tibetone.ztkjhim.bean.Customer">
+		</many-to-one>
+
+	</class>
+</hibernate-mapping>

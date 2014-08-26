@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+<constant name="struts.action.extension" value="action"/>
+
+<package name="SendMessage" namespace="/SendMessage" extends="struts-default">
+		<action name="listSendSMS" class="listSendSMS">
+			<result name="success">listSendGroupMessage.jsp</result>
+		</action>
+		<action name="sendGroupSMSView" class="sendGroupSMSView">
+			<result name="success">addSendGroupMessage.jsp</result>
+		</action>
+	</package>
+
+	<package name="struts2"  extends="struts-default" namespace="/login">
+		
+		<action name="*_*" class="com.tibetone.ztkjhim.action.AdminUserAction" method="{1}_{2}">
+			<result name="error">/index.jsp</result>
+			<result name="success">/login/main.jsp</result>
+			<result name="adduserall">/login/adminuser.jsp</result> 
+		</action>
+		
+		<action name="sms_*" class="com.tibetone.ztkjhim.action.SMSAction" method="sms_{1}">
+			<result name="success">/login/adminuser.jsp</result>
+			<result name="adduserall">/login/adminuser.jsp</result>
+		</action>
+		
+         <action name="keyword_getlist" class="com.tibetone.ztkjhim.action.FileKeyWordAction" method="keyword_getlist">
+			<result>/login/keywordscenter.jsp</result>
+		</action>
+		
+		<action name="keyword_set" class="com.tibetone.ztkjhim.action.FileKeyWordAction" method="keyword_set">
+			<result>/login/keywordscenter.jsp</result>
+		    <result name="error">/login/keywordscenter.jsp</result>	
+		</action>
+		<action name="keyword_update" class="com.tibetone.ztkjhim.action.FileKeyWordAction" method="keyword_update">
+			<result>/login/keywordscenter.jsp</result>
+				<result name="error">/login/updatekeywords.jsp</result>	
+		</action>
+			<action name="keyword_getSt" class="com.tibetone.ztkjhim.action.FileKeyWordAction" method="keyword_getSt">
+			<result>/login/updatekeywords.jsp</result>
+		</action>
+			<action name="smsadd_info" class="com.tibetone.ztkjhim.action.SMSAction" method="smsadd_info">
+			<result>/login/updatekeywords.jsp</result>
+		</action>
+		<action name="smsall_info" class="com.tibetone.ztkjhim.action.SMSAction" method="sms_customerList">
+			<result>/login/vipshow.jsp</result>
+		</action>
+		<action name="smsautosend_info" class="com.tibetone.ztkjhim.action.SMSAction" method="sms_autosendList">
+			<result>/login/autosendsmslist.jsp</result>
+		</action>
+		
+		<action name="smsbackluser" class="com.tibetone.ztkjhim.action.BlacklistAction" method="getblacklist">
+			<result>/login/blacklist.jsp</result>
+		</action>
+		<action name="addbackuser" class="com.tibetone.ztkjhim.action.BlacklistAction" method="addBlacklist">
+			<result>/login/blacklist.jsp</result>
+				</action>
+		<action name="getbackuser" class="com.tibetone.ztkjhim.action.BlacklistAction" method="getBlackuserString">
+			<result>/login/updatebackuer.jsp</result>
+		</action>
+		<action name="updatebackuser" class="com.tibetone.ztkjhim.action.BlacklistAction" method="updateBlacklist">
+			<result>/login/blacklist.jsp</result>
+			<result name="error">/login/updatebackuer.jsp</result>
+		</action>
+		<!-- 统计 -->
+		<action name="smsStatistics" class="com.tibetone.ztkjhim.action.SMSAction" method="smsStatistics">
+			<result>/login/smsStatistics.jsp</result>	
+		</action>
+		<action name="smsaddlistfile" class="com.tibetone.ztkjhim.action.SMSAction" method="smsaddfilelist">
+			<result>/login/addsms.jsp</result>
+			<result name="error">/login/addsms.jsp</result>		
+		</action>
+		<action name="smsaddsend" class="com.tibetone.ztkjhim.action.SMSAction" method="sendSMSinfo">
+			<result>/login/addsms.jsp</result>
+			<result name="error">/login/addsms.jsp</result>		
+		</action>
+		<action name="smsdeletephsend" class="com.tibetone.ztkjhim.action.SMSAction" method="deletephSMSinfo">
+			<result>/login/addsms.jsp</result>
+			<result name="error">/login/addsms.jsp</result>		
+		</action>
+	</package>
+</struts>

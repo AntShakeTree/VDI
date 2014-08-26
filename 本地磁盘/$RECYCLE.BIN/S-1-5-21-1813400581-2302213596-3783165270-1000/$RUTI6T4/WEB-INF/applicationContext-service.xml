@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+	<bean id="smsService"
+		class="com.tibetone.ztkjhim.service.impl.SmsServiceImpl"
+		scope="singleton">
+		<property name="smsDao" ref="smsDao"></property>
+	</bean>
+		<bean id="userOPService"
+		class="com.tibetone.ztkjhim.service.impl.UserOPServiceImpl"
+		scope="singleton">
+		<property name="userOPDao" ref="userOPDao"></property>
+	</bean>
+
+	<bean id="adminuserService"
+		class="com.tibetone.ztkjhim.service.impl.AdminUserServiceImpl">
+		<property name="adminuserDao" ref="adminuserDao"></property>
+	</bean>
+	
+	
+	<bean id="autoSendSmsService"
+		class="com.tibetone.ztkjhim.service.impl.AutoSendSmsServiceImpl"
+		scope="singleton">
+		<property name="dao" ref="autoSendDao"></property>
+	</bean>
+	
+		<bean id="autoSendSmsbackService"
+		class="com.tibetone.ztkjhim.service.impl.AutoSendSmsbackServiceImpl"
+		scope="singleton">
+		<property name="dao" ref="autoSendbackDao"></property>
+	</bean>
+	
+	<bean id="businessService"
+		class="com.tibetone.ztkjhim.service.impl.BusinessServiceImpl"
+		scope="singleton">
+		<property name="dao" ref="businessDao"></property>
+	</bean>
+	<bean id="customerService"
+		class="com.tibetone.ztkjhim.service.impl.CustomerServiceImpl"
+		scope="singleton">
+		<property name="dao" ref="customerDao"></property>
+	</bean>
+	<bean id="interfaceService"
+		class="com.tibetone.ztkjhim.dao.impl.InterfaceParamerImpl">
+		<property name="interfaceParamerDao" ref="interfaceParamerDao">
+		</property>
+	</bean>
+	<bean id="logService"
+		class="com.tibetone.ztkjhim.service.impl.LogServiceImpl">
+		<property name="logDao" ref="logDao"></property>
+	</bean>
+	<bean id="clientService"
+		class="com.tibetone.ztkjhim.service.impl.ClientService">
+	</bean>
+	<bean id="auditRecordService" class="com.tibetone.ztkjhim.service.impl.AuditRecordServiceImpl">
+	<property name="auditRecordDao" ref="auditRecordDao"></property>
+	</bean>
+	
+</beans>

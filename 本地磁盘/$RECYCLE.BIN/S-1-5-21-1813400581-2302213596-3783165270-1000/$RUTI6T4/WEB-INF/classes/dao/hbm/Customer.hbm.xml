@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.tibetone.ztkjhim.bean.Customer" table="customer_"
+		catalog="dlgs">
+
+		<id name="id" type="long" column="id">
+			<generator class="increment"></generator>
+		</id>
+		<!-- <property name="age" column="age_" type="integer" length="5"></property> -->
+		<property name="card" column="card_" type="string"
+			length="50">
+		</property>
+		<property name="mobile" column="mobile_" type="string"
+			length="20">
+		</property>
+		
+		<property name="state" column="state_" type="int">
+		</property>
+		<property name="endmoth" column="endmoth_" type="int">
+		</property>
+		<set name="smses" table="sms" cascade="all-delete-orphan" inverse="true" lazy="true" order-by="id desc">
+			<key column="customerId_"></key>
+				<one-to-many class="com.tibetone.ztkjhim.bean.Sms" />
+			</set>
+			<!-- 
+		<set name="businesses" table="Business_customer_" cascade="all-delete-orphan" inverse="false" lazy="true" order-by="id desc">
+			<key column="customerId_"></key>
+				<many-to-many class="com.tibetone.ztkjhim.bean.Business" />
+		</set> -->
+	</class>
+</hibernate-mapping>
