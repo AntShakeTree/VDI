@@ -1,0 +1,17 @@
+eclipse.preferences.version=1
+encoding//src/main/java=UTF-8
+encoding//src/main/java/com/vdi/gateway=UTF-8
+encoding//src/main/java/com/vdi/gateway/Cache.java=UTF-8
+encoding//src/main/java/com/vdi/gateway/ConnectionInfo.java=UTF-8
+encoding//src/main/java/com/vdi/gateway/DelayItem.java=UTF-8
+encoding//src/main/java/com/vdi/gateway/GateWayServer.java=UTF-8
+encoding//src/main/java/com/vdi/gateway/GateWayServerHandler.java=UTF-8
+encoding//src/main/java/com/vdi/gateway/GateWayServerInitializer.java=UTF-8
+encoding//src/main/java/com/vdi/gateway/LocalConnectionManager.java=UTF-8
+encoding//src/main/java/com/vdi/gateway/Monitor.java=UTF-8
+encoding//src/main/java/com/vdi/gateway/Pair.java=UTF-8
+encoding//src/main/java/com/vdi/gateway/ParseJSON.java=UTF-8
+encoding//src/main/java/com/vdi/gateway/RuntimeUtils.java=UTF-8
+encoding//src/main/java/com/vdi/gateway/Session.java=UTF-8
+encoding//src/test/java=UTF-8
+encoding/<project>=UTF-8
