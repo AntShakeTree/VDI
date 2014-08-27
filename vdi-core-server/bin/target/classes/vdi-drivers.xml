@@ -1,0 +1,12 @@
+<vdidrivers>
+<vdidriver>
+<name>CloudStack</name>
+<version>1.0</version>
+<driverClass>com.opzoon.ohvc.cloudstack.CloudStackDriver</driverClass>
+</vdidriver>
+<vdidriver>
+<name>OpzoonCloud</name>
+<driverClass>com.opzoon.ohvc.driver.opzooncloud.OpzoonCloudDriver</driverClass>
+<version>1.0</version>
+</vdidriver>
+</vdidrivers>

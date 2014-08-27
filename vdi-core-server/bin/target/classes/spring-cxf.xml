@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one
+  or more contributor license agreements. See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership. The ASF licenses this file
+  to you under the Apache License, Version 2.0 (the
+  "License"); you may not use this file except in compliance
+  with the License. You may obtain a copy of the License at
+ 
+  http://www.apache.org/licenses/LICENSE-2.0
+ 
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied. See the License for the
+  specific language governing permissions and limitations
+  under the License.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:jaxws="http://cxf.apache.org/jaxws"
+      xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+      xmlns:soap="http://cxf.apache.org/bindings/soap"
+      xmlns:security="http://www.springframework.org/schema/security"
+      xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+http://cxf.apache.org/bindings/soap http://cxf.apache.org/schemas/configuration/soap.xsd
+http://cxf.apache.org/jaxws
+http://cxf.apache.org/schemas/jaxws.xsd
+http://cxf.apache.org/jaxrs
+http://cxf.apache.org/schemas/jaxrs.xsd">
+  <jaxrs:server id="services" address="/">
+  	<jaxrs:serviceBeans>
+  		<bean class="com.opzoon.vdi.core.ws.ServicesImpl">
+  			<property name="entrance">
+  				<bean class="com.opzoon.vdi.core.ws.Entrance">
+  					<property name="userFacade">
+  						<ref bean="userFacade" />
+  					</property>
+  				</bean>
+  			</property>
+  			<property name="userManagement">
+  				<bean class="com.opzoon.vdi.core.ws.admin.UserManagement">
+  					<property name="userFacade">
+  						<ref bean="userFacade" />
+  					</property>
+  					<property name="sessionFacade">
+  						<ref bean="sessionFacade" />
+  					</property>
+  				</bean>
+  			</property>
+  			<property name="domainManagement">
+  				<bean class="com.opzoon.vdi.core.ws.admin.DomainManagement">
+  					<property name="domainFacade">
+  						<ref bean="domainFacade" />
+  					</property>
+  				</bean>
+  			</property>
+  			<property name="domainUsage">
+  				<bean class="com.opzoon.vdi.core.ws.DomainUsage">
+  					<property name="domainFacade">
+  						<ref bean="domainFacade" />
+  					</property>
+  				</bean>
+  			</property>
+  			<property name="organizationManagement">
+  				<bean class="com.opzoon.vdi.core.ws.admin.OrganizationManagement">
+  					<property name="organizationFacade">
+  						<ref bean="organizationFacade" />
+  					</property>
+  				</bean>
+  			</property>
+  			<property name="groupManagement">
+  				<bean class="com.opzoon.vdi.core.ws.admin.GroupManagement">
+  					<property name="groupFacade">
+  						<ref bean="groupFacade" />
+  					</property>
+  				</bean>
+  			</property>
+  			<property name="desktopManagement">
+  				<bean class="com.opzoon.vdi.core.ws.admin.DesktopManagement">
+  					<property name="desktopFacade">
+  						<ref bean="desktopFacade" />
+  					</property>
+  					<property name="desktopPoolFacade">
+  						<ref bean="desktopPoolFacade" />
+  					</property>
+  					<property name="cloudManagerFacade">
+  						<ref bean="cloudManagerFacade" />
+  					</property>
+  					<property name="resourceFacade">
+  						<ref bean="resourceFacade" />
+  					</property>
+  					<property name="asyncJobFacade">
+  						<ref bean="asyncJobFacade" />
+  					</property>
+  					<property name="connectionFacade">
+  						<ref bean="connectionFacade" />
+  					</property>
+  				</bean>
+  			</property>
+  			<property name="systemManagement">
+  				<bean class="com.opzoon.vdi.core.ws.admin.SystemManagement">
+					<property name="userFacade">
+  						<ref bean="userFacade" />
+  					</property>
+					<property name="runtimeVariableFacade">
+  						<ref bean="runtimeVariableFacade" />
+  					</property>
+  				</bean>
+  			</property>
+  			<property name="desktopUsage">
+  				<bean class="com.opzoon.vdi.core.ws.DesktopUsage">
+  					<property name="resourceFacade">
+  						<ref bean="resourceFacade" />
+  					</property>
+  					<property name="connectionFacade">
+  						<ref bean="connectionFacade" />
+  					</property>
+  					<property name="sessionFacade">
+  						<ref bean="sessionFacade" />
+  					</property>
+  					<property name="asyncJobFacade">
+  						<ref bean="asyncJobFacade" />
+  					</property>
+  				</bean>
+  			</property>
+  			<property name="licenseMangement">
+  				<bean class="com.opzoon.vdi.core.ws.admin.LicenseMangement">
+  					<property name="licenseFacade">
+  						<ref bean="licenseFacade" />
+  					</property>
+<!--   					<property name="publicKeyFacade"> -->
+<!--   						<ref bean="publicKeyFacade" /> -->
+<!--   					</property> -->
+  				</bean>
+  			</property>
+  			<!-- APP -->
+  			<property name="validator" ref="validator" />
+  			
+  			<!-- appstatus add by zhengyi start-->
+  			<!-- <property name="appStatusService">
+  				<bean class="com.opzoon.appstatus.facade.impl.AppStatusServiceImpl">
+  					<property name="appStatusDao">
+  						<ref bean="appStatusDao" />
+  					</property>
+  					<property name="sendQueueExecutor">
+  						<ref bean="sendQueueExecutor" />
+  					</property>
+  					<property name="controller">
+  						<ref bean="controller" />
+  					</property>
+  					<property name="nodeManager">
+  						<ref bean="nodeManager" />
+  					</property>
+  				</bean>
+  			</property> -->
+  			<!-- appstatus add by zhengyi end-->
+  			
+  		</bean>
+  	</jaxrs:serviceBeans>
+    <jaxrs:providers>
+      <bean class="com.opzoon.vdi.core.ws.JacksonJsonProvider" />
+      <bean class="com.opzoon.vdi.core.ws.AllExceptionMapper" />
+    </jaxrs:providers>
+  </jaxrs:server>
+  
+  <bean id="authenticationProvider" class="com.opzoon.vdi.core.ws.TicketAuthenticationProvider">
+  	<property name="sessionFacade">
+  		<ref bean="sessionFacade" />
+  	</property>
+  </bean>
+  
+  <security:global-method-security secured-annotations="enabled">
+      <security:protect-pointcut 
+        expression="execution(* com.opzoon.vdi.core.ws.Entrance.logoutSession())" 
+        access="ROLE_USER"/>
+      <security:protect-pointcut 
+        expression="execution(* com.opzoon.vdi.core.ws.admin.UserManagement.*(..))" 
+        access="ROLE_ADMIN"/>
+      <security:protect-pointcut 
+        expression="execution(* com.opzoon.vdi.core.ws.admin.GroupManagement.*(..))" 
+        access="ROLE_ADMIN"/>
+      <security:protect-pointcut 
+        expression="execution(* com.opzoon.vdi.core.ws.admin.OrganizationManagement.*(..))" 
+        access="ROLE_ADMIN"/>
+      <security:protect-pointcut 
+        expression="execution(* com.opzoon.vdi.core.ws.admin.DomainManagement.*(..))" 
+        access="ROLE_SUPER_ADMIN"/>
+      <security:protect-pointcut 
+        expression="execution(* com.opzoon.vdi.core.ws.admin.DesktopManagement.addCloudManager(..))" 
+        access="ROLE_SUPER_ADMIN"/>
+      <security:protect-pointcut 
+        expression="execution(* com.opzoon.vdi.core.ws.admin.DesktopManagement.deleteCloudManager(..))" 
+        access="ROLE_SUPER_ADMIN"/>
+      <security:protect-pointcut 
+        expression="execution(* com.opzoon.vdi.core.ws.admin.DesktopManagement.deleteDesktopPool(..))" 
+        access="ROLE_SUPER_ADMIN"/>
+      <security:protect-pointcut 
+        expression="execution(* com.opzoon.vdi.core.ws.admin.DesktopManagement.queryAsyncJobResult(..))" 
+        access="ROLE_USER"/>
+      <security:protect-pointcut 
+        expression="execution(* com.opzoon.vdi.core.ws.admin.DesktopManagement.*(..))" 
+        access="ROLE_ADMIN"/>
+      <security:protect-pointcut 
+        expression="execution(* com.opzoon.vdi.core.ws.admin.SystemManagement.*(..))" 
+        access="ROLE_SUPER_ADMIN"/>
+      <security:protect-pointcut 
+        expression="execution(* com.opzoon.vdi.core.ws.DesktopUsage.*(..))" 
+        access="ROLE_USER"/>
+      <security:protect-pointcut 
+        expression="execution(* com.opzoon.vdi.core.ws.admin.LicenseMangement.*(..))" 
+        access="ROLE_SUPER_ADMIN"/>
+      <!-- APP -->
+      <security:protect-pointcut
+        expression="execution(* com.opzoon.vdi.core.ws.admin.RailAdminManager.*(..))"
+        access="ROLE_ADMIN" /> 
+      <security:protect-pointcut
+        expression="execution(* com.opzoon.vdi.core.facade.RailUserDataManager.*(..))"
+        access="ROLE_USER" />
+        
+  </security:global-method-security>
+  
+  <security:http auto-config='true'>
+    <security:http-basic />
+  </security:http>
+  
+  <security:authentication-manager>
+    <security:authentication-provider ref="authenticationProvider" />
+  </security:authentication-manager>
+</beans>
