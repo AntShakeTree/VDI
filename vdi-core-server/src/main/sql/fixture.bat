@@ -1,0 +1,1 @@
+mysql -uroot -p111111 < %~dp0fixture_mysql.sql

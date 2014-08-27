@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop.xsd
+    http://www.springframework.org/schema/task
+    http://www.springframework.org/schema/task/spring-task-3.0.xsd
+    http://www.springframework.org/schema/util
+    http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+    
+	<context:component-scan base-package="com.opzoon.vdi.core.quartz" />
+    
+    <bean id="ukeyMonitorQuartz" class="com.opzoon.vdi.core.quartz.UkeyMonitorQuartz" >
+          <property name="licenseFacade">
+                <ref bean="licenseFacade" />
+          </property>
+          <property name="appStatusService">
+                <ref bean="appStatusService" />
+          </property>
+    </bean>
+    <bean id="timerJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="ukeyMonitorQuartz" />
+        <property name="targetMethod" value="updateSystemTime" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="ukeyJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="ukeyMonitorQuartz" />
+        <property name="targetMethod" value="ukeyTask" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="timerTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="timerJob" />
+        <!-- 每1小时执行一次 -->
+        <property name="cronExpression" value="0 0 */1 * * ?" />
+        <!-- <property name="cronExpression" value="0 0/1 * * * ?" /> -->
+    </bean>
+    <bean id="ukeyTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="ukeyJob" />
+        <!-- 每15秒执行一次 -->
+        <property name="cronExpression" value="0/15 * * * * ?" />
+    </bean>
+    <bean lazy-init="false" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="timerTrigger" />
+                <ref bean="ukeyTrigger" />
+            </list>
+        </property>
+        <property name="schedulerContextAsMap">
+            <map>
+                <description>schedulerContextAsMap</description>
+                <entry key="licenseFacade" value-ref="licenseFacade"/>
+                <entry key="appStatusService" value-ref="appStatusService"/>
+            </map>
+        </property>
+    </bean>
+</beans>

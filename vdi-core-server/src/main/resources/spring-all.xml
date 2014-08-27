@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop.xsd
+    http://www.springframework.org/schema/task
+    http://www.springframework.org/schema/task/spring-task-3.0.xsd
+    http://www.springframework.org/schema/util
+    http://www.springframework.org/schema/util/spring-util-3.0.xsd"
+	default-autowire="byName" default-init-method="init">
+	<aop:aspectj-autoproxy />
+	<!-- add by zhengyi start -->
+	<context:component-scan
+		base-package="com.opzoon.appstatus, com.opzoon.vdi.core.controller" />
+	<util:properties id="propertiesReader" location="classpath:appstatus.properties" />
+	<!-- add by zhengyi end -->
+
+	<import resource="classpath:spring-database.xml" />
+	<import resource="classpath:spring-cxf.xml" />
+	<import resource="classpath:spring-activemq.xml" />
+	<task:annotation-driven/>
+	<bean id="connectionManager" class="com.opzoon.vdi.core.cloud.LocalConnectionManager" />
+	<bean id="userFacade" class="com.opzoon.vdi.core.facade.UserFacade" />
+	<bean id="domainFacade" class="com.opzoon.vdi.core.facade.DomainFacade" />
+	<bean id="organizationFacade" class="com.opzoon.vdi.core.facade.OrganizationFacade" />
+	<bean id="groupFacade" class="com.opzoon.vdi.core.facade.GroupFacade" />
+	<bean id="desktopFacade" class="com.opzoon.vdi.core.facade.DesktopFacade" />
+	<bean id="cloudManagerFacade" class="com.opzoon.vdi.core.facade.CloudManagerFacade" />
+	<bean id="desktopPoolFacade" class="com.opzoon.vdi.core.facade.DesktopPoolFacade" />
+	<bean id="resourceFacade" class="com.opzoon.vdi.core.facade.ResourceFacade" />
+	<bean id="asyncJobFacade" class="com.opzoon.vdi.core.facade.transience.AsyncJobFacade">
+		<property name="storageFacade">
+			<ref bean="databaseFacade" />
+		</property>
+	</bean>
+	<bean id="connectionFacade" class="com.opzoon.vdi.core.facade.transience.ConnectionFacade">
+		<property name="storageFacade">
+			<ref bean="databaseFacade" />
+		</property>
+	</bean>
+	<bean id="desktopPoolStatusFacade"
+		class="com.opzoon.vdi.core.facade.transience.DesktopPoolStatusFacade">
+		<property name="storageFacade">
+			<ref bean="databaseFacade" />
+		</property>
+	</bean>
+	<bean id="cloudManagerStatusFacade"
+		class="com.opzoon.vdi.core.facade.transience.CloudManagerStatusFacade">
+		<property name="storageFacade">
+			<ref bean="databaseFacade" />
+		</property>
+	</bean>
+	<bean id="desktopStatusFacade"
+		class="com.opzoon.vdi.core.facade.transience.DesktopStatusFacade">
+		<property name="storageFacade">
+			<ref bean="databaseFacade" />
+		</property>
+	</bean>
+	<bean id="sessionFacade" class="com.opzoon.vdi.core.facade.transience.SessionFacade">
+		<property name="storageFacade">
+			<ref bean="databaseFacade" />
+		</property>
+	</bean>
+	<bean id="runtimeVariableFacade"
+		class="com.opzoon.vdi.core.facade.transience.RuntimeVariableFacade">
+		<property name="storageFacade">
+			<ref bean="databaseFacade" />
+		</property>
+	</bean>
+	<bean id="licenseFacade" class="com.opzoon.vdi.core.facade.LicenseFacade">
+		<property name="storageFacade">
+			<ref bean="databaseFacade" />
+		</property>
+	</bean>
+    <bean id="licenseServerFacade" class="com.opzoon.vdi.core.facade.LicenseServerFacade">
+        <property name="storageFacade">
+            <ref bean="databaseFacade" />
+        </property>
+    </bean>
+	<bean id="publicKeyFacade" class="com.opzoon.vdi.core.facade.PublicKeyFacade">
+		<property name="storageFacade">
+			<ref bean="databaseFacade" />
+		</property>
+	</bean>
+
+	<bean id="taskFacade" class="com.opzoon.vdi.core.facade.TaskFacade">
+		<property name="databaseFacade">
+			<ref bean="databaseFacade" />
+		</property>
+	</bean>
+
+
+	<bean id="sessionCleaner" class="com.opzoon.vdi.core.daemon.SessionCleaner"
+		init-method="run" />
+
+	<bean id="floatingDesktopDeallocater" class="com.opzoon.vdi.core.daemon.FloatingDesktopDeallocater"
+		init-method="run" />
+
+	<bean id="configuration" class="com.opzoon.vdi.core.support.Configuration">
+		<property name="brokerName">
+			<value>${broker.name}</value>
+		</property>
+		<property name="brokerIP">
+			<value>${broker.ip}</value>
+		</property>
+		<property name="brokerPortMin">
+			<value>${broker.port.min}</value>
+		</property>
+		<property name="brokerPortMax">
+			<value>${broker.port.max}</value>
+		</property>
+		<property name="httpTunnelName">
+			<value>${http.tunnel.name}</value>
+		</property>
+		<property name="httpTunnelPort">
+			<value>${http.tunnel.port}</value>
+		</property>
+		<property name="httpsTunnelName">
+			<value>${https.tunnel.name}</value>
+		</property>
+		<property name="httpsTunnelPort">
+			<value>${https.tunnel.port}</value>
+		</property>
+	</bean>
+
+	<bean id="validatorManager" class=" com.opzoon.vdi.core.facade.ValidatorManager">
+		<property name="databaseFacade" ref="databaseFacade" />
+	</bean>
+
+	<bean id="validator" class="com.opzoon.vdi.core.util.Validator">
+		<property name="validatorManager" ref="validatorManager" />
+	</bean>
+
+	<bean id="operationPool" class="com.opzoon.vdi.core.pool.ClusteredOperationPool" />
+	<bean id="stateMachine" class="com.opzoon.vdi.core.fsm.StateMachine">
+		<property name="operationPool">
+			<ref bean="operationPool" />
+		</property>
+		<property name="databaseFacade">
+			<ref bean="databaseFacade" />
+		</property>
+	</bean>
+	<bean id="operationRegistry" class="com.opzoon.vdi.core.operations.OperationRegistry">
+		<property name="operationPool">
+			<ref bean="operationPool" />
+		</property>
+		<property name="stateMachine">
+			<ref bean="stateMachine" />
+		</property>
+		<property name="configuration">
+			<ref bean="configuration" />
+		</property>
+		<property name="connectionManager">
+			<ref bean="connectionManager" />
+		</property>
+	</bean>	
+	   <!-- add by zhanglu start -->
+    <import resource="classpath:spring-quartz.xml" />
+    <!-- add by zhanglu end -->
+</beans>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop.xsd"
+    default-autowire="byName"
+    default-init-method="init">
+
+  <context:property-placeholder location="classpath*:env*.properties, classpath*:appstatus*.properties" />
+
+  <bean id="dataSource" lazy-init="false" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+    <property name="driverClass">
+      <value>${database.driverClassName}</value> 
+    </property>
+    <property name="jdbcUrl">
+      <value>${database.url}</value>
+    </property>
+    <property name="user">
+      <value>${database.username}</value>
+    </property>
+    <property name="password">
+      <value>${database.password}</value>
+    </property>
+    <property name="automaticTestTable">
+      <value>${database.automaticTestTable}</value>
+     </property>
+    <property name="minPoolSize">
+      <value>${database.minPoolSize}</value>
+    </property>
+    <property name="maxPoolSize">
+      <value>${database.maxPoolSize}</value>
+    </property>
+    <property name="initialPoolSize">
+      <value>${database.initialPoolSize}</value>
+    </property>
+    <property name="maxIdleTime">
+      <value>${database.maxIdleTime}</value>
+    </property>
+    <property name="acquireIncrement">
+      <value>${database.acquireIncrement}</value>
+    </property>
+    <property name="maxStatements">
+      <value>${database.maxStatements}</value>
+    </property>
+    <property name="idleConnectionTestPeriod">
+      <value>${database.idleConnectionTestPeriod}</value>
+    </property>
+    <property name="acquireRetryAttempts">
+      <value>${database.acquireRetryAttempts}</value>
+    </property>
+    <property name="breakAfterAcquireFailure">
+      <value>${database.breakAfterAcquireFailure}</value>
+    </property>
+    <property name="testConnectionOnCheckout">
+      <value>${database.testConnectionOnCheckout}</value>
+    </property>
+  </bean>
+
+  <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+  <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+    <property name="dataSource" ref="dataSource"/>
+    <property name="jpaVendorAdapter">
+      <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <property name="showSql" value="${jpa.show.sql}" />
+        <property name="generateDdl" value="false" />
+        <property name="databasePlatform" value="${jpa.dialect}" />
+      </bean>
+    </property>
+    <property name="jpaPropertyMap">
+      <map>
+        <entry key="hibernate.archive.autodetection" value="class"/>
+        <entry key="hibernate.cache.use_second_level_cache" value="false"/>
+        <entry key="hibernate.cache.use_query_cache" value="false"/>
+        <entry key="hibernate.cache.provider_class" value="net.sf.ehcache.hibernate.SingletonEhCacheProvider"/>
+        <entry key="hibernate.show_sql" value="${jpa.show.sql}" />
+        <entry key="hibernate.use_sql_comments" value="true" />
+        <entry key="hibernate.format_sql" value="true" />
+        <entry key="hibernate.jdbc.batch_size" value="${jpa.jdbc.batch.size}" />
+      </map>
+    </property>
+  </bean>
+
+  <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+    <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    <property name="dataSource" ref="dataSource"/>
+  </bean>
+
+  <tx:advice id="txAdvice" transaction-manager="transactionManager">
+    <tx:attributes>
+      <!--- TODO tx:method name="createUser" propagation="REQUIRED" isolation="SERIALIZABLE" read-only="false" rollback-for="java.lang.Exception"/-->
+      <tx:method name="login" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception"/>
+      <tx:method name="load" propagation="REQUIRED" read-only="true" rollback-for="java.lang.Exception"/>
+      <tx:method name="find*" propagation="REQUIRED" read-only="true" rollback-for="java.lang.Exception"/>
+      <tx:method name="list*" propagation="REQUIRED" read-only="true" rollback-for="java.lang.Exception"/>
+      <tx:method name="count*" propagation="REQUIRED" read-only="true" rollback-for="java.lang.Exception"/>
+      <tx:method name="check*" propagation="REQUIRED" read-only="true" rollback-for="java.lang.Exception"/>
+      <tx:method name="get*" propagation="REQUIRED" read-only="true" rollback-for="java.lang.Exception"/>
+      <tx:method name="set*" propagation="NOT_SUPPORTED"/>
+      <tx:method name="*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception"/>
+    </tx:attributes>
+  </tx:advice>
+
+  <aop:config proxy-target-class="true">
+    <aop:pointcut id="persistenceOperation" expression="execution(public * com.opzoon.vdi.core.facade..*.*(..))"/>
+    <aop:pointcut id="persistenceOperation1" expression="execution(public * com.opzoon.vdi.core.fsm.StateMachine.publishRequest(..))"/>
+    <aop:advisor advice-ref="txAdvice" pointcut-ref="persistenceOperation"/>
+    <aop:advisor advice-ref="txAdvice" pointcut-ref="persistenceOperation1"/>
+  </aop:config>
+  
+  <bean id="databaseFacade" class="com.opzoon.vdi.core.facade.DatabaseFacade" />
+  
+</beans>
