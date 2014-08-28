@@ -50,16 +50,16 @@ public class ComputePoolFacadeTest {
 	}
 	@Test
 	public void testDeleteComputePool() throws InterruptedException {
-		DeleteComputePool d =new DeleteComputePool();
-	
-		List<Long> ss=new ArrayList<Long>();
-		ss.add(1l);
-		ss.add(2l);
-		d.setComputepoolids(ss);
-		computePoolFacade.deleteComputePool(d);
-		while(true){
-			queue.sendSchdulTask();
-			Thread.sleep(5000);
-		}
+//		DeleteComputePool d =new DeleteComputePool();
+//	
+//		List<Long> ss=new ArrayList<Long>();
+//		ss.add(1l);
+//		ss.add(2l);
+//		d.setComputepoolids(ss);
+//		computePoolFacade.deleteComputePool(d);
+//		while(true){
+//			queue.sendSchdulTask();
+//			Thread.sleep(5000);
+//		}
 	}
 }

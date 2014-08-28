@@ -15,5 +15,5 @@ import com.vdi.vo.req.DeleteComputePool;
 public interface AsynchronousComputePoolService {
 	public String createComputePool(ComputePool computePool);
 
-	public void deleteComputePool(DeleteComputePool entity);
+	public String deleteComputePool(DeleteComputePool entity);
 }

@@ -34,14 +34,14 @@ public class AsynchronousComputePoolServiceImpl implements
 	}
 
 	@Override
-	public void deleteComputePool(DeleteComputePool entity) {
-		for (long id : entity.getComputepoolids()) {
+	public String deleteComputePool(DeleteComputePool entity) {
+		
 			ComputePoolEntity e = computePoolDao.get(ComputePoolEntity.class,
-					id);
+					entity.getComputepoolid());
 			ComputePool pool =new ComputePoolBuild(e,new ComputePool()).setComputePoolIdentity().bulidComputePool();
 			pool.setAction(ComputePool.DELETE_COMPUTEPOOL_ACTION);
-			asynchronousServiceImpl.excute(pool);
-		}
+			return asynchronousServiceImpl.excute(pool);
+		
 	}
 
 }

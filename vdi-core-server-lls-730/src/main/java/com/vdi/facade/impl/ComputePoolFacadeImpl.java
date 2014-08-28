@@ -35,6 +35,7 @@ import com.vdi.vo.res.Job;
 import com.vdi.vo.res.JobResponse;
 import com.vdi.vo.res.ListComputePool;
 import com.vdi.vo.res.ListComputePool.ComputePoolList;
+import com.vdi.vo.res.Response;
 
 @Service
 public class ComputePoolFacadeImpl implements ComputePoolFacade {
@@ -102,13 +103,17 @@ public class ComputePoolFacadeImpl implements ComputePoolFacade {
 
 	@Override
 	@Transactional
-	public Header deleteComputePool(DeleteComputePool entity) {
+	public JobResponse deleteComputePool(DeleteComputePool entity) {
 		Assert.notNull(entity);
-		for (Long id :entity.getComputepoolids()) {
-			computePoolDao.delete(computePoolDao.get(ComputePoolEntity.class, id));
-		}
-		ExcecutorUtil.execute(new DeleteComputePoolTask(entity,asynchronousComputePoolService));
-		return new Header().setError(0);
+		JobResponse jobResponse=new JobResponse();
+		Job body=new Job();
+		jobResponse.setBody(body);
+		Header head=new Header();
+		jobResponse.setHead(head.setError(0));
+		String task =asynchronousComputePoolService.deleteComputePool(entity);
+		body.setError(0);
+		body.setJobid(task);
+		return jobResponse;
 	}
 
 	@Override
@@ -121,7 +126,14 @@ public class ComputePoolFacadeImpl implements ComputePoolFacade {
 			head.setError(ErrorCode.BAD_REQ);
 			return res;
 		}
-		res.setBody(computePoolDao.get(ComputePoolEntity.class,entity.getIdcomputepool() ));
+		entity = computePoolDao.get(ComputePoolEntity.class,entity.getIdcomputepool());
+		String identity=entity.getComputePoolIdentity();
+		if(!StringUtils.isEmpty(identity)){
+			ComputePool computePool=computePoolService.getComputePool(identity);
+				entity=new ComputePoolBuild(entity, computePool).entity_computePoolIdentity().entity_cpuamount().entity_cpurest().entity_dispatchtype().entity_memoryamount().entity_memoryrest().entity_status().bulidComputePoolEntity();
+				computePoolDao.update(entity);
+		}
+		res.setBody(entity);
 		return res;
 	}
 }

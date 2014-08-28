@@ -13,9 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.vdi.common.ParseJSON;
-import com.vdi.common.Session;
 import com.vdi.dao.desktop.ComputePoolDao;
 import com.vdi.dao.desktop.HostDao;
+import com.vdi.dao.desktop.domain.ComputePoolBuild;
 import com.vdi.dao.desktop.domain.ComputePoolEntity;
 import com.vdi.dao.desktop.domain.HostBulid;
 import com.vdi.dao.desktop.domain.HostEntity;
@@ -46,15 +46,7 @@ public class TaskHandle {
 			b2 = ParseJSON.convertObjectToDomain(b2.getContent(),
 					ComputePool.class);
 			// ~~
-			ComputePoolEntity computePoolEntity =computePoolDao.findOneByKey("computepoolname", b2.getComputePoolName());
-				computePoolEntity.setComputepoolname(b2.getComputePoolName());
-				computePoolEntity.setComputePoolIdentity(cid);
-				computePoolEntity.setMemoryamount(b2.getWorkHostTotalMem());
-				computePoolEntity.setMemoryrest(b2.getWorkHostTotalMem()
-						- b.getVmProcTotalMem());
-				computePoolEntity.setCpuamount(b2.getWorkHostTotalCpuCoreNum());
-				computePoolEntity.setCpurest(b2.getWorkHostTotalCpuCoreNum()
-						- b.getHostTotalCpuCoreNum());
+			ComputePoolEntity computePoolEntity= new ComputePoolBuild(new ComputePoolEntity(), b2).entity_cpuamount().entity_computePoolIdentity().entity_cpurest().entity_dispatchtype().entity_memoryrest().entity_status().entity_çomputepoolname().bulidComputePoolEntity();
 			computePoolDao.update(computePoolEntity);
 		}
 		break;
@@ -67,7 +59,6 @@ public class TaskHandle {
 					ComputePool.class);
 			ComputePoolEntity delecomputePoolEntity =computePoolDao.findOneByKey("computepoolname", b2.getComputePoolName());
 			computePoolDao.delete(delecomputePoolEntity);
-			Session.removeCache(task.getTaskIdentity());
 			break;
 		}
 		case Host.CREATE_HOST_ACTION:{

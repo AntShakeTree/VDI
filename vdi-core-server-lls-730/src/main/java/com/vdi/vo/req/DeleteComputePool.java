@@ -13,15 +13,24 @@ import java.util.List;
 
 
 public class DeleteComputePool {
-	private List<Long> computepoolids;
+//	private List<Long> computepoolids;
+//
+//	public List<Long> getComputepoolids() {
+//		return computepoolids;
+//	}
+//
+//	public void setComputepoolids(List<Long> computepoolids) {
+//		this.computepoolids = computepoolids;
+//	}
 
-	public List<Long> getComputepoolids() {
-		return computepoolids;
+	private Long computepoolid;
+
+	public Long getComputepoolid() {
+		return computepoolid;
 	}
 
-	public void setComputepoolids(List<Long> computepoolids) {
-		this.computepoolids = computepoolids;
+	public void setComputepoolid(Long computepoolid) {
+		this.computepoolid = computepoolid;
 	}
-
 	
 }

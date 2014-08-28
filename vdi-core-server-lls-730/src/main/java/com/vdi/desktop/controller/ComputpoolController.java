@@ -35,7 +35,7 @@ public class ComputpoolController {
 		return computePoolFacade.createComputePool(entity);
 	}
 	@RequestMapping(value="deleteComputePool",method=RequestMethod.POST)
-	public @ResponseBody Header deleteComputePool(DeleteComputePool entity){
+	public @ResponseBody JobResponse deleteComputePool(DeleteComputePool entity){
 		return computePoolFacade.deleteComputePool(entity);
 	}
 	@RequestMapping(value="deleteComputePool",method=RequestMethod.POST)

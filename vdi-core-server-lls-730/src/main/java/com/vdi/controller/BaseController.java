@@ -25,13 +25,9 @@ import com.vdi.vo.res.JobResponse;
 @ControllerAdvice
 public class BaseController {
 
-	private static final String CONTEXT_TYPE = "application/json";
+	public static final String CONTEXT_TYPE = "application/json";
 
-	@RequestMapping(value = "/getUser", method = RequestMethod.POST, produces = { CONTEXT_TYPE }, consumes = { CONTEXT_TYPE })
-	@PostAuthorize("hasAuthority('ADMIN')")
-	public @ResponseBody User getUser(Object p) {
-		return new User();
-	}
+
 
 	@RequestMapping(value = "/queryJob", method = RequestMethod.POST, produces = { CONTEXT_TYPE })
 	public @ResponseBody JobResponse queryJob(Job job) {

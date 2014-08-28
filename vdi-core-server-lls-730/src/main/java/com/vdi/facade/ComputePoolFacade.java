@@ -24,7 +24,7 @@ public interface ComputePoolFacade {
 	
 	Header updateComputePool(ComputePoolEntity entity);
 	
-	public Header deleteComputePool(DeleteComputePool entity);
+	public JobResponse deleteComputePool(DeleteComputePool entity);
 	public ComputePoolRes getComputPool(ComputePoolEntity entity);
 
 }
