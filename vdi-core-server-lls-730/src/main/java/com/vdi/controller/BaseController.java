@@ -10,7 +10,7 @@
 package com.vdi.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,7 +19,7 @@ import com.vdi.facade.BaseFacad;
 import com.vdi.vo.res.Job;
 import com.vdi.vo.res.JobResponse;
 
-@ControllerAdvice
+@Controller
 public class BaseController {
 
 	public static final String CONTEXT_TYPE = "application/json";
