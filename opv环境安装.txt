@@ -1,0 +1,79 @@
+一、配置交换机
+172.16.103.247  二层交换机 admin admin
+172.16.103.248  二层交换机 admin admin
+172.16.103.249  三层交换机 admin 123.com
+1.远程进入交换机：telnet 172.16.103.247，输入用户名admin密码admin
+当前模式是MLAG_SW2>，此模式是用户模式，首先要进入到特权模式，即
+MLAG_SW2>enable （注：从用户模式进入到特权模式）
+MLAG_SW2#
+然后要进入到全局配置模式，即
+MLAG_SW2#config terminal（注：从特权模式进入全局配置模式）
+MLAG_SW2(config)#
+然后可以对交换机进行配置 
+从全局配置模式返回到特权模式的命令：
+MLAG_SW2(config)#end
+2.先去掉mlag交换机172.16.103.248的聚合口port-group
+  mlag_sw2(config)#interface ethernet 1/0/14-18
+  mlag_sw2(config-if-port-range)#no port-group
+3.关掉交换机172.16.103.247的接口1-45，这相当于拔掉了电源。
+  mlag_sw2(config-if-port-range)#interface ethernet 1/0/1-45
+  mlag_sw2(config-if-port-range)#shutdown
+4.环境安装完成后，没有问题时继续配置交换机
+5.配置247交换机，将其接口打开
+  mlag_sw2(config-if-port-range)#interface ethernet 1/0/2-24
+  mlag_sw2(config-if-port-range)#no shutdown
+6.交换机248添加port-group
+  mlag_sw1(config)#interface ethernet 1/0/14
+  mlag_sw1(config-if-ethernet1/0/14)#port-group 3 mode active 
+附录：
+interface ethernet 1/0/14  port-group 3 mode active  
+interface ethernet 1/0/15  port-group 4 mode active 
+interface ethernet 1/0/16  port-group 11 mode active 
+interface ethernet 1/0/17  port-group 12 mode active 
+interface ethernet 1/0/18  port-group 13 mode active 
+interface ethernet 1/0/19  port-group 5 mode active 
+
+interface ethernet 1/0/20  port-group 6 mode active 
+interface ethernet 1/0/21  port-group 7 mode active 
+interface ethernet 1/0/22  port-group 8 mode active 
+interface ethernet 1/0/23  port-group 9 mode active 
+interface ethernet 1/0/24  port-group 10 mode active
+修改vlan后，要配置mlag id
+Interface Port-Channel12
+ mlag id 12
+
+安装时注意的问题：
+1.查看249交换机上的vlan是否跟安装集群的网段一样，保证能获得ip地址；
+2.将聚合口去掉之后，最后查看一下，免得没去完整；
+
+
+二、环境安装
+在安装前，将所有的node都关机或者都直接停在PXE状态；
+然后登陆种子机172.16.101.3，用户名是administrator，密码是123.com
+
+需要把两台FC设备，分别是15和18放到同一个集群，也划分到同一个vlan；
+选择虚拟机，编辑虚拟机的适配器，保证跟主集群在同一个vlan，种子机启动后，挂在磁盘选择本地的iso镜像即新的安装系统，输入三个集群的ip
+第一个 node 20.2.22.0/24
+       vm   20.2.28.0/23
+第二个 node 20.2.23.0/24
+       vm   20.2.24.0/22
+第三个 node 20.2.20.0/24
+       vm   20.2.36.0/22
+开始安装后，根据提示，在30%启动两台node，第一台一定要开在主集群，第二台开在第二集群，到80%，开启第三台在第三个集群；
+如果是双集群，第三台也要开在主集群；(三台设备最好都是新机器)
+
+
+
+
+环境已经安装好了！（malg交换机，802.3ad模式）
+ 安装版本：Base2.4.065
+ 地址：    https://20.2.22.5:8443
+ 新版本的ip信息如下
+ **集群1：20.2.22.0/24  (8台node)
+ 虚拟机可用ip段:20.2.36.0/22 共有254个ip地址
+ **集群2：20.2.23.0/24 （8台node）
+ 虚拟机可用ip段:20.2.24.0/22 共有254个IP地址
+ 
+QC对应的版本号已经添加了，大家重新登陆即可
+
+
