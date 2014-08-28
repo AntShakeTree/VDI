@@ -15,11 +15,6 @@ import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 public class Header {
 	private int error=0;
 	private String message;
-	private String jobid;
-	private String jobstatus;
-	public static final String SUCCESS="success";
-	public static final String RUNNING="running";
-	public static final String FAIL="error";
 	public int getError() {
 		return error;
 	}
@@ -33,17 +28,6 @@ public class Header {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	public String getJobid() {
-		return jobid;
-	}
-	public void setJobid(String jobid) {
-		this.jobid = jobid;
-	}
-	public String getJobstatus() {
-		return jobstatus;
-	}
-	public void setJobstatus(String jobstatus) {
-		this.jobstatus = jobstatus;
-	}
+	
 	
 }

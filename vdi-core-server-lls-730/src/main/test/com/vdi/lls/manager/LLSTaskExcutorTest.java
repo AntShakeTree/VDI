@@ -12,11 +12,11 @@ import test.config.TestConfig;
 
 import com.vdi.common.Session;
 import com.vdi.support.desktop.lls.domain.task.Task;
-import com.vdi.support.desktop.lls.manager.support.LLSQueryLLSQueue;
+import com.vdi.support.desktop.lls.manager.support.VDIQueue;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes={TestConfig.class})
 public class LLSTaskExcutorTest {
-	@Autowired LLSQueryLLSQueue queue;
+	@Autowired VDIQueue queue;
 	@Before
 	public void setUp() throws Exception {
 		

@@ -2,8 +2,6 @@ package com.vdi.support.desktop.lls.domain.resource;
 
 import java.util.List;
 
-import javax.persistence.Entity;
-
 import org.codehaus.jackson.type.TypeReference;
 
 import com.vdi.support.desktop.lls.domain.BasicDomain;
@@ -14,11 +12,19 @@ import com.vdi.support.desktop.lls.domain.BasicDomain;
  * 
  */
 public class ComputePool extends BasicDomain{
-	public static String CREATE_COMPUTEPOOL_ACTION = "createComputePool";
-	public static String UPDATE_COMPUTEPOOL_ACTION = "updateComputePool";
-	public static String DELETE_COMPUTEPOOL_ACTION = "deleteComputePool";
-	public static String GET_COMPUTEPOOL_ACTION = "reqGetComputePool";
-	public static String LIST_COMPUTEPOOL_ACTION = "reqListComputePool";
+	public static final  String  CREATE_COMPUTEPOOL_ACTION = "createComputePool";
+	public static final String  UPDATE_COMPUTEPOOL_ACTION = "updateComputePool";
+	public static final String  DELETE_COMPUTEPOOL_ACTION = "deleteComputePool";
+	public static final String  GET_COMPUTEPOOL_ACTION = "reqGetComputePool";
+	public static final String CREATING = "creating";
+	public static final String AVAILABLE = "available";
+	public static final String DELETING = "deleting";
+	public static final String HOSTADDING = "hostAdding";
+	public static final String HOSTREMOVEING = "hostRemoveing";
+	public static final String UMOUNTING = "umounting";
+	public static final String MOUNTING = "mounting";
+	public static final String LIST_COMPUTEPOOL_ACTION = "reqListComputPool";
+
 	
 	private String computePoolName;
 	private String dispatchType;

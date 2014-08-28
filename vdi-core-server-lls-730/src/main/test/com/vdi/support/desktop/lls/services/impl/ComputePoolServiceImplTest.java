@@ -24,7 +24,7 @@ import test.config.TestConfig;
 import com.vdi.support.desktop.lls.domain.resource.ComputePool;
 import com.vdi.support.desktop.lls.manager.LLSConnection;
 import com.vdi.support.desktop.lls.manager.LLSSendMessage;
-import com.vdi.support.desktop.lls.manager.support.LLSQueryLLSQueue;
+import com.vdi.support.desktop.lls.manager.support.VDIQueue;
 import com.vdi.support.desktop.lls.services.AsynchronousComputePoolService;
 import com.vdi.support.desktop.lls.services.ComputePoolService;
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -35,7 +35,7 @@ public class ComputePoolServiceImplTest {
 //@Autowired LLSJobService llsJobService;
 private @Resource(name = "llsHandle")
 LLSConnection llsConnection;
-private @Autowired LLSQueryLLSQueue queryLLSQueue;
+private @Autowired VDIQueue queryLLSQueue;
 private @Resource(name = "llsHandle") LLSSendMessage sendMessage;
 	@Test
 	public void testCreateComputePool() throws InterruptedException {

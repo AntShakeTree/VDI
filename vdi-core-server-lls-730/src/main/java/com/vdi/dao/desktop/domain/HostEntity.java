@@ -19,13 +19,36 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+import com.vdi.common.Constants;
+import com.vdi.common.cache.CacheDomain;
+import com.vdi.dao.Request;
+
 @Entity
 @Table(name="host")
-public class HostEntity {
+@JsonIgnoreProperties(value={"hostIdentity"})
+public class HostEntity implements Request<HostEntity>,CacheDomain{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long idhost;
 	private String hostname;
+//	private String totalmem;∂
+	private String ipaddress;
+	private String hostIdentity;
+	private int status;
+	public String getHostIdentity() {
+		return hostIdentity;
+	}
+	public void setHostIdentity(String hostIdentity) {
+		this.hostIdentity = hostIdentity;
+	}
+	public String getIpaddress() {
+		return ipaddress;
+	}
+	public void setIpaddress(String ipaddress) {
+		this.ipaddress = ipaddress;
+	}
 	@JoinColumn(name="computepoolid")
 	@ManyToOne(cascade=CascadeType.ALL,targetEntity=ComputePoolEntity.class,optional=true,fetch=FetchType.EAGER)
 	private ComputePoolEntity computePoolEntity;
@@ -35,17 +58,41 @@ public class HostEntity {
 	public void setIdhost(Long idhost) {
 		this.idhost = idhost;
 	}
-	public String getHostname() {
-		return hostname;
-	}
-	public void setHostname(String hostname) {
-		this.hostname = hostname;
-	}
+
+	
 	public ComputePoolEntity getComputePoolEntity() {
 		return computePoolEntity;
 	}
 	public void setComputePoolEntity(ComputePoolEntity computePoolEntity) {
 		this.computePoolEntity = computePoolEntity;
 	}
+	@Override
+	public Object getId() {
+		return idhost;
+	}
+
+
+	public String getHostname() {
+		return hostname;
+	}
+	public void setHostname(String hostname) {
+		this.hostname = hostname;
+	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
 	
+	
+	public static final int CREATING=Constants.CREATING;
+	public static final int FREE=Constants.AVAILABLE;
+	public static final int DELETING=Constants.DELETING;
+	public static final int WORK=2;
+	public static final  int DISCON=504;
+	public static final int WORKDIS=503;
+	public static final  int FREEDIS=505;
+	public static final int RECOVING=506;
+	public static final int ERROR=Constants.ERROR;
 }

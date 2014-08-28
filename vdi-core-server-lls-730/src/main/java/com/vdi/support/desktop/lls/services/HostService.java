@@ -11,4 +11,5 @@ import com.vdi.support.desktop.lls.domain.resource.Host;
 public interface HostService {
 	List<Host>  listHost(Host host);
 	Host getHost(String hostId);
+	
 }

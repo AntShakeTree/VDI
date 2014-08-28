@@ -16,7 +16,7 @@ import test.config.TestConfig;
 import com.vdi.dao.Request;
 import com.vdi.dao.desktop.DesktopDao;
 import com.vdi.dao.desktop.domain.Desktop;
-import com.vdi.facade.DesktopService;
+import com.vdi.service.desktop.DesktopService;
 
 /**
  * @author mxc

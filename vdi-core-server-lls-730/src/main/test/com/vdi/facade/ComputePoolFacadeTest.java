@@ -23,7 +23,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.sun.jndi.url.corbaname.corbanameURLContextFactory;
 import com.vdi.dao.desktop.domain.ComputePoolEntity;
-import com.vdi.support.desktop.lls.manager.support.LLSQueryLLSQueue;
+import com.vdi.support.desktop.lls.manager.support.VDIQueue;
 import com.vdi.vo.req.DeleteComputePool;
 
 import test.config.TestConfig;
@@ -32,7 +32,7 @@ import test.config.TestConfig;
 public class ComputePoolFacadeTest {
 	private @Autowired ComputePoolFacade computePoolFacade;
 	@Autowired
-	LLSQueryLLSQueue queue;
+	VDIQueue queue;
 	@Test
 	public void testCreateComputePool() throws InterruptedException {
 		ComputePoolEntity entity=new ComputePoolEntity();

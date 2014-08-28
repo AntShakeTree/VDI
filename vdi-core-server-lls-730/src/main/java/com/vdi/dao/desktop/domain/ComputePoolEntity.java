@@ -26,6 +26,7 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
+import com.vdi.common.Constants;
 import com.vdi.common.cache.CacheDomain;
 import com.vdi.dao.PageRequest;
 
@@ -45,13 +46,19 @@ public class ComputePoolEntity extends PageRequest<ComputePoolEntity> implements
 	private int memoryrest;
 	private String dispatchtype;
 	private String taskid;
-	private int error;
 	private String note;
 	private String computePoolIdentity;
+	private int status;
 	@OneToMany(cascade=CascadeType.ALL,mappedBy="computePoolEntity", orphanRemoval=true,targetEntity=HostEntity.class,fetch=FetchType.EAGER)
 	private List<HostEntity> hosts=new ArrayList<HostEntity>();
 	
 
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
 	public String getComputepoolname() {
 		return computepoolname;
 	}
@@ -104,12 +111,7 @@ public class ComputePoolEntity extends PageRequest<ComputePoolEntity> implements
 	public void setTaskid(String taskid) {
 		this.taskid = taskid;
 	}
-	public int getError() {
-		return error;
-	}
-	public void setError(int error) {
-		this.error = error;
-	}
+
 
 	public String getNote() {
 		return note;
@@ -129,6 +131,14 @@ public class ComputePoolEntity extends PageRequest<ComputePoolEntity> implements
 	public void setIdcomputepool(Long idcomputepool) {
 		this.idcomputepool = idcomputepool;
 	}
+	public static final int CREATING = Constants.CREATING;
+	public static final int AVAILABLE = Constants.AVAILABLE;
+	public static final int DELETING = Constants.DELETING;
+	public static final int HOSTADDING = 503;
+	public static final int HOSTREMOVEING = 504;
+	public static final int UMOUNTING = 505;
+	public static final int MOUNTING = 506;
+	public static final int ERROR=Constants.ERROR;
 } 
 	
 //	

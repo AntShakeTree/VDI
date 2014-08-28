@@ -7,7 +7,7 @@
  *
 */
 
-package com.vdi.facade;
+package com.vdi.service.desktop;
 
 import com.vdi.dao.desktop.domain.Desktop;
 

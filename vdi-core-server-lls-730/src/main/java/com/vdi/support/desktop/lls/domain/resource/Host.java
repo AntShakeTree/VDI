@@ -8,11 +8,11 @@ import org.codehaus.jackson.type.TypeReference;
 import com.vdi.support.desktop.lls.domain.BasicDomain;
 
 public class Host extends BasicDomain {
-	public static String CREATE_HOST_ACTION = "createHost";
-	public static String UPDATE_HOST_ACTION = "updateHost";
-	public static String DELETE_HOST_ACTION = "deleteHost";
-	public static String GET_HOST_ACTION = "reqGetHost";
-	public static String LIST_HOST_ACTION = "reqListHost";
+	public static final String CREATE_HOST_ACTION = "createHost";
+	public static final String UPDATE_HOST_ACTION = "updateHost";
+	public static final String DELETE_HOST_ACTION = "deleteHost";
+	public static final String GET_HOST_ACTION = "reqGetHost";
+	public static final String LIST_HOST_ACTION = "reqListHost";
 	private String action;
 	private Host mapper;// 查询条件
 	private String computePoolIdentity;
@@ -142,4 +142,12 @@ public class Host extends BasicDomain {
 		this.cpuCoreNum = cpuCoreNum;
 	}
 	
+	public static final String DISABLE_CREATEING="creating";
+	public static final String ENABLE_DELETE_FREE="free";
+	public static final String DELETING="deleting";
+	public static final String WORK="work";
+	public static final  String DISCON="disConnectDealing";
+	public static final String WORKDIS="workDisconnected";
+	public static final  String FREEDIS="freeDisconnected";
+	public static final String RECOVING="recoving";
 }

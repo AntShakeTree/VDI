@@ -20,6 +20,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.vdi.common.ParseJSON;
+import com.vdi.common.Session;
 import com.vdi.support.desktop.lls.domain.task.Task;
 import com.vdi.support.desktop.lls.manager.LLSConnection;
 import com.vdi.support.desktop.lls.manager.LLSExcutor;
@@ -31,9 +32,9 @@ import com.vdi.support.desktop.lls.services.TaskService;
  * @author maxiaochao
  */
 @Component("llsSendQueue")
-public class LLSQueryLLSQueue implements LLSExcutor {
+public class VDIQueue implements LLSExcutor {
 	private final static Logger LOGGER = LoggerFactory
-			.getLogger(LLSQueryLLSQueue.class);
+			.getLogger(VDIQueue.class);
 	// Queue<E>
 	private final static ArrayBlockingQueue<Task> SENDQUEUE = new ArrayBlockingQueue<Task>(
 			1000);
@@ -67,7 +68,7 @@ public class LLSQueryLLSQueue implements LLSExcutor {
 			origintask = taskService.getTask(tid);
 			origintask=ParseJSON.convertObjectToDomain(origintask.getContent(),Task.class);
 
-//			Session.setCache(origintask.getTaskIdentity(), origintask);
+			Session.setCache(origintask.getTaskIdentity(), origintask);
 			if (!origintask.isTaskFinished(origintask)) {
 				try {
 					origintask.setTaskIdentity(tid);

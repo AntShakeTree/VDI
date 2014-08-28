@@ -22,7 +22,7 @@ import com.vdi.support.desktop.lls.domain.vms.VmInstance;
 import com.vdi.support.desktop.lls.domain.vms.attributes.RunParams;
 import com.vdi.support.desktop.lls.domain.vms.attributes.VDisk;
 import com.vdi.support.desktop.lls.domain.vms.attributes.VNetcard;
-import com.vdi.support.desktop.lls.manager.support.LLSQueryLLSQueue;
+import com.vdi.support.desktop.lls.manager.support.VDIQueue;
 import com.vdi.support.desktop.lls.services.AsynchronousVmInstanceServices;
 import com.vdi.support.desktop.lls.services.TaskService;
 
@@ -32,7 +32,7 @@ public class AsynchronousVmInstanceServicesTest {
 	@Autowired
 	AsynchronousVmInstanceServices asynchronousVmInstanceServices;
 	@Autowired
-	LLSQueryLLSQueue queue;
+	VDIQueue queue;
 	@Autowired
 	TaskService taskService;
 //	@Autowired LLSJobService jobService;
