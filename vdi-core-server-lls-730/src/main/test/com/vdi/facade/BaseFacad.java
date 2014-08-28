@@ -4,5 +4,5 @@ import com.vdi.vo.res.Job;
 import com.vdi.vo.res.JobResponse;
 
 public interface BaseFacad {
-JobResponse queryJob(Job job);
+	JobResponse queryJob(Job job);
 }
