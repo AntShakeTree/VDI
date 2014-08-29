@@ -55,10 +55,11 @@ public class LLSLocalNIOHandle implements LLSConnection, LLSSendMessage {
 			reconnection();
 			String message = ParseJSON.toJson(obj);
 			sendbuffer.clear();
-			String len = message.length() + "";
-			sendbuffer.put((byte) len.length());
-			sendbuffer.put((byte) (len.length() >> 8));
-			sendbuffer.put(len.getBytes("UTF-8"));
+			int len = message.length();
+			// sendbuffer.put((byte) len.length());
+			// sendbuffer.put((byte) (len.length() >> 8));
+			// sendbuffer.put(len.getBytes("UTF-8"));
+			sendbuffer.putInt(len);
 			sendbuffer.put(message.getBytes("UTF-8"));
 			sendbuffer.flip();
 			socketChannel.write(sendbuffer);
@@ -153,52 +154,47 @@ public class LLSLocalNIOHandle implements LLSConnection, LLSSendMessage {
 		}
 	}
 
-	// public static void main(String[] args) {
-	// LLSLocalNIOHandle lls = new LLSLocalNIOHandle();
-	// long start = (System.currentTimeMillis());
-	// for (int i = 0; i < 10000; i++) {
-	// Host host = new Host();
-	// host.setAction(Host.LIST_HOST_ACTION);
-	// host.setMapper(new Host());
-	// host = lls.sendMessage(host, Host.class);
-	// try {
-	// Thread.sleep(1);
-	// } catch (InterruptedException e) {
-	// e.printStackTrace();
-	// }
-	// System.out.println(ParseJSON.toJson(host));
-	// }
-	// System.out.println(System.currentTimeMillis() - start);
-	// lls.close();
-	// }
 	protected <T extends BasicDomain> T readDataFromSocket(SelectionKey key,
 			Object obj, Class<T> typeReference) {
 		SocketChannel socketChannel = (SocketChannel) key.channel();
 		T t = null;
-		readBuffer.clear(); // Empty buffer
 		try {
 			int count = -1;
-			while ((count = socketChannel.read(readBuffer)) > 0) {
-				readBuffer.flip(); // Make buffer readable
-				byte[] bs = new byte[readBuffer.limit()];
-				readBuffer.get(bs);
-				String result = new String(bs, "UTF-8");
-				result = result.substring(result.indexOf("{"));
-				t = ParseJSON.fromJson(result, typeReference);
-				LOGGER.debug("receive :{}", result);
-				if (!(t.getResult().equalsIgnoreCase("successed"))) {
-					throw new LLSRuntimeException(ParseJSON.toJson(new Head()
-							.setError(t.getErrorCode())));
-				}
-			
+			StringBuilder sb = new StringBuilder("");
+			int len = 0;
+			intBuffer.clear();
+			socketChannel.read(intBuffer);
+			intBuffer.flip();
+			len = intBuffer.getInt();
+			System.out.println(len);
+			intBuffer.clear();
+			int c = 0;
+			while (c < len) {
 				readBuffer.clear();
-
+				count = socketChannel.read(readBuffer);
+				if (count > 0) {
+					readBuffer.flip();
+					byte[] bs = new byte[count];
+					readBuffer.get(bs);
+					String result = new String(bs, "UTF-8");
+					sb.append(result);
+					c += count;
+				}
 			}
-
+			String endResult = sb.toString();
+			endResult = endResult.substring(endResult.indexOf("{"));
+			t = ParseJSON.fromJson(endResult, typeReference);
+			LOGGER.debug("receive :{}", endResult);
+			//
+			if (!(t.getResult().equalsIgnoreCase("successed"))) {
+				throw new LLSRuntimeException(ParseJSON.toJson(new Head()
+						.setError(t.getErrorCode())));
+			}
+			//
 			if (count == -1) {
-				this.close();
-				this.reconnection();
-				return this.sendMessage(obj, typeReference);
+				close();
+				reconnection();
+				sendMessage(obj, typeReference);
 			}
 			return t;
 		} catch (Exception e) {
@@ -212,4 +208,5 @@ public class LLSLocalNIOHandle implements LLSConnection, LLSSendMessage {
 
 	ByteBuffer sendbuffer = ByteBuffer.allocateDirect(4096);
 	ByteBuffer readBuffer = ByteBuffer.allocateDirect(4096);
+	ByteBuffer intBuffer = ByteBuffer.allocate(4);
 }

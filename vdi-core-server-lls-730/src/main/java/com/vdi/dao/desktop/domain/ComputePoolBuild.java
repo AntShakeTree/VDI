@@ -33,9 +33,9 @@ public class ComputePoolBuild {
 	}
 
 	public ComputePoolBuild setComputePoolIdentity() {
-		if (!isEmpty(entity.getComputePoolIdentity()))
+		if (!isEmpty(entity.getComputepoolidentity()))
 			this.computePool.setComputePoolIdentity(entity
-					.getComputePoolIdentity());
+					.getComputepoolidentity());
 		return this;
 	}
 
@@ -45,9 +45,10 @@ public class ComputePoolBuild {
 		return entity;
 	}
 
-	public ComputePoolBuild entity_çomputepoolname() {
-		if (!isEmpty(computePool.getComputePoolIdentity()))
-			entity.setComputePoolIdentity(computePool.getComputePoolIdentity());
+	public ComputePoolBuild entity_computepoolname() {
+		if (!isEmpty(computePool.getComputePoolName())){
+			entity.setComputepoolname(computePool.getComputePoolName());
+		};
 		return this;
 	};
 
@@ -81,7 +82,7 @@ public class ComputePoolBuild {
 
 	public ComputePoolBuild entity_computePoolIdentity() {
 		if (!isEmpty(computePool.getComputePoolIdentity())) {
-			entity.setComputePoolIdentity(computePool.getComputePoolIdentity());
+			entity.setComputepoolidentity(computePool.getComputePoolIdentity());
 		}
 		return this;
 	};

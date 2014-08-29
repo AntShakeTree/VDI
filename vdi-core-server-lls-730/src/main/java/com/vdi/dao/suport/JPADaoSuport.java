@@ -11,6 +11,7 @@ import javax.persistence.Query;
 //import javax.transaction.Transactional;
 
 
+
 import org.springframework.stereotype.Repository;
 //import org.springframework.transaction.annotation.Transactional;
 
@@ -38,6 +39,7 @@ public class JPADaoSuport<T> implements Dao<T> {
 	}
 
 	@SuppressWarnings("unchecked")
+	@Transactional(readOnly=true)
 	public <V extends CacheDomain> List<V> listRequest(Request<V> req) {
 		List<V> ls = null;
 		String daoname = GenericsUtils.getMethodParameterGenericsInterfaceType(
@@ -79,8 +81,15 @@ public class JPADaoSuport<T> implements Dao<T> {
 			e.printStackTrace();
 		} catch (InvocationTargetException e) {
 			e.printStackTrace();
+		} catch (NoSuchFieldException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		State state = Session.getStateBySeed(daoname);
+		if(ls!=null){
 		synchronized (state) {
 			try {
 				state.openDoor();
@@ -94,7 +103,7 @@ public class JPADaoSuport<T> implements Dao<T> {
 			} catch (IllegalAccessException e) {
 				e.printStackTrace();
 			}
-		}
+		}}
 		return ls;
 	}
 
@@ -138,10 +147,11 @@ public class JPADaoSuport<T> implements Dao<T> {
 	public T update(T domain) {
 		return this.entityManager.merge(domain);
 	}
+//	@Transactional(readOnl)
+	@javax.transaction.Transactional
 	@Override
 	public void delete(T domain) {
-		this.entityManager.remove(domain);
-
+		this.entityManager.remove(entityManager.merge( domain));
 	}
 
 	public void excuteNative(String hql, Object... args) {

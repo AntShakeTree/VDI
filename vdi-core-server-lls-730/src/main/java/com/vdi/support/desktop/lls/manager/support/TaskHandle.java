@@ -46,7 +46,7 @@ public class TaskHandle {
 			b2 = ParseJSON.convertObjectToDomain(b2.getContent(),
 					ComputePool.class);
 			// ~~
-			ComputePoolEntity computePoolEntity= new ComputePoolBuild(new ComputePoolEntity(), b2).entity_cpuamount().entity_computePoolIdentity().entity_cpurest().entity_dispatchtype().entity_memoryrest().entity_status().entity_çomputepoolname().bulidComputePoolEntity();
+			ComputePoolEntity computePoolEntity= new ComputePoolBuild(new ComputePoolEntity(), b2).entity_cpuamount().entity_computePoolIdentity().entity_cpurest().entity_dispatchtype().entity_memoryrest().entity_status().entity_computepoolname().bulidComputePoolEntity();
 			computePoolDao.update(computePoolEntity);
 		}
 		break;

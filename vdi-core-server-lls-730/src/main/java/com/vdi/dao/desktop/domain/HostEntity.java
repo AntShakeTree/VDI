@@ -23,25 +23,26 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import com.vdi.common.Constants;
 import com.vdi.common.cache.CacheDomain;
+import com.vdi.dao.PageRequest;
 import com.vdi.dao.Request;
 
 @Entity
 @Table(name="host")
 @JsonIgnoreProperties(value={"hostIdentity"})
-public class HostEntity implements Request<HostEntity>,CacheDomain{
+public class HostEntity extends PageRequest<HostEntity> implements CacheDomain{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long idhost;
 	private String hostname;
-//	private String totalmem;∂
 	private String ipaddress;
-	private String hostIdentity;
-	private int status;
-	public String getHostIdentity() {
-		return hostIdentity;
+	private String hostidentity;
+	private Integer status;
+
+	public String getHostidentity() {
+		return hostidentity;
 	}
-	public void setHostIdentity(String hostIdentity) {
-		this.hostIdentity = hostIdentity;
+	public void setHostidentity(String hostidentity) {
+		this.hostidentity = hostidentity;
 	}
 	public String getIpaddress() {
 		return ipaddress;
@@ -78,14 +79,15 @@ public class HostEntity implements Request<HostEntity>,CacheDomain{
 	public void setHostname(String hostname) {
 		this.hostname = hostname;
 	}
-	public int getStatus() {
+	
+	
+	
+	public Integer getStatus() {
 		return status;
 	}
-	public void setStatus(int status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	
-	
 	public static final int CREATING=Constants.CREATING;
 	public static final int FREE=Constants.AVAILABLE;
 	public static final int DELETING=Constants.DELETING;

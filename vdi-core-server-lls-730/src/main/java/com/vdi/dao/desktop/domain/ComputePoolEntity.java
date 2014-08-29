@@ -29,6 +29,8 @@ import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import com.vdi.common.Constants;
 import com.vdi.common.cache.CacheDomain;
 import com.vdi.dao.PageRequest;
+import com.vdi.dao.annotation.VDIDaoHelper;
+import com.vdi.dao.annotation.VDIDaoHelper.IgnoreValue;
 
 @Entity
 @Table(name="computepool")
@@ -37,9 +39,9 @@ import com.vdi.dao.PageRequest;
 public class ComputePoolEntity extends PageRequest<ComputePoolEntity> implements CacheDomain{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long idcomputepool;
-	@Column(nullable=false,unique=true)
+	private Integer idcomputepool;
 	private String computepoolname;
+
 	private int cpuamount;
 	private int cpurest;
 	private int memoryamount;
@@ -47,16 +49,17 @@ public class ComputePoolEntity extends PageRequest<ComputePoolEntity> implements
 	private String dispatchtype;
 	private String taskid;
 	private String note;
-	private String computePoolIdentity;
-	private int status;
-	@OneToMany(cascade=CascadeType.ALL,mappedBy="computePoolEntity", orphanRemoval=true,targetEntity=HostEntity.class,fetch=FetchType.EAGER)
-	private List<HostEntity> hosts=new ArrayList<HostEntity>();
+	private String computepoolidentity;
+	private Integer status;
+	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true,targetEntity=HostEntity.class,fetch=FetchType.EAGER)
+	private List<HostEntity> hosts;
+	
 	
 
-	public int getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
-	public void setStatus(int status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 	public String getComputepoolname() {
@@ -65,30 +68,35 @@ public class ComputePoolEntity extends PageRequest<ComputePoolEntity> implements
 	public void setComputepoolname(String computepoolname) {
 		this.computepoolname = computepoolname;
 	}
+	@VDIDaoHelper(ignore=IgnoreValue.ZERO)
 	public int getCpuamount() {
 		return cpuamount;
 	}
 	public void setCpuamount(int cpuamount) {
 		this.cpuamount = cpuamount;
 	}
+	@VDIDaoHelper(ignore=IgnoreValue.ZERO)
 	public int getCpurest() {
 		return cpurest;
 	}
 	public void setCpurest(int cpurest) {
 		this.cpurest = cpurest;
 	}
+	@VDIDaoHelper(ignore=IgnoreValue.ZERO)
 	public int getMemoryamount() {
 		return memoryamount;
 	}
 	public void setMemoryamount(int memoryamount) {
 		this.memoryamount = memoryamount;
 	}
+	@VDIDaoHelper(ignore=IgnoreValue.ZERO)
 	public int getMemoryrest() {
 		return memoryrest;
 	}
 	public void setMemoryrest(int memoryrest) {
 		this.memoryrest = memoryrest;
 	}
+	@VDIDaoHelper(ignore=IgnoreValue.NULLCOLLECTION)
 	public List<HostEntity> getHosts() {
 		return hosts;
 	}
@@ -119,18 +127,21 @@ public class ComputePoolEntity extends PageRequest<ComputePoolEntity> implements
 	public void setNote(String note) {
 		this.note = note;
 	}
-	public String getComputePoolIdentity() {
-		return computePoolIdentity;
+
+	public String getComputepoolidentity() {
+		return computepoolidentity;
 	}
-	public void setComputePoolIdentity(String computePoolIdentity) {
-		this.computePoolIdentity = computePoolIdentity;
+	public void setComputepoolidentity(String computepoolidentity) {
+		this.computepoolidentity = computepoolidentity;
 	}
-	public Long getIdcomputepool() {
+	
+	public Integer getIdcomputepool() {
 		return idcomputepool;
 	}
-	public void setIdcomputepool(Long idcomputepool) {
+	public void setIdcomputepool(Integer idcomputepool) {
 		this.idcomputepool = idcomputepool;
 	}
+
 	public static final int CREATING = Constants.CREATING;
 	public static final int AVAILABLE = Constants.AVAILABLE;
 	public static final int DELETING = Constants.DELETING;

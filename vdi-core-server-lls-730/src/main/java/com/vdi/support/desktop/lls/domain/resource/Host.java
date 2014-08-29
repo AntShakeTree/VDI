@@ -21,17 +21,27 @@ public class Host extends BasicDomain {
 	private String addTime;
 	private String addr;
 	private String role;
-	private List<CpuInfo> cpuInfo;
+	private CpuInfo cpuInfo;
 	private String hostName;
+	
 	private String hostIdentity;
 	private String status;
 	private long totalMem;
 	private int cpuCoreNum;
 	@JsonIgnore
 	private Integer _userId;
-
+	@JsonIgnore
+	private boolean _isDisconnected;
 	public long getTotalMem() {
 		return totalMem;
+	}
+
+	public boolean is_isDisconnected() {
+		return _isDisconnected;
+	}
+
+	public void set_isDisconnected(boolean _isDisconnected) {
+		this._isDisconnected = _isDisconnected;
 	}
 
 	public void setTotalMem(long totalMem) {
@@ -124,11 +134,12 @@ public class Host extends BasicDomain {
 		this.role = role;
 	}
 
-	public List<CpuInfo> getCpuInfo() {
+
+	public CpuInfo getCpuInfo() {
 		return cpuInfo;
 	}
 
-	public void setCpuInfo(List<CpuInfo> cpuInfo) {
+	public void setCpuInfo(CpuInfo cpuInfo) {
 		this.cpuInfo = cpuInfo;
 	}
 
@@ -144,6 +155,8 @@ public class Host extends BasicDomain {
 		this.cpuCoreNum = cpuCoreNum;
 	}
 	
+
+
 	public static final String DISABLE_CREATEING="creating";
 	public static final String ENABLE_DELETE_FREE="free";
 	public static final String DELETING="deleting";

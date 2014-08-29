@@ -9,6 +9,8 @@
 
 package com.vdi.facade;
 
+import java.util.List;
+
 import com.vdi.dao.desktop.domain.ComputePoolEntity;
 import com.vdi.vo.req.DeleteComputePool;
 import com.vdi.vo.res.ComputePoolRes;
@@ -28,5 +30,6 @@ public interface ComputePoolFacade {
 	
 	public ComputePoolRes getComputPool(ComputePoolEntity entity);
 	
+	public void testSave(List<ComputePoolEntity> es);
 	
 }

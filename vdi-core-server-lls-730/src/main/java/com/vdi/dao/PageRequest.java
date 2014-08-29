@@ -1,5 +1,8 @@
 package com.vdi.dao;
 
+import com.vdi.dao.annotation.VDIDaoHelper;
+import com.vdi.dao.annotation.VDIDaoHelper.IgnoreValue;
+
 
 public class PageRequest<V> implements Request<V> {
 	

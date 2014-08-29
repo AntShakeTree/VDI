@@ -59,10 +59,16 @@ public class HostBulid {
 
 	// private String totalmem;∂
 	public HostBulid hostEntity_ipaddress() {
+		if(!isEmpty(host.getAddr())){
+			entity.setIpaddress(host.getAddr());
+		}
 		return this;
 	}
 
 	public HostBulid hostEntity_hostIdentity() {
+		if(!isEmpty(host.getHostIdentity())){
+			entity.setHostidentity(host.getHostIdentity());
+		}
 		return this;
 	}
 
@@ -82,9 +88,9 @@ public class HostBulid {
 	public HostBulid computPoolIdentity() {
 		if (entity.getComputePoolEntity() != null
 				&& isEmpty(entity.getComputePoolEntity()
-						.getComputePoolIdentity()))
+						.getComputepoolidentity()))
 			host.setComputePoolIdentity(entity.getComputePoolEntity()
-					.getComputePoolIdentity());
+					.getComputepoolidentity());
 		return this;
 	}
 

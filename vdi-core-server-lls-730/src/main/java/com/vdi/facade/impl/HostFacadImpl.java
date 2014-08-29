@@ -53,7 +53,7 @@ public class HostFacadImpl implements HostFacad {
 		for (Host host : hs) {
 			boolean isexists=false;
 			for (HostEntity hostEntity : hostEntities) {
-				String identity=hostEntity.getHostIdentity();
+				String identity=hostEntity.getHostidentity();
 				if (host.getHostIdentity().equals(identity)) {
 					hostEntity.setStatus(new HostBulid(hostEntity, host).hostEntity_status().bulidHostEntity().getStatus());
 					hostDao.update(hostEntity);
@@ -62,7 +62,7 @@ public class HostFacadImpl implements HostFacad {
 			}
 			if (!isexists) {
 				
-				HostEntity hostEntity=new HostBulid(new HostEntity(), host).hostEntity_hostIdentity().hostEntity_ipaddress().hostEntity_status().bulidHostEntity();
+				HostEntity hostEntity=new HostBulid(new HostEntity(), host).hostEntity_hostname().hostEntity_hostIdentity().hostEntity_ipaddress().hostEntity_status().bulidHostEntity();
 				if(!StringUtils.isEmpty(host.getComputePoolIdentity())){
 					ComputePoolEntity ePoolEntity = computePoolDao.findOneByKey("computePoolIdentity", host.getComputePoolIdentity());
 					hostEntity.setComputePoolEntity(ePoolEntity);
