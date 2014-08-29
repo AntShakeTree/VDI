@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
-@EnableWebMvc
+//@EnableWebMvc
 @EnableAsync
 @EnableScheduling
 @EnableAspectJAutoProxy

@@ -57,15 +57,18 @@ public class JPADaoSuport<T> implements Dao<T> {
 			List<Object> args = queryUtil.getValues();
 			Query query = entityManager.createQuery(hql);
 			if (req instanceof PageRequest) {
-				PageView pageView = new PageView(
-						((PageRequest<V>) req).getPagesize(),
+				int pagesize= ((PageRequest<V>)req).getPagesize();
+				if(pagesize!=-1){
+				PageView pageView = new PageView(pagesize,
 						((PageRequest<V>) req).getPage());
 
 				ls = (List<V>) prepareParamlizedQuery(query, args.toArray())
 						.setFirstResult(pageView.getFirstResult())
 						.setMaxResults(pageView.getMaxresult()).getResultList();
 				((PageRequest<V>) req).setAmount(getCount(hql, args));
-
+				}else{
+					ls=(List<V>)prepareParamlizedQuery(query, args.toArray()).getResultList();
+				}
 			} else {
 				ls = JPADaoSuport.prepareParamlizedQuery(query, args.toArray())
 						.getResultList();

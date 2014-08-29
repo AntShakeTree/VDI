@@ -29,16 +29,16 @@ public class ComputpoolController {
 		return computePoolFacade.listComputePool(pool);
 	}
 	
-	@RequestMapping(value= "/getUser",method=RequestMethod.POST,produces={CONTEXT_TYPE},consumes={CONTEXT_TYPE})
+	@RequestMapping(value= "/createComputePool",method=RequestMethod.POST,produces={CONTEXT_TYPE},consumes={CONTEXT_TYPE})
 	@PostAuthorize("hasAuthority('ADMIN')")
 	public @ResponseBody JobResponse createComputePool(ComputePoolEntity entity){
 		return computePoolFacade.createComputePool(entity);
 	}
-	@RequestMapping(value="deleteComputePool",method=RequestMethod.POST)
+	@RequestMapping(value="/deleteComputePool",method=RequestMethod.POST)
 	public @ResponseBody JobResponse deleteComputePool(DeleteComputePool entity){
 		return computePoolFacade.deleteComputePool(entity);
 	}
-	@RequestMapping(value="deleteComputePool",method=RequestMethod.POST)
+	@RequestMapping(value="/getComputePool",method=RequestMethod.POST)
 	public @ResponseBody ComputePoolRes getComputePool(ComputePoolEntity entity){
 		return computePoolFacade.getComputPool(entity);
 	}

@@ -17,5 +17,19 @@ public class AsynchousHostServiceImpl implements AsynchounousHostService{
 		host.setAction(Host.CREATE_HOST_ACTION);
 		return asynchousHostService.excute(host);
 	}
-
+	@Override
+	public String removeHostFromComputePool(Host host) {
+		host.setAction(Host.REMOVEHOSTFROMCOMPUTEPOOL);
+		return asynchousHostService.excute(host);
+	}
+	@Override
+	public String deleteHost(Host host) {
+		host.setAction(Host.DELETE_HOST_ACTION);
+		return asynchousHostService.excute(host);
+	}
+	@Override
+	public String addHostToComputePool(Host host) {
+		host.setAction(Host.ADDHOST2COMPUTEPOOL);
+		return asynchousHostService.excute(host);
+	}
 }

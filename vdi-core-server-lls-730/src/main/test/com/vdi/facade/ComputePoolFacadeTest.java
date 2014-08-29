@@ -9,10 +9,6 @@
 
 package com.vdi.facade;
 
-import static org.junit.Assert.*;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 import org.junit.Test;
@@ -21,12 +17,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.sun.jndi.url.corbaname.corbanameURLContextFactory;
+import test.config.TestConfig;
+
+import com.vdi.common.ParseJSON;
 import com.vdi.dao.desktop.domain.ComputePoolEntity;
 import com.vdi.support.desktop.lls.manager.support.VDIQueue;
-import com.vdi.vo.req.DeleteComputePool;
-
-import test.config.TestConfig;
+import com.vdi.vo.res.ListComputePool;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { TestConfig.class })
 public class ComputePoolFacadeTest {
@@ -61,5 +57,15 @@ public class ComputePoolFacadeTest {
 //			queue.sendSchdulTask();
 //			Thread.sleep(5000);
 //		}
+	}
+	
+	@Test
+	public void testListCs(){
+		ComputePoolEntity entity=new ComputePoolEntity();
+		entity.setAmount(10);
+		entity.setPage(1);
+		entity.setPagesize(10);
+		ListComputePool es =computePoolFacade.listComputePool(entity);
+		System.out.println(ParseJSON.toJson(es));
 	}
 }

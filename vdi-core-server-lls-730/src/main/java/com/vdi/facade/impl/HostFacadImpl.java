@@ -2,12 +2,14 @@ package com.vdi.facade.impl;
 
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
+import com.vdi.dao.desktop.ComputePoolDao;
 import com.vdi.dao.desktop.HostDao;
+import com.vdi.dao.desktop.domain.ComputePoolEntity;
 import com.vdi.dao.desktop.domain.HostBulid;
 import com.vdi.dao.desktop.domain.HostEntity;
 import com.vdi.facade.HostFacad;
@@ -24,6 +26,7 @@ public class HostFacadImpl implements HostFacad {
 	private @Autowired HostService hostService;
 	private @Autowired AsynchounousHostService asynchounousHostService;
 	private @Autowired HostDao hostDao;
+	private @Autowired ComputePoolDao computePoolDao;
 	@Override
 	public JobResponse createHost(HostEntity entity) {
 		JobResponse response =new JobResponse();
@@ -47,16 +50,24 @@ public class HostFacadImpl implements HostFacad {
 		List<Host> hs= hostService.listHost(new HostBulid(entity,new Host()).hostName().computPoolIdentity().ipAddress().bulidHost());
 		
 		//～～不是很好实现
-		for (HostEntity hostEntity : hostEntities) {
-			for (Host host : hs) {
+		for (Host host : hs) {
+			boolean isexists=false;
+			for (HostEntity hostEntity : hostEntities) {
 				String identity=hostEntity.getHostIdentity();
 				if (host.getHostIdentity().equals(identity)) {
 					hostEntity.setStatus(new HostBulid(hostEntity, host).hostEntity_status().bulidHostEntity().getStatus());
 					hostDao.update(hostEntity);
-					continue;
-				}else{
-					hostEntity.setStatus(HostEntity.ERROR);
+					isexists=true;
 				}
+			}
+			if (!isexists) {
+				
+				HostEntity hostEntity=new HostBulid(new HostEntity(), host).hostEntity_hostIdentity().hostEntity_ipaddress().hostEntity_status().bulidHostEntity();
+				if(!StringUtils.isEmpty(host.getComputePoolIdentity())){
+					ComputePoolEntity ePoolEntity = computePoolDao.findOneByKey("computePoolIdentity", host.getComputePoolIdentity());
+					hostEntity.setComputePoolEntity(ePoolEntity);
+				}
+				hostDao.save(hostEntity);
 			}
 		}
 		

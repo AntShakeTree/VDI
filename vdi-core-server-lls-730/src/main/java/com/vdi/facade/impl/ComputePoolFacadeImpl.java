@@ -67,22 +67,20 @@ public class ComputePoolFacadeImpl implements ComputePoolFacade {
 		ComputePoolList body=new ComputePoolList();
 		List<ComputePoolEntity> cs =computePoolDao.listRequest(entity);
 		List<ComputePool> cps=computePoolService.listComputePool(new ComputePoolBuild(entity, new ComputePool()).setComputePoolIdentity().setComputePoolName().bulidComputePool());
-		for (ComputePoolEntity computePoolEntity : cs) {
-			String identity=computePoolEntity.getComputePoolIdentity();
+		for (ComputePool computePool : cps) {
+			String identity=computePool.getComputePoolIdentity();
 			boolean isEx=false;
-			for (ComputePool computePool : cps) {
+			for (ComputePoolEntity computePoolEntity : cs) {
 				if(!StringUtils.isEmpty(identity)){
-					if(computePool.getComputePoolIdentity().equals(identity)){
+					if(computePoolEntity.getComputePoolIdentity().equals(identity)){
 						isEx=true;
 						entity=new ComputePoolBuild(entity, computePool).entity_computePoolIdentity().entity_cpuamount().entity_cpurest().entity_dispatchtype().entity_memoryamount().entity_memoryrest().entity_status().bulidComputePoolEntity();
 						computePoolDao.update(entity);
-						continue;
 					}
 				}	
 			}
 			if(!isEx){
-				entity.setStatus(ComputePoolEntity.ERROR);
-				computePoolDao.update(entity);
+				computePoolDao.save(new ComputePoolBuild(entity, computePool).entity_computePoolIdentity().entity_cpuamount().entity_cpurest().entity_dispatchtype().entity_memoryamount().entity_memoryrest().entity_çomputepoolname().entity_status().bulidComputePoolEntity());
 			}
 		}
 		body.setList(cs);

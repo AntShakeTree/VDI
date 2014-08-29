@@ -13,6 +13,8 @@ public class Host extends BasicDomain {
 	public static final String DELETE_HOST_ACTION = "deleteHost";
 	public static final String GET_HOST_ACTION = "reqGetHost";
 	public static final String LIST_HOST_ACTION = "reqListHost";
+	public static final String ADDHOST2COMPUTEPOOL = "addHost2ComputePool";
+	public static final String REMOVEHOSTFROMCOMPUTEPOOL  = "removeHostFromComputePool";
 	private String action;
 	private Host mapper;// 查询条件
 	private String computePoolIdentity;
