@@ -33,7 +33,7 @@ public class LLSConnectionTest {
 
 	@Test
 	public void test01Connection() throws Exception {
-		connection.connection(null,null);
+//		connection.connection(null,null);
 	    Thread.sleep(1000);
 	    System.out.println(connection.isConnection());
 	}

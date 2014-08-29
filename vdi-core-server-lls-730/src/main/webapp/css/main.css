@@ -1,0 +1,12 @@
+.shortcut-buttons-set li .shortcut-button span .button-add,
+.shortcut-buttons-set li .shortcut-button span .button-gray-add,
+.shortcut-buttons-set li .shortcut-button span .button-edit,
+.shortcut-buttons-set li .shortcut-button span .button-gray-edit,
+.shortcut-buttons-set li .shortcut-button span .button-del,
+.shortcut-buttons-set li .shortcut-button span .button-gray-del{background:url(../images/icons/button_icons.png) no-repeat; width:48px; height:48px; margin:auto}
+.shortcut-buttons-set li .shortcut-button span .button-add{background-position:0 -386px;}
+.shortcut-buttons-set li .shortcut-button span .button-edit{background-position:0 -338px;}
+.shortcut-buttons-set li .shortcut-button span .button-del{background-position:0 -48px;}
+.shortcut-buttons-set li .shortcut-button span .button-gray-add{background-position:-48px -386px;}
+.shortcut-buttons-set li .shortcut-button span .button-gray-edit{background-position:-48px -338px;}
+.shortcut-buttons-set li .shortcut-button span .button-gray-del{background-position:-48px -48px;}
