@@ -153,7 +153,12 @@ public class LLSLocalNIOHandle implements LLSConnection, LLSSendMessage {
 			}
 		}
 	}
-
+	/** 
+	 * @param key
+	 * @param obj
+	 * @param typeReference
+	 * @return
+	 */
 	protected <T extends BasicDomain> T readDataFromSocket(SelectionKey key,
 			Object obj, Class<T> typeReference) {
 		SocketChannel socketChannel = (SocketChannel) key.channel();
@@ -166,7 +171,6 @@ public class LLSLocalNIOHandle implements LLSConnection, LLSSendMessage {
 			socketChannel.read(intBuffer);
 			intBuffer.flip();
 			len = intBuffer.getInt();
-			System.out.println(len);
 			intBuffer.clear();
 			int c = 0;
 			while (c < len) {
@@ -206,7 +210,7 @@ public class LLSLocalNIOHandle implements LLSConnection, LLSSendMessage {
 		return null;
 	}
 
-	ByteBuffer sendbuffer = ByteBuffer.allocateDirect(4096);
-	ByteBuffer readBuffer = ByteBuffer.allocateDirect(4096);
-	ByteBuffer intBuffer = ByteBuffer.allocate(4);
+	private ByteBuffer sendbuffer = ByteBuffer.allocateDirect(4096);
+	private ByteBuffer readBuffer = ByteBuffer.allocateDirect(4096);
+	private ByteBuffer intBuffer = ByteBuffer.allocate(4);
 }

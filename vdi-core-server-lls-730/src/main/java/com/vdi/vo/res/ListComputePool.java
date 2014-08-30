@@ -13,8 +13,9 @@ import java.util.List;
 
 import com.vdi.dao.PageRequest;
 import com.vdi.dao.desktop.domain.ComputePoolEntity;
+import com.vdi.vo.res.ListComputePool.ComputePoolList;
 
-public class ListComputePool {
+public class ListComputePool implements Response<ComputePoolList>{
 	
 	private Header head;
 	

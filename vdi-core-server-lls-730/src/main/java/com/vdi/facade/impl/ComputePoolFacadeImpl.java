@@ -63,19 +63,16 @@ public class ComputePoolFacadeImpl implements ComputePoolFacade {
 
 	@Override
 	public ListComputePool listComputePool(ComputePoolEntity entity) {
+		Header head=new Header();
+		int error=0;
 		ListComputePool res = new ListComputePool();
 		ComputePoolList body=new ComputePoolList();
 		List<ComputePoolEntity> cs =computePoolDao.listRequest(entity);
-		
-		
-		
-		
 		List<ComputePool> cps=computePoolService.listComputePool(new ComputePoolBuild(entity, new ComputePool()).setComputePoolIdentity().setComputePoolName().bulidComputePool());
 		for (ComputePool computePool : cps) {
 			String identity=computePool.getComputePoolIdentity();
 			boolean isEx=false;
 			for (ComputePoolEntity computePoolEntity : cs) {
-				System.out.println(computePoolEntity.getComputepoolidentity());
 				if(!StringUtils.isEmpty(identity)){
 					if(computePoolEntity.getComputepoolidentity().equals(identity)){
 						isEx=true;
@@ -84,6 +81,7 @@ public class ComputePoolFacadeImpl implements ComputePoolFacade {
 					}
 				}	
 			}
+			
 			if(!isEx){
 				ComputePoolEntity e =new ComputePoolBuild(entity, computePool).entity_computePoolIdentity().entity_computepoolname().entity_cpuamount().entity_cpurest().entity_dispatchtype().entity_memoryamount().entity_memoryrest().entity_status().bulidComputePoolEntity();
 				e.setIdcomputepool(null);
@@ -92,6 +90,8 @@ public class ComputePoolFacadeImpl implements ComputePoolFacade {
 			}
 		}
 		body.setList(cs);
+		head.setError(error);
+		res.setHead(head);
 		res.setBody(body);
 		return res;
 	}
