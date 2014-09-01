@@ -76,6 +76,7 @@ public class HostEntity extends PageRequest<HostEntity> implements CacheDomain{
 		this.computePoolEntity = computePoolEntity;
 	}
 	@Override
+	@JsonIgnore
 	public Object getId() {
 		return idhost;
 	}

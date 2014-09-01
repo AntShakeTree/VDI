@@ -6,6 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import com.vdi.common.cache.CacheDomain;
 import com.vdi.dao.Request;
 
@@ -70,6 +72,7 @@ public class Desktop  implements CacheDomain , Request<Desktop>{
 	}
 
 	@Override
+	@JsonIgnore
 	public Object getId() {
 		// TODO Auto-generated method stub
 		return this.getIdesktop();

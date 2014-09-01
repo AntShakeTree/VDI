@@ -122,6 +122,7 @@ public class StorageEntity extends PageRequest<StorageEntity> implements CacheDo
 	public static final int ERROR=Constants.ERROR;
 
 	@Override
+	@JsonIgnore
 	public Object getId() {
 		return this.idstorage;
 	}

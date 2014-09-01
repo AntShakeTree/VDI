@@ -22,6 +22,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
@@ -104,6 +105,7 @@ public class ComputePoolEntity extends PageRequest<ComputePoolEntity> implements
 		this.hosts = hosts;
 	}
 	@Override
+	@JsonIgnore
 	public Object getId() {
 		return this.getIdcomputepool();
 	}

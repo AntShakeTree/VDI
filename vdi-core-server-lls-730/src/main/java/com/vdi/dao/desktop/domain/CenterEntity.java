@@ -6,6 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import com.vdi.common.cache.CacheDomain;
 import com.vdi.dao.PageRequest;
 
@@ -37,6 +39,7 @@ public class CenterEntity extends PageRequest<CenterEntity>  implements CacheDom
 		this.centername = centername;
 	}
 	@Override
+	@JsonIgnore
 	public Object getId() {
 		// 
 		return this.idcenter;

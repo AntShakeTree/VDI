@@ -5,7 +5,7 @@ import java.util.List;
 import com.vdi.dao.desktop.domain.HostEntity;
 
 public class ListHostResponse {
-	private Header head;
+	private Header head=new Header().setError(0);
 	private ListHost body;
 	
 	public Header getHead() {
