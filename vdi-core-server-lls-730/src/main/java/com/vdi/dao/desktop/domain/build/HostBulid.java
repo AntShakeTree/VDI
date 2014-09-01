@@ -1,9 +1,10 @@
-package com.vdi.dao.desktop.domain;
+package com.vdi.dao.desktop.domain.build;
 
 import static org.springframework.util.StringUtils.isEmpty;
 
 import org.springframework.util.Assert;
 
+import com.vdi.dao.desktop.domain.HostEntity;
 import com.vdi.support.desktop.lls.domain.resource.Host;
 
 public class HostBulid {
@@ -17,13 +18,13 @@ public class HostBulid {
 		this.host = host;
 	}
 
-	public HostBulid hostEntity_hostname() {
+	public HostBulid entity_hostname() {
 		if(!isEmpty(host.getHostName())){
 			entity.setHostname(host.getHostName());
 		}
 		return this;
 	}
-	public HostBulid hostEntity_status(){
+	public HostBulid entity_status(){
 		if(!isEmpty(host.getStatus())){
 			switch (host.getStatus()) {
 			case Host.DELETING:
@@ -58,14 +59,14 @@ public class HostBulid {
 	}
 
 	// private String totalmem;∂
-	public HostBulid hostEntity_ipaddress() {
+	public HostBulid entity_address() {
 		if(!isEmpty(host.getAddr())){
-			entity.setIpaddress(host.getAddr());
+			entity.setAddress(host.getAddr());
 		}
 		return this;
 	}
 
-	public HostBulid hostEntity_hostIdentity() {
+	public HostBulid entity_hostIdentity() {
 		if(!isEmpty(host.getHostIdentity())){
 			entity.setHostidentity(host.getHostIdentity());
 		}
@@ -73,19 +74,19 @@ public class HostBulid {
 	}
 
 
-	public HostBulid hostName() {
+	public HostBulid lls_hostName() {
 		if (!isEmpty(entity.getHostname()))
 			host.setHostName(entity.getHostname());
 		return this;
 	}
 
-	public HostBulid ipAddress() {
-		if (!isEmpty(entity.getIpaddress()))
-			host.setAddr(entity.getIpaddress());
+	public HostBulid lls_ipAddress() {
+		if (!isEmpty(entity.getAddress()))
+			host.setAddr(entity.getAddress());
 		return this;
 	}
 
-	public HostBulid computPoolIdentity() {
+	public HostBulid lls_computPoolIdentity() {
 		if (entity.getComputePoolEntity() != null
 				&& isEmpty(entity.getComputePoolEntity()
 						.getComputepoolidentity()))
@@ -94,10 +95,10 @@ public class HostBulid {
 		return this;
 	}
 
-	public Host bulidHost() {
+	public Host BulidLLSDomain() {
 		return this.host;
 	}
-	public HostEntity bulidHostEntity() {
+	public HostEntity bulidEntity() {
 		return this.entity;
 	}
 }

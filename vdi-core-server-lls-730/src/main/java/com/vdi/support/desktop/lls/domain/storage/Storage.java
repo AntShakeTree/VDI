@@ -14,6 +14,7 @@ import com.vdi.support.desktop.lls.domain.storage.attributes.StorageParams;
  *
  */
 public class Storage extends BasicDomain{
+
 	public static  String CREATE_STORAGE_ACTION = "createStorage";
 	public static String UPDATE_STORAGE_ACTION = "updateStorage";
 	public static String DELETE_STORAGE_ACTION = "deleteStorage";
@@ -109,5 +110,12 @@ public class Storage extends BasicDomain{
 	public void setTotalSize(Integer totalSize) {
 		this.totalSize = totalSize;
 	}
+	//status
+	public static final String CREATING = "creating";
+	public static final String AVAILABLE="available";
+	public static final String DELETING="deleting";
+	public static final String MOUNTING="mounting";
+	public static final String UMOUNTING="umounting";
+	public static final String DISCOVING="discoving";
 	
 }

@@ -147,8 +147,8 @@ public class ComputePoolEntity extends PageRequest<ComputePoolEntity> implements
 	public static final int DELETING = Constants.DELETING;
 	public static final int HOSTADDING = 503;
 	public static final int HOSTREMOVEING = 504;
-	public static final int UMOUNTING = 505;
-	public static final int MOUNTING = 506;
+	public static final int UMOUNTING = Constants.UMOUNTING;
+	public static final int MOUNTING = Constants.MOUNTING;
 	public static final int ERROR=Constants.ERROR;
 } 
 	

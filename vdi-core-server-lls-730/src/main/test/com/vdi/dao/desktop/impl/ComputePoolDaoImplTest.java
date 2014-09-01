@@ -24,9 +24,9 @@ import test.config.TestConfig;
 
 import com.vdi.dao.Request;
 import com.vdi.dao.desktop.ComputePoolDao;
-import com.vdi.dao.desktop.domain.ComputePoolBuild;
 import com.vdi.dao.desktop.domain.ComputePoolEntity;
 import com.vdi.dao.desktop.domain.HostEntity;
+import com.vdi.dao.desktop.domain.build.ComputePoolBuild;
 import com.vdi.support.desktop.lls.domain.resource.ComputePool;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -79,7 +79,7 @@ public class ComputePoolDaoImplTest {
 			System.out.println(computePoolEntity.getComputepoolidentity());
 			if(!StringUtils.isEmpty(identity)){
 				if(computePoolEntity.getComputepoolidentity().equals(identity)){
-					computePoolEntity=new ComputePoolBuild(computePoolEntity, computePool).entity_computePoolIdentity().entity_cpuamount().entity_cpurest().entity_dispatchtype().entity_memoryamount().entity_memoryrest().entity_status().bulidComputePoolEntity();
+					computePoolEntity=new ComputePoolBuild(computePoolEntity, computePool).entity_computePoolIdentity().entity_cpuamount().entity_cpurest().entity_dispatchtype().entity_memoryamount().entity_memoryrest().entity_status().bulidEntity();
 					computePoolDao.update(computePoolEntity);
 				}
 			}	

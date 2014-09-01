@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.vdi.dao.desktop.domain.ComputePoolEntity;
 import com.vdi.facade.ComputePoolFacade;
 import com.vdi.vo.req.DeleteComputePool;
+import com.vdi.vo.res.ComputePoolIdReq;
 import com.vdi.vo.res.ComputePoolRes;
 import com.vdi.vo.res.Header;
 import com.vdi.vo.res.JobResponse;
@@ -23,24 +24,24 @@ public class ComputpoolController {
 	
 
 	@RequestMapping(value= "/listComputePool",method=RequestMethod.POST,produces={CONTEXT_TYPE},consumes={CONTEXT_TYPE})
-	@PostAuthorize("hasAuthority('ADMIN')")
+//	@PostAuthorize("hasAuthority('ROLE_ADMIN')")
 	public @ResponseBody ListComputePool listComputePool(ComputePoolEntity pool){
-		//~ 
 		return computePoolFacade.listComputePool(pool);
 	}
 	
 	@RequestMapping(value= "/createComputePool",method=RequestMethod.POST,produces={CONTEXT_TYPE},consumes={CONTEXT_TYPE})
-	@PostAuthorize("hasAuthority('ADMIN')")
+//	@PostAuthorize("hasAuthority('ROLE_ADMIN')")
 	public @ResponseBody JobResponse createComputePool(ComputePoolEntity entity){
 		return computePoolFacade.createComputePool(entity);
 	}
 	@RequestMapping(value="/deleteComputePool",method=RequestMethod.POST)
+//	@PostAuthorize("hasAuthority('ROLE_ADMIN')")
 	public @ResponseBody JobResponse deleteComputePool(DeleteComputePool entity){
 		return computePoolFacade.deleteComputePool(entity);
 	}
 	@RequestMapping(value="/getComputePool",method=RequestMethod.POST)
-	public @ResponseBody ComputePoolRes getComputePool(ComputePoolEntity entity){
+//	@PostAuthorize("hasAuthority('ROLE_ADMIN')")
+	public @ResponseBody ComputePoolRes getComputePool(ComputePoolIdReq entity){
 		return computePoolFacade.getComputPool(entity);
 	}
-	
 }

@@ -18,4 +18,7 @@ public class Constants {
 	public static final int AVAILABLE = 1;
 	public static final int DELETING = 502;
 	public static final int ERROR = 500;
+	public static final int UMOUNTING = 505;
+	public static final int MOUNTING = 506;
+	public static final int RECOVING = 509;
 }

@@ -34,22 +34,24 @@ public class HostEntity extends PageRequest<HostEntity> implements CacheDomain{
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long idhost;
 	private String hostname;
-	private String ipaddress;
+	private String address;
 	private String hostidentity;
 	private Integer status;
-
+	
 	public String getHostidentity() {
 		return hostidentity;
 	}
 	public void setHostidentity(String hostidentity) {
 		this.hostidentity = hostidentity;
 	}
-	public String getIpaddress() {
-		return ipaddress;
+	
+	public String getAddress() {
+		return address;
 	}
-	public void setIpaddress(String ipaddress) {
-		this.ipaddress = ipaddress;
+	public void setAddress(String address) {
+		this.address = address;
 	}
+
 	@JoinColumn(name="computepoolid")
 	@ManyToOne(cascade=CascadeType.ALL,targetEntity=ComputePoolEntity.class,optional=true,fetch=FetchType.EAGER)
 	private ComputePoolEntity computePoolEntity;
@@ -92,9 +94,9 @@ public class HostEntity extends PageRequest<HostEntity> implements CacheDomain{
 	public static final int FREE=Constants.AVAILABLE;
 	public static final int DELETING=Constants.DELETING;
 	public static final int WORK=2;
-	public static final  int DISCON=504;
-	public static final int WORKDIS=503;
-	public static final  int FREEDIS=505;
-	public static final int RECOVING=506;
+	public static final  int DISCON=510;
+	public static final int WORKDIS=507;
+	public static final  int FREEDIS=508;
+	public static final int RECOVING=Constants.RECOVING;
 	public static final int ERROR=Constants.ERROR;
 }
