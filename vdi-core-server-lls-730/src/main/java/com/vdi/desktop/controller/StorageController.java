@@ -17,11 +17,11 @@ import com.vdi.vo.res.StorageResponse;
 @Controller 
 public class StorageController {
 	private @Autowired StorageFacad storageFacad;
-	@RequestMapping(value="/listStorage",method=RequestMethod.POST,produces={CONTEXT_TYPE})
+	@RequestMapping(value="/listStorages",method=RequestMethod.POST,produces={CONTEXT_TYPE},consumes={CONTEXT_TYPE})
 	public @ResponseBody ListStorage listStorage(StorageEntity entity){
 		return storageFacad.listStorage(entity);
 	}
-	@RequestMapping(value="/getStorage",method=RequestMethod.POST,produces={CONTEXT_TYPE})
+	@RequestMapping(value="/getStorage",method=RequestMethod.POST,produces={CONTEXT_TYPE},consumes={CONTEXT_TYPE})
 	public StorageResponse getStorage(StorageIdReq req){
 		return storageFacad.getStorage(req);
 	}

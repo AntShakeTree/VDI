@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.vdi.dao.desktop.StorageDao;
 import com.vdi.dao.desktop.domain.StorageEntity;
+import com.vdi.dao.desktop.domain.build.StorageBuild;
 import com.vdi.facade.StorageFacad;
+import com.vdi.support.desktop.lls.domain.storage.Storage;
 import com.vdi.support.desktop.lls.services.StorageService;
 import com.vdi.vo.req.StorageIdReq;
 import com.vdi.vo.res.Header;
@@ -34,7 +36,25 @@ public class StorageFacadImpl implements StorageFacad {
 	}
 	@Override
 	public StorageResponse getStorage(StorageIdReq req) {
-		// TODO Auto-generated method stub
-		return null;
+		StorageResponse response =new StorageResponse();
+		Header head=new Header();
+		head.setError(0);
+		response.setHead(head);
+		StorageEntity entity = storageDao.get(StorageEntity.class, req.getStorageid());
+		if(entity==null){
+			return response;
+		}
+		
+		String identity  =entity.getStorageidentity();
+		
+		Storage storage= storageService.getStorage(identity);
+		if(storage==null){
+			entity.setStatus(StorageEntity.ERROR);	
+			return response;
+		}else{
+			entity=new StorageBuild(entity, storage).entity_address().entity_free().entity_path().entity_storageidentity().entity_storagename().entity_totalize().entity_status().buildEntity();
+		}
+		
+		return response;
 	}
 }

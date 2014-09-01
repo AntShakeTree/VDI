@@ -84,16 +84,16 @@ public class WSClientService {
 		ConfigUtil.loadConfigFileByPath("/test.properties");
 		String url=ConfigUtil.getCustomKey("url");
 		System.out.println(url);
-		HttpPost get = new HttpPost(url);
+		HttpPost post = new HttpPost(url);
 		Map<String, String> paramterStr = new HashMap<String, String>();
-//		paramterStr.put("Content-Type", "applicationopzoon-v4+json");
-		//paramterStr.put("Content-Type", "application/json;charset=utf-8");
-		
-
-		HttpResponse res = httpClient.execute(get);
+		paramterStr.put("Content-Type", "application/json");
+		addHeader(post, paramterStr);
+		String param=ConfigUtil.getKey("no.role.param");
+		post.setEntity(new StringEntity(param,Charset.forName("UTF-8")));
+		HttpResponse res = httpClient.execute(post);
 		HttpEntity entity2 = res.getEntity();
 		System.out.println(EntityUtils.toString(entity2));
-		get.abort();
+		post.abort();
 		httpClient.getConnectionManager().shutdown();
 	}
 

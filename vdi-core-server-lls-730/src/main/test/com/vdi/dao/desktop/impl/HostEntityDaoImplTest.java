@@ -11,12 +11,15 @@ package com.vdi.dao.desktop.impl;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.vdi.dao.Request;
 import com.vdi.dao.desktop.HostDao;
 import com.vdi.dao.desktop.domain.HostEntity;
 
@@ -28,8 +31,11 @@ public class HostEntityDaoImplTest {
 	
 	@Test
 	public void testSave() {
-		HostEntity hostEntity =new HostEntity();
-//		hostDao.save();
+		List<HostEntity> hs = hostDao.listRequest(new Request<HostEntity>() {
+		});
+		for (HostEntity hostEntity : hs) {
+			hostDao.delete(hostEntity);
+		}
 	}
 
 }

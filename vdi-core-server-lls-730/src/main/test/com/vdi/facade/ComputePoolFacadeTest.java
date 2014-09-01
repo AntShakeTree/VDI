@@ -65,17 +65,17 @@ public class ComputePoolFacadeTest {
 	
 	@Test
 	public void testListCs(){
-		for (int i=0;i<1000;i++) {
 			try {
 				ComputePoolEntity entity=new ComputePoolEntity();
 				entity.setAmount(10);
 				entity.setPage(1);
 				entity.setPagesize(10);
 				ListComputePool es =computePoolFacade.listComputePool(entity);
+				System.out.println(ParseJSON.toJson(es));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}
+	
 		}	
 	
 	public static void main(String[] args) {

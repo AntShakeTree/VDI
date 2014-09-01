@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.vdi.dao.desktop.domain.ComputePoolEntity;
 import com.vdi.facade.ComputePoolFacade;
+import com.vdi.vo.req.ComputePoolIdReq;
 import com.vdi.vo.req.DeleteComputePool;
-import com.vdi.vo.res.ComputePoolIdReq;
 import com.vdi.vo.res.ComputePoolRes;
 import com.vdi.vo.res.Header;
 import com.vdi.vo.res.JobResponse;
@@ -23,7 +23,7 @@ public class ComputpoolController {
 	private static final String CONTEXT_TYPE = "application/json";
 	
 
-	@RequestMapping(value= "/listComputePool",method=RequestMethod.POST,produces={CONTEXT_TYPE},consumes={CONTEXT_TYPE})
+	@RequestMapping(value= "/listComputePools",method=RequestMethod.POST,produces={CONTEXT_TYPE},consumes={CONTEXT_TYPE})
 //	@PostAuthorize("hasAuthority('ROLE_ADMIN')")
 	public @ResponseBody ListComputePool listComputePool(ComputePoolEntity pool){
 		return computePoolFacade.listComputePool(pool);

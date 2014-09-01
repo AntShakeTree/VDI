@@ -32,7 +32,7 @@ public class StorageEntity extends PageRequest<StorageEntity> implements CacheDo
 //	@ManyToMany(cascade = CascadeType.REFRESH,fetch=FetchType.EAGER)  
 //	@JoinTable(name = "storage_host", inverseJoinColumns = @JoinColumn(name = "hostid"), joinColumns = @JoinColumn(name = "storageid"))  	
 //	private List<HostEntity> hosts;
-	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name = "hostid")
 	private HostEntity host;
 	private String address;

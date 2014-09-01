@@ -1,4 +1,4 @@
-package com.vdi.vo.res;
+package com.vdi.vo.req;
 
 import com.vdi.dao.Request;
 import com.vdi.dao.desktop.domain.ComputePoolEntity;

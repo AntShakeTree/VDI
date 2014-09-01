@@ -3,7 +3,6 @@ package com.opzoon.vdi.core.daemon;
 import org.apache.log4j.Logger;
 import org.springframework.scheduling.annotation.Scheduled;
 
-import com.opzoon.ohvc.service.VdiAgentClientImpl;
 import com.opzoon.vdi.core.facade.UserFacade;
 
 /**

@@ -17,12 +17,12 @@ import static com.vdi.controller.BaseController.CONTEXT_TYPE;
 public class HostController {
 	public @Autowired HostFacad hostFacad;
 	
-	@RequestMapping(value="/listHost",method=RequestMethod.POST,produces={CONTEXT_TYPE})
+	@RequestMapping(value="/listHosts",method=RequestMethod.POST,produces={CONTEXT_TYPE},consumes={CONTEXT_TYPE})
 	@ResponseBody
-	public ListHostResponse listHost(HostEntity entity){
+	public ListHostResponse listHosts(HostEntity entity){
 		return	hostFacad.listHost(entity);
 	}
-	@RequestMapping(value="/getHost",method=RequestMethod.POST,produces={CONTEXT_TYPE})
+	@RequestMapping(value="/getHost",method=RequestMethod.POST,produces={CONTEXT_TYPE},consumes={CONTEXT_TYPE})
 	@ResponseBody
 	HostResponse getHost(HostIdReq req){
 		return	hostFacad.getHost(req);

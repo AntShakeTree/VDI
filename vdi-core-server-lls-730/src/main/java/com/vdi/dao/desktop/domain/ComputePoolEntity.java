@@ -35,7 +35,7 @@ import com.vdi.dao.annotation.VDIDaoHelper.IgnoreValue;
 @Entity
 @Table(name="computepool")
 @JsonSerialize(include=Inclusion.NON_DEFAULT)
-@JsonIgnoreProperties({"taskid","computePoolIdentity"})
+@JsonIgnoreProperties({"taskid","computepoolidentity"})
 public class ComputePoolEntity extends PageRequest<ComputePoolEntity> implements CacheDomain{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -51,7 +51,7 @@ public class ComputePoolEntity extends PageRequest<ComputePoolEntity> implements
 	private String note;
 	private String computepoolidentity;
 	private Integer status;
-	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true,targetEntity=HostEntity.class,fetch=FetchType.EAGER)
+	@OneToMany(cascade=CascadeType.ALL,targetEntity=HostEntity.class,mappedBy="computePoolEntity",fetch=FetchType.EAGER)
 	private List<HostEntity> hosts;
 	
 	
@@ -145,8 +145,8 @@ public class ComputePoolEntity extends PageRequest<ComputePoolEntity> implements
 	public static final int CREATING = Constants.CREATING;
 	public static final int AVAILABLE = Constants.AVAILABLE;
 	public static final int DELETING = Constants.DELETING;
-	public static final int HOSTADDING = 503;
-	public static final int HOSTREMOVEING = 504;
+	public static final int HOSTADDING = 3;
+	public static final int HOSTREMOVEING = 4;
 	public static final int UMOUNTING = Constants.UMOUNTING;
 	public static final int MOUNTING = Constants.MOUNTING;
 	public static final int ERROR=Constants.ERROR;

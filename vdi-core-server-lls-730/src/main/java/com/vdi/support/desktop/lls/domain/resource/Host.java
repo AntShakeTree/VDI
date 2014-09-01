@@ -23,17 +23,34 @@ public class Host extends BasicDomain {
 	private String role;
 	private CpuInfo cpuInfo;
 	private String hostName;
-	
+	private Integer localFree;
 	private String hostIdentity;
 	private String status;
 	private long totalMem;
 	private int cpuCoreNum;
+	private Integer localTotalSize;
 	@JsonIgnore
 	private Integer _userId;
 	@JsonIgnore
 	private boolean _isDisconnected;
 	public long getTotalMem() {
 		return totalMem;
+	}
+
+	public Integer getLocalFree() {
+		return localFree;
+	}
+	
+	public Integer getLocalTotalSize() {
+		return localTotalSize;
+	}
+
+	public void setLocalTotalSize(Integer localTotalSize) {
+		this.localTotalSize = localTotalSize;
+	}
+
+	public void setLocalFree(Integer localFree) {
+		this.localFree = localFree;
 	}
 
 	public boolean is_isDisconnected() {

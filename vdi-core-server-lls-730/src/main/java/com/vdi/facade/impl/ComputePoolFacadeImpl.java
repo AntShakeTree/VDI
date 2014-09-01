@@ -28,8 +28,8 @@ import com.vdi.service.desktop.DeleteComputePoolTask;
 import com.vdi.support.desktop.lls.domain.resource.ComputePool;
 import com.vdi.support.desktop.lls.services.AsynchronousComputePoolService;
 import com.vdi.support.desktop.lls.services.ComputePoolService;
+import com.vdi.vo.req.ComputePoolIdReq;
 import com.vdi.vo.req.DeleteComputePool;
-import com.vdi.vo.res.ComputePoolIdReq;
 import com.vdi.vo.res.ComputePoolRes;
 import com.vdi.vo.res.Header;
 import com.vdi.vo.res.Job;
@@ -73,6 +73,7 @@ public class ComputePoolFacadeImpl implements ComputePoolFacade {
 		head.setError(error);
 		res.setHead(head);
 		res.setBody(body);
+		res.setPage(entity);
 		return res;
 	}
 

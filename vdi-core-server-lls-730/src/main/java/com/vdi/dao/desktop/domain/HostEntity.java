@@ -19,7 +19,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonBackReference;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonManagedReference;
 
 import com.vdi.common.Constants;
 import com.vdi.common.cache.CacheDomain;
@@ -28,16 +31,21 @@ import com.vdi.dao.Request;
 
 @Entity
 @Table(name="host")
-@JsonIgnoreProperties(value={"hostIdentity"})
+@JsonIgnoreProperties(value={"hostidentity"})
 public class HostEntity extends PageRequest<HostEntity> implements CacheDomain{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long idhost;
 	private String hostname;
 	private String address;
+	@JsonIgnore
 	private String hostidentity;
 	private Integer status;
-	
+
+	@ManyToOne
+	@JoinColumn(name="computepoolid")
+	@JsonIgnore
+	private ComputePoolEntity computePoolEntity;
 	public String getHostidentity() {
 		return hostidentity;
 	}
@@ -52,9 +60,7 @@ public class HostEntity extends PageRequest<HostEntity> implements CacheDomain{
 		this.address = address;
 	}
 
-	@JoinColumn(name="computepoolid")
-	@ManyToOne(cascade=CascadeType.ALL,targetEntity=ComputePoolEntity.class,optional=true,fetch=FetchType.EAGER)
-	private ComputePoolEntity computePoolEntity;
+
 	public Long getIdhost() {
 		return idhost;
 	}

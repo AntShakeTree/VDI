@@ -18,8 +18,8 @@ public class LoginInfo implements Serializable {
 	private String source;
 	private List<AuthenticationMethodParamValue> params;
 	// FIXME delete it.
-  private int domainid;
-  private String domainguid;
+	private int domainid;
+	private String domainguid;
 	private int logintype;
 	
 	public String getSource() {
