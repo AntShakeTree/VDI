@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 14-7-25.
  */
-var rootApp = angular.module('rootApp', ['ngAnimate', 'ngRoute', 'buttonGroup', 'ui.bootstrap', 'ngTouch']);
+var rootApp = angular.module('rootApp', ['ngAnimate', 'ngRoute', 'buttonGroup', 'ui.bootstrap', 'anTable']);
 rootApp.controller('rootCtrl', function($scope, $modal, $log) {
     $scope.root = {
         createModal : function(modalConfig) {
