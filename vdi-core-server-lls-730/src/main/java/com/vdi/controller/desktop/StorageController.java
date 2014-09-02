@@ -1,4 +1,4 @@
-package com.vdi.desktop.controller;
+package com.vdi.controller.desktop;
 
 import static com.vdi.controller.BaseController.CONTEXT_TYPE;
 

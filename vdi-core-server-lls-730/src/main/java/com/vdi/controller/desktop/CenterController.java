@@ -1,4 +1,4 @@
-package com.vdi.desktop.controller;
+package com.vdi.controller.desktop;
 
 import java.util.ArrayList;
 import java.util.List;

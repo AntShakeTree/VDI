@@ -1,4 +1,4 @@
-package com.vdi.user.controller;
+package com.vdi.controller.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,7 +23,7 @@ import com.vdi.vo.res.LoginResponse;
  */
 import static com.vdi.controller.BaseController.CONTEXT_TYPE;
 @Controller
-public class UserController {
+public class EntraceController {
 //	public 
 	private @Autowired EntranceFacad enterFacad;
 	@RequestMapping(value= "/loginSession",method=RequestMethod.POST,produces={CONTEXT_TYPE},consumes={CONTEXT_TYPE})
