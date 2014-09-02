@@ -22,13 +22,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.vdi.common.cache.CacheDomain;
+import com.vdi.dao.PageRequest;
 import com.vdi.dao.Request;
 
 /**
@@ -38,7 +43,8 @@ import com.vdi.dao.Request;
  * @date 2013-2-2 上午12:33:22
  */
 @Entity
-public class User implements UserDetails,CacheDomain,Request<User> {
+@JsonSerialize(include=Inclusion.NON_DEFAULT)
+public class User extends PageRequest<User> implements UserDetails,CacheDomain{
 	/**
 	 * @Fields serialVersionUID
 	 */
@@ -51,15 +57,15 @@ public class User implements UserDetails,CacheDomain,Request<User> {
 	private boolean enabled = true;
 	private String realname;
 	@ManyToMany(cascade=CascadeType.REFRESH,targetEntity=DeliveryGroup.class,mappedBy="users")
-	private Set<DeliveryGroup> groups=new HashSet<DeliveryGroup>();
+	private Set<DeliveryGroup> groups;
 	private String mobile;
 	private String email;
-	@OneToOne(optional=true,fetch=FetchType.LAZY,targetEntity=Domain.class,cascade=CascadeType.ALL)
+	@ManyToOne(fetch=FetchType.LAZY,targetEntity=Domain.class,cascade=CascadeType.MERGE)
 	@JoinColumn(name="domainguid")
 	private Domain domain;
-	@ManyToMany(cascade = { CascadeType.ALL }, targetEntity = Role.class, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = { CascadeType.MERGE,CascadeType.REFRESH }, targetEntity = Role.class, fetch = FetchType.EAGER)
 	@JoinTable(name = "userroles", inverseJoinColumns = @JoinColumn(name = "userid"), joinColumns = @JoinColumn(name = "roleid"))
-	private Set<Role> roles = new HashSet<Role>();
+	private Set<Role> roles;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "organizationid")////这里设置JoinColum设置了外键的名字，并且organization是关系维护端 
 	private Organization organization;
@@ -206,6 +212,7 @@ public class User implements UserDetails,CacheDomain,Request<User> {
 
 	@Override
 	@Transient
+	@JsonIgnore
 	public Object getId() {
 		return this.getIduser();
 	}

@@ -9,13 +9,26 @@
 
 package com.vdi.dao.user.domain;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
+
+import com.vdi.common.cache.CacheDomain;
+import com.vdi.dao.PageRequest;
 @Entity
-public class Domain {
+@JsonSerialize(include=Inclusion.NON_DEFAULT)
+public class Domain extends PageRequest<Domain> implements CacheDomain{
 	@Id
 	private String guid;
-	private String domainname="";
+	private String domainname;
 
 	private static final long serialVersionUID = 1L;
 
@@ -62,6 +75,16 @@ public class Domain {
 	private String domainbindpass;
 	private String notes;
 	private int status;
+	@JsonIgnore
+	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.REMOVE,mappedBy="domain")
+	private List<User> users;
+	
+	public List<User> getUsers() {
+		return users;
+	}
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
 	public String getGuid() {
 		return guid;
 	}
@@ -124,6 +147,11 @@ public class Domain {
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+	@Override
+	@JsonIgnore
+	public Object getId() {
+		return this.getGuid();
 	}
 	
 }

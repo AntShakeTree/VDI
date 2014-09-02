@@ -48,7 +48,7 @@ public class Role  implements GrantedAuthority,CacheDomain,Request<Role>{
 	
 	
 	@ManyToMany(cascade={CascadeType.ALL},targetEntity=User.class,fetch=FetchType.EAGER)
-	private Set<User> users=new HashSet<User>();
+	private Set<User> users;
 
 	public Integer getIdrole() {
 		return idrole;

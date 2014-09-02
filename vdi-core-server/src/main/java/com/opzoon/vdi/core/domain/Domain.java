@@ -7,11 +7,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.springframework.web.bind.annotation.ResponseBody;
+
 /**
  * 系统支持的域, 系统默认存在一个ID为0的本地域.
  */
 @Entity
-public class Domain implements Serializable {
+public class Domain  implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

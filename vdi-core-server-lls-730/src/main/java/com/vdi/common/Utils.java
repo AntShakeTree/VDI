@@ -4,10 +4,13 @@ import java.math.BigInteger;
 import java.net.InetAddress;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Utils {
+	
+	
 	public static String MD5(String md5Str) {
 		MessageDigest md5;
 		StringBuffer sb = new StringBuffer();
@@ -64,5 +67,9 @@ public class Utils {
 		Pattern pattern = Pattern.compile(regular);
 		Matcher matcher = pattern.matcher(value); // 娴犮儵鐛欑拠锟�7.400.600.2娑撹桨绶�
 		return matcher.matches();
+	}
+
+	public static String generalTicket() {
+		return (UUID.randomUUID()+""+UUID.randomUUID()).replace("-", "");
 	}
 }

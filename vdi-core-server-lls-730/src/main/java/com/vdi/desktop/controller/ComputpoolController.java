@@ -2,6 +2,7 @@ package com.vdi.desktop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,13 +25,13 @@ public class ComputpoolController {
 	
 
 	@RequestMapping(value= "/listComputePools",method=RequestMethod.POST,produces={CONTEXT_TYPE},consumes={CONTEXT_TYPE})
-//	@PostAuthorize("hasAuthority('ROLE_ADMIN')")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public @ResponseBody ListComputePool listComputePool(ComputePoolEntity pool){
 		return computePoolFacade.listComputePool(pool);
 	}
 	
 	@RequestMapping(value= "/createComputePool",method=RequestMethod.POST,produces={CONTEXT_TYPE},consumes={CONTEXT_TYPE})
-//	@PostAuthorize("hasAuthority('ROLE_ADMIN')")
+//	@PostAuthorize("hasAuthority('ADMIN')")
 	public @ResponseBody JobResponse createComputePool(ComputePoolEntity entity){
 		return computePoolFacade.createComputePool(entity);
 	}

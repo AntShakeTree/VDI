@@ -1,29 +1,39 @@
 package com.vdi.user.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.vdi.facade.EnterFacade;
+import com.vdi.facade.EntranceFacad;
 import com.vdi.vo.req.LoginInfo;
 import com.vdi.vo.req.NullResponse;
+import com.vdi.vo.req.TicketReq;
+import com.vdi.vo.res.Header;
 import com.vdi.vo.res.LoginResponse;
+
+
 
 /**
  * 
  * @author ant_shake_tree
  *
  */
+import static com.vdi.controller.BaseController.CONTEXT_TYPE;
 @Controller
 public class UserController {
 //	public 
-	private EnterFacade enterFacad;
-	
-	public LoginResponse loginSession(LoginInfo loginInfo) {
+	private @Autowired EntranceFacad enterFacad;
+	@RequestMapping(value= "/loginSession",method=RequestMethod.POST,produces={CONTEXT_TYPE},consumes={CONTEXT_TYPE})
+	public @ResponseBody LoginResponse loginSession(@RequestBody LoginInfo loginInfo) {
 		
-		return null;
+		return enterFacad.loginSession(loginInfo);
 	}
 	
-
-	public NullResponse logoutSession() {
-		return null;
+	@RequestMapping(value= "/logoutSession",method=RequestMethod.POST,produces={CONTEXT_TYPE},consumes={CONTEXT_TYPE})
+	public @ResponseBody Header logoutSession(@RequestBody TicketReq req) {
+		return enterFacad.logoutSession(req);
 	}
 }
