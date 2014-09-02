@@ -10,3 +10,7 @@
 .shortcut-buttons-set li .shortcut-button span .button-gray-add{background-position:-48px -386px;}
 .shortcut-buttons-set li .shortcut-button span .button-gray-edit{background-position:-48px -338px;}
 .shortcut-buttons-set li .shortcut-button span .button-gray-del{background-position:-48px -48px;}
+.today-cost-ul{padding:10px 2px 8px 18px;list-style-type:none;line-height:1;}
+.today-cost-ul li{padding:0 15px 10px 15px;text-align:right;}
+.today-cost-ul li .today-cost-green{color:#76B700;font-size:18px;}
+.today-cost-ul li .today-cost-darkOrange{color:#F7713B;font-size:18px;}

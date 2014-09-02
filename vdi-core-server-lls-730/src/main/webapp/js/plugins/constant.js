@@ -18,5 +18,9 @@ STATIC_PAGE = {
 		TEMPLATE : {
 			NAME : "/template",
 			URL : "view/template/view.html"
+		},
+		CENTER : {
+			NAME : "/center",
+			URL : "view/center/view.html"
 		}
 };

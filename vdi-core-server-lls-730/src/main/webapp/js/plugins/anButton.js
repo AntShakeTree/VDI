@@ -16,7 +16,7 @@ var buttonGroup = angular.module('buttonGroup', []);
     })
     .directive('anButtons', function() {
         return {
-            template : '<li>'
+            template : '<li class="head-content">'
             +			'<a class="shortcut-button" id={{button.id}} ng-click="button.click()" href="javascript:void(0)">'
             +				'<span>'
             +					'<div class={{button.cls}} />'
