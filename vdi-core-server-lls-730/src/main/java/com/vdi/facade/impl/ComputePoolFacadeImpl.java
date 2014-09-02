@@ -124,11 +124,4 @@ public class ComputePoolFacadeImpl implements ComputePoolFacade {
 		return res;
 	}
 
-	@Override
-	@Transactional
-	public void testSave(List<ComputePoolEntity> es) {
-		for (ComputePoolEntity computePoolEntity : es) {
-			computePoolDao.save(computePoolEntity);
-		}
-	}
 }

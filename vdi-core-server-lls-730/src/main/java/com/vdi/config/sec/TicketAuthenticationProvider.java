@@ -8,6 +8,7 @@
  */
 package com.vdi.config.sec;
 
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -23,6 +24,7 @@ import com.vdi.common.Session;
 import com.vdi.dao.user.RoleDao;
 import com.vdi.dao.user.domain.Role;
 import com.vdi.dao.user.domain.User;
+import com.vdi.dao.user.domain.bulid.RoleBuild;
 import com.vdi.service.user.SessionService;
 import com.vdi.service.user.UserService;
 
@@ -62,10 +64,13 @@ public class TicketAuthenticationProvider implements AuthenticationProvider {
 		Set<Role> rs = user.getRoles();
 		
 		for(Role role:user.getRoles()){
-			if(role.getParent()!=0){
-				Role father =roleDao.get(Role.class,role.getParent());
-				rs.add(father);	
+			if(role.getParent()==0){
+				List<Role> rssons=this.roleDao.listRequest(new RoleBuild().parent(role.getIdrole()).bulidEntity());
+				rs.addAll(rssons);	
 			}
+		}
+		for (Role role : rs) {
+			System.out.println(role.getAuthority());
 		}
 		user.setRoles(rs);
 		//获得所有权限

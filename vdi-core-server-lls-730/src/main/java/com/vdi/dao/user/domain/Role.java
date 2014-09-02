@@ -23,6 +23,7 @@ import javax.persistence.Transient;
 import org.springframework.security.core.GrantedAuthority;
 
 import com.vdi.common.cache.CacheDomain;
+import com.vdi.dao.PageRequest;
 import com.vdi.dao.Request;
 
 /**
@@ -32,7 +33,7 @@ import com.vdi.dao.Request;
  * @date 2013-2-3 上午1:07:59
  */
 @Entity
-public class Role  implements GrantedAuthority,CacheDomain,Request<Role>{
+public class Role extends PageRequest<Role> implements GrantedAuthority,CacheDomain{
 	/**
 	 * serialVersionUID:
 	 * @since JDK 1.7

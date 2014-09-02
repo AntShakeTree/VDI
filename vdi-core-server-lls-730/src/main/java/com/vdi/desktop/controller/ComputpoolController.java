@@ -25,13 +25,12 @@ public class ComputpoolController {
 	
 
 	@RequestMapping(value= "/listComputePools",method=RequestMethod.POST,produces={CONTEXT_TYPE},consumes={CONTEXT_TYPE})
-	@PreAuthorize("hasAuthority('ADMIN')")
 	public @ResponseBody ListComputePool listComputePool(ComputePoolEntity pool){
 		return computePoolFacade.listComputePool(pool);
 	}
 	
 	@RequestMapping(value= "/createComputePool",method=RequestMethod.POST,produces={CONTEXT_TYPE},consumes={CONTEXT_TYPE})
-//	@PostAuthorize("hasAuthority('ADMIN')")
+//	@PostAuthorize("hasAuthority('ROLE_ADMIN')")
 	public @ResponseBody JobResponse createComputePool(ComputePoolEntity entity){
 		return computePoolFacade.createComputePool(entity);
 	}

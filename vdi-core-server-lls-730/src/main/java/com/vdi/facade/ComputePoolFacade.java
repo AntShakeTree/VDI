@@ -11,6 +11,8 @@ package com.vdi.facade;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
+
 import com.vdi.dao.desktop.domain.ComputePoolEntity;
 import com.vdi.vo.req.ComputePoolIdReq;
 import com.vdi.vo.req.DeleteComputePool;
@@ -22,15 +24,14 @@ import com.vdi.vo.res.ListComputePool;
 public interface ComputePoolFacade {
 
 	JobResponse createComputePool(ComputePoolEntity entity);
-	
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	ListComputePool listComputePool(ComputePoolEntity entity);
-	
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	Header updateComputePool(ComputePoolEntity entity);
-	
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public JobResponse deleteComputePool(DeleteComputePool entity);
-	
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public ComputePoolRes getComputPool(ComputePoolIdReq entity);
 	
-	public void testSave(List<ComputePoolEntity> es);
 	
 }

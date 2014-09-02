@@ -70,6 +70,6 @@ public class Utils {
 	}
 
 	public static String generalTicket() {
-		return (UUID.randomUUID()+""+UUID.randomUUID()).replace("-", "");
+		return (UUID.randomUUID()+"").replace("-", "");
 	}
 }

@@ -17,11 +17,13 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.junit.Test;
 
 import sun.misc.BASE64Encoder;
 
@@ -43,10 +45,10 @@ public class WSClientService {
 		WSClientService clientService = new WSClientService();
 		
 		ConfigUtil.loadConfigFileByPath("/test.properties");
-//		testWS(ConfigUtil.getCustomKey("listCenters"), "{}");
-		testGetWS();
-	clientService.testRole(ConfigUtil.getCustomKey("ticket"));
-		//clientService.login();
+//		testWS(ConfigUtil.getCustomKey("funcation"), "{}");
+//		testGetWS();
+		clientService.testRole(ConfigUtil.getCustomKey("funcation"),ConfigUtil.getCustomKey("ticket"),ConfigUtil.getCustomKey("req"));
+//		clientService.login(ConfigUtil.getCustomKey("login.url"));
 	}
 
 	public static void addHeader(HttpRequestBase method, Map<String, String> paramterStr) {
@@ -83,31 +85,30 @@ public class WSClientService {
 		ConfigUtil.loadConfigFileByPath("/test.properties");
 		String url=ConfigUtil.getCustomKey("url");
 		System.out.println(url);
-		HttpPost post = new HttpPost("http://localhost:8080/vdi-core-server/services/listCenters");
+		HttpPost get = new HttpPost(url);
 		Map<String, String> paramterStr = new HashMap<String, String>();
-		paramterStr.put("Content-Type", "application/json");
-		addHeader(post, paramterStr);
-		String param=ConfigUtil.getKey("req");
-		post.setEntity(new StringEntity(param,Charset.forName("UTF-8")));
-		HttpResponse res = httpClient.execute(post);
+//		paramterStr.put("Content-Type", "applicationopzoon-v4+json");
+		//paramterStr.put("Content-Type", "application/json;charset=utf-8");
+		
+
+		HttpResponse res = httpClient.execute(get);
 		HttpEntity entity2 = res.getEntity();
 		System.out.println(EntityUtils.toString(entity2));
-		post.abort();
+		get.abort();
 		httpClient.getConnectionManager().shutdown();
 	}
 
-	public void login() throws IOException {
+	public void login(String url) throws IOException {
 		ConfigUtil.loadConfigFileByPath("/test.properties");
 		HttpClient httpClient = new DefaultHttpClient();
-		HttpPost post = new HttpPost("http://localhost:8080/vdi-core-server/services/listCenters");
+		HttpPost post = new HttpPost(url);
 		// HttpGet get = new HttpGet(url);
 		try {
 			Map<String, String> paramterStr = new HashMap<String, String>();
 			paramterStr.put("Content-Type", "application/json");
 			addHeader(post, paramterStr);
 			System.out.println(ConfigUtil.getCustomKey("login.req"));
-//			String param=ConfigUtil.getCustomKey("login.req");
-			String param=ConfigUtil.getCustomKey("req");
+			String param=ConfigUtil.getCustomKey("login.req");
 			post.setEntity(new StringEntity(param,Charset.forName("UTF-8")));
 			HttpResponse response = httpClient.execute(post);
 			HttpEntity entity = response.getEntity();
@@ -120,17 +121,17 @@ public class WSClientService {
 
 	}
 
-	public void testRole( String ticket) throws IOException {
+	public void testRole(String string, String ticket,String data) throws IOException {
 		ConfigUtil.loadConfigFileByPath("/test.properties");
 		HttpClient httpClient = new DefaultHttpClient();
-		 HttpPost post = new HttpPost("http://localhost:8080/vdi-core-server/services/listCenters");
+		 HttpPost post = new HttpPost(ConfigUtil.getCustomKey("url")+string);
 		try {
 			String token = "Basic " + (new BASE64Encoder()).encode( (ticket + ":").getBytes() );
 			Map<String, String> paramterStr = new HashMap<String, String>();
 			paramterStr.put("Content-Type", "application/json");
 			paramterStr.put("Authorization", token);
 			addHeader(post, paramterStr);
-			post.setEntity(new StringEntity("{}"));
+			post.setEntity(new StringEntity(data));
 			HttpResponse response = httpClient.execute(post);
 			HttpEntity entity = response.getEntity();
 			System.out.println(EntityUtils.toString(entity));
@@ -144,7 +145,7 @@ public class WSClientService {
 
 //	public void reg() throws IOException {
 //		ConfigUtil.load("/test.properties");
-//		HttpClient httpClient = new DefaultHttpClientR();
+//		HttpClient httpClient = new DefaultHttpClient();
 //		String fun = ConfigUtil.getBykey("reg");
 //		HttpPost post = new HttpPost(url+fun);
 //		// HttpGet get = new HttpGet(url);
@@ -194,5 +195,11 @@ public class WSClientService {
 //		}
 //
 //	}
+
+	@Test
+	public void testGetU() throws ClientProtocolException, IOException{
+			ConfigUtil.loadConfigFileByPath("/test.properties");
+			testWS(ConfigUtil.getCustomKey("funcation"), "{}");
+	}
 
 }
