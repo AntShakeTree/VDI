@@ -678,11 +678,17 @@
 
 rootApp.controller('computingpool.ctrl', function($scope) {
     var add = function() {
-        $scope.root.createModal({
-            templateUrl : "template/computingpool/create.html",
-            size : "",
-            width : "600px"
-        });
+        $scope.modalConfig = {
+                type : "dialog",
+                title : "修改个人设置",
+                template : "view/computingpool/create.html",
+                width : "600px",
+                buttons : {
+                	ok : function() {},
+                	cancel : function() {}
+                }
+            };
+        $scope。root.createModal(modalConfig);
     };
     var edit = function() {
         return null;
@@ -690,14 +696,14 @@ rootApp.controller('computingpool.ctrl', function($scope) {
     var del = function() {
         return null;
     };
-    //数据模型
+    // 数据模型
     $scope.computingpoolmodel = {
-        //按钮组
+        // 按钮组
         buttonGroup : [{'id' : 'add', 'cls' : 'button-add', 'val' : '创建', 'click' : add},
                         {'id' : 'edit', 'cls' : 'button-edit', 'val' : '修改', 'click' : edit},
                         {'id' : 'delete', 'cls' : 'button-del', 'val' : '删除', 'click' : del}]
     };
-    //计算池列表假数据
+    // 计算池列表假数据
     $scope.tableData = [{
     	id : "1",
     	name : "default",
