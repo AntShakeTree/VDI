@@ -1,36 +1,8 @@
-<style type="text/css" xmlns="http://www.w3.org/1999/html">
-    .modal-header-self {
-        border-radius: 6px 6px 0 0;
-        border-bottom-color: #ccc;
-        background: #e5e5e5 url('images/bg-content-box.gif') top left repeat-x;
-    }
-    .modal-footer-self {
-        border-top-color: #ccc;
-    }
-    .btn-primary-self {
-        background-color: #57a000;
-        border-color: #459300;
-    }
-    .btn-primary-self:hover {
-        background-color: #469400;
-        border-color: #459300;
-    }
-    .btn-warning-self {
-        background-color: #d5d5d5;
-        border-color: #adadad;
-        color: #000000;
-    }
-    .btn-warning-self:hover {
-        background-color: #c0c0c0;
-        border-color: #adadad;
-        color: #000000;
-    }
-</style>
 <div class="modal-header modal-header-self">
     <h3 class="modal-title">{{modal.title}}</h3>
 </div>
 <div class="modal-body" ng-include="modal.template"></div>
 <div class="modal-footer modal-footer-self">
-    <button class="btn btn-primary btn-primary-self" ng-click="modal.buttons.ok()">确定</button>
-    <button class="btn btn-warning btn-warning-self" ng-click="modal.buttons.cancel()">取消</button>
+    <button class="btn vdi-btn-default" ng-click="modal.buttons.ok()">确定</button>
+    <button class="btn btn-default" ng-click="modal.buttons.cancel()">取消</button>
 </div>

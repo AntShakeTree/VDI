@@ -252,9 +252,9 @@ rootApp.controller('storage.ctrl', function($scope) {
     //数据模型
     $scope.storagemodel = {
         //按钮组
-        buttonGroup : [{'id' : 'add', 'cls' : 'button-add', 'val' : '创建', 'click' : add},
-                        {'id' : 'edit', 'cls' : 'button-edit', 'val' : '修改', 'click' : edit},
-                        {'id' : 'delete', 'cls' : 'button-del', 'val' : '删除', 'click' : del}]
+        buttonGroup : [{'id' : 'add', 'cls' : 'button-add', 'val' : 'Create', 'click' : add},
+                        {'id' : 'edit', 'cls' : 'button-edit', 'val' : 'Edit', 'click' : edit},
+                        {'id' : 'delete', 'cls' : 'button-del', 'val' : 'Delete', 'click' : del}]
     };
     //计算池列表假数据
     $scope.tableData = [{
@@ -297,7 +297,7 @@ rootApp.controller('storage.ctrl', function($scope) {
                     colWidth : ''
                 }, {
                     field : 'status',
-                    displayName : 'status',
+                    displayName : 'Status',
                     colWidth : '',
                     render:function(v){
                     	var res=null;
