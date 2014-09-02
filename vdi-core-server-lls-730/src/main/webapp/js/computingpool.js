@@ -678,9 +678,9 @@
 
 rootApp.controller('computingpool.ctrl', function($scope) {
     var add = function() {
-        $scope.modalConfig = {
+        var modalConfig = {
                 type : "dialog",
-                title : "修改个人设置",
+                title : "Create",
                 template : "view/computingpool/create.html",
                 width : "600px",
                 buttons : {
@@ -688,7 +688,7 @@ rootApp.controller('computingpool.ctrl', function($scope) {
                 	cancel : function() {}
                 }
             };
-        $scope。root.createModal(modalConfig);
+        $scope.root.createModal(modalConfig);
     };
     var edit = function() {
         return null;
