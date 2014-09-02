@@ -36,7 +36,7 @@ rect:hover {  fill:blue; }
 </style>
 </head>
 <body>
-  <div id="main-content">
+  <div id="main-content" ng-controller="host.ctrl">
     <!-- Main Content Section with everything -->
     <noscript>
     <!-- Show a notification if the user has disabled javascript -->
@@ -46,7 +46,7 @@ rect:hover {  fill:blue; }
     </div>
     </noscript>
     <!-- Page Head -->
-    <h2>Welcome</h2>
+    <h2>Host</h2>
     <p id="page-intro">What would you like to do?</p>
     <ul class="shortcut-buttons-set">
       <li><a class="shortcut-button" href="#"><span> <img src="images/icons/pencil_48.png" alt="icon" /><br />
@@ -64,7 +64,8 @@ rect:hover {  fill:blue; }
       <!-- End .content-box-header -->
       <div class="content-box-content">
         <div class="tab-content default-tab">
-		<div id="host_content"></div>
+		<!-- <div id="host_content"></div> -->
+        <antable class="table-grid" options="tableOptions"></antable>
 
     </div>
 	</div>

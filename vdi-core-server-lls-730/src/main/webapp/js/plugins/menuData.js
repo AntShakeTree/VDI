@@ -11,11 +11,11 @@ var menuData = [
             },
             {
                 title : "Storage",
-                url : "#"
+                url : "#/storage"
             },
             {
                 title : "Network",
-                url : "#"
+                url : "#/network"
             }
         ]
     },
@@ -74,7 +74,7 @@ var menuData = [
             },
             {
                 title : "Host",
-                url : "#"
+                url : "#host"
             },
             {
                 title : "Database",
