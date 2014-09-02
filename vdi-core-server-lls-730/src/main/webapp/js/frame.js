@@ -10,14 +10,12 @@ $(document).ready(function() {
     });
 });
 rootApp.controller('rootCtrl.frameCtrl', function($scope) {
-    $scope.frame = {
-        menuData : menuData
-    };
+
 })
 .directive('frame.menu', function() {
     return {
         template : '<ul>'
-        +               '<li ng-repeat="main in frame.menuData">'
+        +               '<li ng-repeat="main in menu.menuData">'
         +                   '<a href="javascript:void(0)" class="nav-top-item no-submenu" ng-click="menu.mainClick(main)" ng-class="{current : main.selected}" ng-init="main.selected = $first">{{main.title}}</a>'
         +                   '<ul ng-show="main.selected" class="animate animate-{{main.content.length}}">'
         +                       '<li ng-repeat="sub in main.content">'
@@ -31,14 +29,15 @@ rootApp.controller('rootCtrl.frameCtrl', function($scope) {
         scope : true,
         link : function(scope, element, attrs) {
             scope.menu = {
+                menuData : menuData,
                 mainClick : function(obj) {
-                    angular.forEach(scope.frame.menuData, function(main, index) {
+                    angular.forEach(scope.menu.menuData, function(main, index) {
                         main.selected = false;
                     });
                     obj.selected = true;
                 },
                 subClick : function(obj) {
-                    angular.forEach(scope.frame.menuData, function(main, index) {
+                    angular.forEach(scope.menu.menuData, function(main, index) {
                         if(main.content) {
                             angular.forEach(main.content, function(sub, index) {
                                 sub.selected = false;
@@ -50,25 +49,4 @@ rootApp.controller('rootCtrl.frameCtrl', function($scope) {
             };
         }
     };
-})
-.config(function($routeProvider) { //配置menu的跳转
-    $routeProvider
-        .when('/computingpool', {
-            templateUrl: 'template/computingpool.html'
-        })
-        .when('/host', {
-            templateUrl: 'template/host.html'
-        })
-        .when('/network', {
-            templateUrl: 'template/network.html'
-        })
-        .when('/storage', {
-            templateUrl: 'template/storage.html'
-        })
-        .when('/template', {
-            templateUrl: 'template/template.html'
-        })
-        .otherwise({
-            redirectTo: '#'
-        });
 });
