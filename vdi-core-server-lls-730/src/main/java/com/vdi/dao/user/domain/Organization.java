@@ -18,6 +18,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
@@ -39,10 +40,20 @@ public class Organization implements Request<Organization>, CacheDomain {
 	private Set<User> users;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "parent")
 	private Set<Organization> childrens;
+	@ManyToMany(cascade=CascadeType.REFRESH,targetEntity=DeliveryGroup.class,mappedBy="origanazations")
+	private Set<DeliveryGroup> groups;
 	private String guid;
 	private String distinguishedName;
 	private int level=0;
 	
+	public Set<DeliveryGroup> getGroups() {
+		return groups;
+	}
+
+	public void setGroups(Set<DeliveryGroup> groups) {
+		this.groups = groups;
+	}
+
 	public int getLevel() {
 		return level;
 	}
