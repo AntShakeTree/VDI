@@ -20,7 +20,7 @@ var menuData = [ {
 		url : "#"
 	}, {
 		title : "Desktop Pool",
-		url : "#"
+		url : "#"+STATIC_PAGE.DESKTOPPOOL.NAME
 	}, {
 		title : "Template(and VM)",
 		url : "#"
@@ -53,7 +53,7 @@ var menuData = [ {
 		url : '#' + STATIC_PAGE.CENTER.NAME
 	}, {
 		title : "Host",
-		url : "#host"
+		url : "#/host"
 	}, {
 		title : "Database",
 		url : "#"
