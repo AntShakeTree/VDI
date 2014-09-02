@@ -679,3 +679,86 @@
 //});
 //}
 
+rootApp.controller('computingpool.ctrl', function($scope) {
+    var add = function() {
+        $scope.root.createModal({
+            templateUrl : "template/computingpool/create.html",
+            size : "",
+            width : "600px"
+        });
+    };
+    var edit = function() {
+        return null;
+    };
+    var del = function() {
+        return null;
+    };
+    //数据模型
+    $scope.computingpoolmodel = {
+        //按钮组
+        buttonGroup : [{'id' : 'add', 'cls' : 'button-add', 'val' : '创建', 'click' : add},
+                        {'id' : 'edit', 'cls' : 'button-edit', 'val' : '修改', 'click' : edit},
+                        {'id' : 'delete', 'cls' : 'button-del', 'val' : '删除', 'click' : del}]
+    };
+    //计算池列表假数据
+    $scope.tableData = [{
+    	id : "1",
+    	name : "default",
+    	dispatchtype : "default",
+    	cpuamount : "32",
+    	cpurest : "16",
+    	memoryamount : "64G",
+    	memoryrest : "32G",
+    	createtime : "2014-09-01",
+    	note : "无"
+    }];
+    $scope.demo = {
+    	    pageNo : 5,
+    	    pageSize : 10,
+    	    pageAmount : 20
+    	};
+    $scope.tableOptions = {
+            data : 'tableData',
+            method : 'POST',
+            page : 'tablePage',
+            pageNo : 1,
+            pageSize : 10,
+            sortKey : 'id',
+            ascend : 1,
+            needSelect : true,
+            columns :
+                [{
+                    field : 'name',
+                    displayName : 'Name',
+                    colWidth : ''
+                }, {
+                    field : 'dispatchtype',
+                    displayName : 'Type',
+                    colWidth : ''
+                }, {
+                    field : 'cpuamount',
+                    displayName : 'Total CPU',
+                    colWidth : ''
+                }, {
+                    field : 'cpurest',
+                    displayName : 'Remaining CPU',
+                    colWidth : ''
+                }, {
+                    field : 'memoryamount',
+                    displayName : 'Total memory',
+                    colWidth : ''
+                }, {
+                    field : 'memoryrest',
+                    displayName : 'Remaining memory',
+                    colWidth : ''
+                }, {
+                    field : 'createtime',
+                    displayName : 'Create time',
+                    colWidth : ''
+                }, {
+                    field : 'note',
+                    displayName : 'Remark',
+                    colWidth : ''
+                }]
+        }
+}); 
