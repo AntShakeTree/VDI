@@ -1,26 +1,22 @@
+
 package com.vdi.dao.desktop.domain;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import com.vdi.common.Constants;
 import com.vdi.common.cache.CacheDomain;
 import com.vdi.dao.PageRequest;
-import com.vdi.support.desktop.lls.domain.resource.Host;
 
 @Entity
+@Table(name="storage")
 public class StorageEntity extends PageRequest<StorageEntity> implements CacheDomain{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
