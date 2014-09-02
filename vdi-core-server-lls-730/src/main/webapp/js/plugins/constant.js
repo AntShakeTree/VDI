@@ -22,5 +22,9 @@ STATIC_PAGE = {
 		CENTER : {
 			NAME : "/center",
 			URL : "view/center/view.html"
+		},
+		DESKTOPPOOL : {
+			NAME : "/desktoppool",
+			URL : "view/desktoppool/view.html"
 		}
 };

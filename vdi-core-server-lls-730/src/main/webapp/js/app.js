@@ -39,6 +39,8 @@ rootApp.config(
 				templateUrl : STATIC_PAGE.TEMPLATE.URL
 			}).when(STATIC_PAGE.CENTER.NAME, {
 				templateUrl : STATIC_PAGE.CENTER.URL
+			}).when(STATIC_PAGE.DESKTOPPOOL.NAME, {
+				templateUrl : STATIC_PAGE.DESKTOPPOOL.URL
 			}).otherwise({
 				redirectTo : STATIC_PAGE.COMPUTINGPOOL.NAME
 			});
