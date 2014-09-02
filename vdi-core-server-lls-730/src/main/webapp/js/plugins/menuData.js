@@ -32,7 +32,7 @@ var menuData = [ {
 	title : "User",
 	content : [ {
 		title : "User",
-		url : "#"
+		url : "#"+STATIC_PAGE.USER.NAME
 	}, {
 		title : "Delivery Group",
 		url : "#"

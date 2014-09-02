@@ -26,5 +26,9 @@ STATIC_PAGE = {
 		DESKTOPPOOL : {
 			NAME : "/desktoppool",
 			URL : "view/desktoppool/view.html"
+		},
+		USER : {
+			NAME : "/user",
+			URL : "view/user/view.html"
 		}
 };
