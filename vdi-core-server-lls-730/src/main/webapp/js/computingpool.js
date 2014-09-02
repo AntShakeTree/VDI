@@ -705,14 +705,15 @@ rootApp.controller('computingpool.ctrl', function($scope) {
     };
     // 计算池列表假数据
     $scope.tableData = [{
-    	id : "1",
-    	name : "default",
-    	dispatchtype : "default",
+    	idcomputepool : "1",
+    	computename : "computePool1",
+    	status : 509,
     	cpuamount : "32",
     	cpurest : "16",
     	memoryamount : "64G",
     	memoryrest : "32G",
     	createtime : "2014-09-01",
+    	hosts:[{hostname:"host1",idhost:"1",address:"192.168.70.110"}],
     	note : "无"
     }];
     $scope.demo = {
@@ -726,18 +727,32 @@ rootApp.controller('computingpool.ctrl', function($scope) {
             page : 'tablePage',
             pageNo : 1,
             pageSize : 10,
-            sortKey : 'id',
+            sortKey : 'idcomputepool',
             ascend : 1,
             needSelect : true,
             columns :
                 [{
-                    field : 'name',
+                    field : 'computename',
                     displayName : 'Name',
                     colWidth : ''
                 }, {
-                    field : 'dispatchtype',
-                    displayName : 'Type',
-                    colWidth : ''
+                    field : 'status',
+                    displayName : 'Status',
+                    colWidth : '',
+                    render:function(v){
+                    	var res=null;
+                    	switch(v){
+                    		case 1:res="正常使用"; break;
+                    		case 3:res="主机添加中";break;
+                    		case 4:res="主机移除中";break;
+                    		case 501:res="创建中";break;
+                    		case 502:res="删除中";break;
+                    		case 505:res="卸载中";break;
+                    		case 506:res="装载中";break;
+                    		case 509:res="恢复中";break;
+                    	}
+                    	return res;
+                    }
                 }, {
                     field : 'cpuamount',
                     displayName : 'Total CPU',
@@ -758,6 +773,17 @@ rootApp.controller('computingpool.ctrl', function($scope) {
                     field : 'createtime',
                     displayName : 'Create time',
                     colWidth : ''
+                }, {
+                    field : 'hosts',
+                    displayName : 'Host',
+                    colWidth : '',
+                    render:function(r){
+                    	if(r && 0 < r.length){
+                    		return r.length;
+                    	}else{
+                    		return "No host";
+                    	}
+                    }
                 }, {
                     field : 'note',
                     displayName : 'Remark',

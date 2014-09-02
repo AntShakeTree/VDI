@@ -71,7 +71,7 @@ angular.module('anTable', [])
             +               '<td>'
             +                   '<input type="checkbox" ng-init="row.selected=false" ng-model="row.selected" />'
             +               '</td>'
-            +               '<td ng-repeat="column in anbody.columns">{{row[column.field]}}</td>'
+            +               '<td ng-repeat="column in anbody.columns">{{column.render ? column.render(row[column.field]) : row[column.field]}}</td>'
             +           '</tr>',
             replace : false,
             restrict : 'A',

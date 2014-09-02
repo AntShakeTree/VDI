@@ -258,21 +258,19 @@ rootApp.controller('storage.ctrl', function($scope) {
     };
     //计算池列表假数据
     $scope.tableData = [{
-    	id : "1",
-    	name : "sharedstorage",
+    	storagename : "sharedstorage",
     	storagetype : "shared",
-    	usedsize : "50",
-    	availablesize : "150",
-    	createtime : "2014-09-01",
-    	note : "无"
+    	address:"192.168.4.5",
+    	status : 1,
+    	totalsize : 50,
+    	free : 150
     },{
-    	id : "2",
-    	name : "localstorage",
+    	storagename : "localstorage",
     	storagetype : "local",
-    	usedsize : "60",
-    	availablesize : "140",
-    	createtime : "2014-09-01",
-    	note : "无"
+    	address:"192.168.4.91",
+    	status : 505,
+    	totalsize : 60,
+    	free : 140
     }];
     $scope.demo = {
     	    pageNo : 5,
@@ -285,12 +283,12 @@ rootApp.controller('storage.ctrl', function($scope) {
             page : 'tablePage',
             pageNo : 1,
             pageSize : 10,
-            sortKey : 'id',
+            sortKey : 'storagename',
             ascend : 1,
             needSelect : true,
             columns :
                 [{
-                    field : 'name',
+                    field : 'storagename',
                     displayName : 'Name',
                     colWidth : ''
                 }, {
@@ -298,20 +296,34 @@ rootApp.controller('storage.ctrl', function($scope) {
                     displayName : 'Type',
                     colWidth : ''
                 }, {
-                    field : 'usedsize',
-                    displayName : 'Used Size',
+                    field : 'status',
+                    displayName : 'status',
+                    colWidth : '',
+                    render:function(v){
+                    	var res=null;
+                    	switch(v){
+                    		case 1:res="正常使用"; break;
+                    		case 3:res="主机添加中";break;
+                    		case 4:res="主机移除中";break;
+                    		case 501:res="创建中";break;
+                    		case 502:res="删除中";break;
+                    		case 505:res="卸载中";break;
+                    		case 506:res="装载中";break;
+                    		case 509:res="恢复中";break;
+                    	}
+                    	return res;
+                    }
+                }, {
+                    field : 'address',
+                    displayName : 'Address',
                     colWidth : ''
                 }, {
-                    field : 'availablesize',
+                    field : 'totalsize',
+                    displayName : 'Total Size',
+                    colWidth : ''
+                }, {
+                    field : 'free',
                     displayName : 'Available Size',
-                    colWidth : ''
-                },{
-                    field : 'createtime',
-                    displayName : 'Create time',
-                    colWidth : ''
-                }, {
-                    field : 'note',
-                    displayName : 'Remark',
                     colWidth : ''
                 }]
         }

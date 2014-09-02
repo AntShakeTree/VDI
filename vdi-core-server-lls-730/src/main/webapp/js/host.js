@@ -226,16 +226,9 @@ rootApp.controller('host.ctrl', function($scope) {
     };
     //计算池列表假数据
     $scope.tableData = [{
-    	id : "1",
-    	name : "host",
-    	ip : "192.168.10.56",
-    	memoryamount : "500G",
-    	memoryavailable : "480G",
-    	cpuamount : "64",
-    	cpuavailable : "32",
-    	vmcount : "9",
-    	createtime:"2014-9-1 16:44:45",
-    	note : "无"
+    	hostname : "host",
+    	address : "192.168.10.56",
+    	status : 501
     }];
     $scope.demo = {
     	    pageNo : 5,
@@ -253,41 +246,31 @@ rootApp.controller('host.ctrl', function($scope) {
             needSelect : true,
             columns :
                 [{
-                    field : 'name',
+                    field : 'hostname',
                     displayName : 'Name',
                     colWidth : ''
                 }, {
-                    field : 'ip',
+                    field : 'address',
                     displayName : 'IP Address',
                     colWidth : ''
                 }, {
-                    field : 'cpuamount',
-                    displayName : 'Total CPU',
-                    colWidth : ''
-                }, {
-                    field : 'cpuavailable',
-                    displayName : 'Remaining CPU',
-                    colWidth : ''
-                }, {
-                    field : 'memoryamount',
-                    displayName : 'Total memory',
-                    colWidth : ''
-                }, {
-                    field : 'memoryavailable',
-                    displayName : 'Remaining memory',
-                    colWidth : ''
-                }, {
-                    field : 'createtime',
-                    displayName : 'Create time',
-                    colWidth : ''
-                },  {
-                    field : 'vmcount',
-                    displayName : 'VM Count',
-                    colWidth : ''
-                }, {
-                    field : 'note',
-                    displayName : 'Remark',
-                    colWidth : ''
+                    field : 'status',
+                    displayName : 'Status',
+                    colWidth : '',
+                    render:function(v){
+                    	var res=null;
+                    	switch(v){
+                    		case 501:res="创建中"; break;
+                    		case 1:res="正常使用";break;
+                    		case 502:res="删除中";break;
+                    		case 500:res="错误";break;
+                    		case 2:res="正在工作";break;
+                    		case 507:res="工作断开连接";break;
+                    		case 508:res="空闲断开连接";break;
+                    		case 509:res="正在恢复";break;
+                    	}
+                    	return res;
+                    }
                 }]
         }
 }); 
