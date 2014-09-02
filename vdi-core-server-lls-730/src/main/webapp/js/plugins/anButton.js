@@ -1,9 +1,9 @@
 var buttonGroup = angular.module('buttonGroup', []);
     buttonGroup.directive('buttonGroup', function() {
         return {
-            template : '<ul class="shortcut-buttons-set">'
+            template : '<p>'
             +				'<an-buttons ng-repeat="button in data"></an-buttons>'
-            +			'</ul>',
+            +			'</p>',
             replace : true,
             restrict : 'E',
             scope : false,
@@ -16,15 +16,9 @@ var buttonGroup = angular.module('buttonGroup', []);
     })
     .directive('anButtons', function() {
         return {
-            template : '<li class="head-content">'
-            +			'<a class="shortcut-button" id={{button.id}} ng-click="button.click()" href="javascript:void(0)">'
-            +				'<span>'
-            +					'<div class={{button.cls}} />'
-            +						'<br />'
-            +							'{{button.val}}'
-            +				'</span>'
-            +			'</a>'
-            +			'</li>',
+        	template : '<div class="vdi-btn-group" >'
+        		+ '<button type="button" id={{button.id}} class="btn {{button.cls}} btn-lg btn-block vdi-btn-default" ng-click="button.click()" >{{button.val}}</button>'
+        		+ '</div>',
             replace : true,
             restrict : 'E',
             scope : false,

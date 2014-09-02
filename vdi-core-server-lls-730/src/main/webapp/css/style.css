@@ -10,7 +10,7 @@ html {
 body {
                 font-family: Arial, Helvetica, sans-serif;
                 color: #555;
-                background: #f0f0f0 url('../images/bg-body.gif') top left repeat-y;
+                background-color: #ECF0F1;
                 font-size: 12px;
                 /*zhengyi update*/
                 overflow-x: hidden!important;
@@ -101,7 +101,7 @@ a.remove-link:hover {
 /********************************      Sidebar      ********************************/
 
 #sidebar {
-                background: url('../images/bg-sidebar.gif') top left no-repeat;
+	background-color: #2C3E50;
                 width: 230px;
                 height: 100%;
                 position: absolute;
@@ -154,7 +154,8 @@ a.remove-link:hover {
                 }
 
 #sidebar #main-nav li a.nav-top-item {
-                background: transparent url('../images/bg-menu-item-green.gif') right center no-repeat; /* Background image for default color scheme - green */
+                background-color: #16a085;
+                border:1px solid #16a085;border-radius: 5px 0px 0px 5px;
                 padding: 10px 15px;
                 color: #fff;
                 font-size: 14px;
@@ -169,7 +170,8 @@ a.remove-link:hover {
 }
 
 #sidebar #main-nav li a.current {
-                background-image: url('../images/bg-menu-item-current.gif') !important;
+                background-color: #ffffff;
+                border:0px;
                 color: #333;
                 font-weight: bold;
                 }
