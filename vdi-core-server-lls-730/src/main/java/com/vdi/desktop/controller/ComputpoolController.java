@@ -34,10 +34,10 @@ public class ComputpoolController {
 	public @ResponseBody JobResponse createComputePool(ComputePoolEntity entity){
 		return computePoolFacade.createComputePool(entity);
 	}
-	@RequestMapping(value="deleteComputePool",method=RequestMethod.POST)
-	public @ResponseBody JobResponse deleteComputePool(DeleteComputePool entity){
-		return computePoolFacade.deleteComputePool(entity);
-	}
+//	@RequestMapping(value="deleteComputePool",method=RequestMethod.POST)
+//	public @ResponseBody JobResponse deleteComputePool(DeleteComputePool entity){
+//		return computePoolFacade.deleteComputePool(entity);
+//	}
 	@RequestMapping(value="deleteComputePool",method=RequestMethod.POST)
 	public @ResponseBody ComputePoolRes getComputePool(ComputePoolEntity entity){
 		return computePoolFacade.getComputPool(entity);

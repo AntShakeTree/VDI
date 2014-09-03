@@ -2,45 +2,52 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Simpla Admin </title>
-    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-    <link type="text/css" rel="stylesheet" href="lib/bootstrap/css/bootstrap.css" />
-    <link type="text/css" rel="stylesheet" href="css/invalid.css"/>
-    <link type="text/css" rel="stylesheet" href="css/style.css"/>
+<title>Virtual Desktop Infrastructure</title>
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<link type="text/css" rel="stylesheet"
+	href="lib/bootstrap/css/bootstrap.css" />
+<link type="text/css" rel="stylesheet" href="css/main.css" />
 </head>
 <body id="login">
-<div id="login-wrapper" class="png_bg">
-  <div id="login-top">
-    <h1>Simpla Admin</h1>
-    <!-- Logo (221px width) -->
-    <a href="#"><img id="logo" src="images/logo.png" alt="Simpla Admin logo" /></a> </div>
-  <!-- End #logn-top -->
-  <div id="login-content">
-    <form action="frame.html">
-      <!--<div class="notification information png_bg">
-        <div> Just click "Sign In". No password needed. </div>
-      </div>-->
-      <p>
-        <label>Username</label>
-        <input class="text-input" type="text" />
-      </p>
-      <div class="clear"></div>
-      <p>
-        <label>Password</label>
-        <input class="text-input" type="password" />
-      </p>
-      <div class="clear"></div>
-      <p id="remember-password">
-        <input type="checkbox" />
-        Remember me </p>
-      <div class="clear"></div>
-      <p>
-        <input class="button" type="submit" value="Sign In" />
-      </p>
-    </form>
-  </div>
-  <!-- End #login-content -->
-</div>
-<!-- End #login-wrapper -->
+	<div id="login-wrapper" class="png_bg">
+		<div id="login-top">
+			<h1>Virtual Desktop Infrastructure</h1>
+		</div>
+		<div id="login-content">
+			<form class="form-horizontal" role="form" action="frame.html">
+				<div class="form-group">
+					<label for="inputEmail3" class="col-sm-2 control-label">Username</label>
+					<div class="col-sm-4">
+						<input type="email" class="form-control" id="inputEmail3"
+							placeholder="Username">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+					<div class="col-sm-4">
+						<input type="password" class="form-control" id="inputPassword3"
+							placeholder="Password">
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-4">
+						<div class="checkbox">
+							<label> <input type="checkbox"> Remember me </label>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-4">
+						<button type="submit" class="btn btn-default vdi-btn-default">Sign
+							in</button>
+					</div>
+				</div>
+			</form>
+
+
+		</div>
+		<!-- End #login-content -->
+	</div>
+	<!-- End #login-wrapper -->
 </body>
 </html>

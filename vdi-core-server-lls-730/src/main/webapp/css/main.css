@@ -16,6 +16,11 @@
 .today-cost-ul li .today-cost-darkOrange{color:#F7713B;font-size:18px;}
 
 /************** new style************************/
+body#login {color: #fff;background-color: #2C3E50;}
+#login-wrapper{background-color:#16a085;height:230px;}
+#login-wrapper #login-top{width:100%;padding:140px 0 50px 0;text-align: center;}
+#login-wrapper #login-content {text-align:left;margin-right:10%;margin-left:33%;}
 .vdi-btn-group{float:left;padding-right:10px;padding-bottom:15px}
-.vdi-btn-default{width:120px;color:#fff;background-color:#1abc9c;border-color:#16a085;}
+.vdi-btn-default{color:#fff;background-color:#1abc9c;border-color:#16a085;}
 .vdi-btn-default:hover{color:#fff;background-color:#16a085;border-color:#16a085;}
+.modal-header-self {border-radius:6px 6px 0 0;border-bottom-color:#ccc;background-color:#ECF0F1;}
