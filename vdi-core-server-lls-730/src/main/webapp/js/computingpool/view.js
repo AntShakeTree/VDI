@@ -716,7 +716,7 @@ rootApp.controller('computingpool.ctrl', function($scope) {
     	hosts:[{hostname:"host1",idhost:"1",address:"192.168.70.110"}],
     	note : "无"
     }];
-    $scope.demo = {
+    $scope.tablePage = {
     	    pageNo : 5,
     	    pageSize : 10,
     	    pageAmount : 20

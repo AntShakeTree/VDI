@@ -24,3 +24,4 @@ body#login {color: #fff;background-color: #2C3E50;}
 .vdi-btn-default{color:#fff;background-color:#1abc9c;border-color:#16a085;}
 .vdi-btn-default:hover{color:#fff;background-color:#16a085;border-color:#16a085;}
 .modal-header-self {border-radius:6px 6px 0 0;border-bottom-color:#ccc;background-color:#ECF0F1;}
+.pageNo{padding: 3px 6px;border-radius: 4px;border: 1px solid #333;color: #333;background-color: #fff;border-color: #ccc;margin: 0;}

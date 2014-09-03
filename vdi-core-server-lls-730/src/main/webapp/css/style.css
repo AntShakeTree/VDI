@@ -403,16 +403,26 @@ ul.content-box-tabs li a.current {
 
 .pagination a.number {
 				border: 1px solid #ddd;
+				color:#333;
+				background-color:#fff;
+				border-color: #ccc;
                 }
-
+                
+.pagination a.number:hover {
+                border: 1px solid #333;
+                color:#333;
+                background-color:#ccc;
+                border-color:#adadad;
+                }
+                
 .pagination a.current {
-                background: #469400 url('../images/bg-button-green.gif') top left repeat-x !important;
-                border-color: #459300 !important;
+                background-color:#1abc9c;
+                border-color: #16a085 !important;
                 color: #fff !important;
                 }
 				
 .pagination a.current:hover {
-				text-decoration: underline;
+	            background-color: #16a085 !important;
                 }
 
 /************ Shortcut Buttons ************/
