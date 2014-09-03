@@ -205,11 +205,17 @@
 //dashboard('#host_content',freqData);
 rootApp.controller('host.ctrl', function($scope) {
     var add = function() {
-        $scope.root.createModal({
-            templateUrl : "template/computingpool/create.html",
-            size : "",
-            width : "600px"
-        });
+        var modalConfig = {
+                type : "dialog",
+                title : "Create",
+                template : "view/host/create.html",
+                width : "600px",
+                buttons : {
+                	ok : function() {},
+                	cancel : function() {}
+                }
+            };
+        $scope.root.createModal(modalConfig);
     };
     var edit = function() {
         return null;
@@ -217,9 +223,9 @@ rootApp.controller('host.ctrl', function($scope) {
     var del = function() {
         return null;
     };
-    //数据模型
+    // 数据模型
     $scope.hostmodel = {
-        //按钮组
+        // 按钮组
         buttonGroup : [{'id' : 'add', 'cls' : 'button-add', 'val' : '创建', 'click' : add},
                         {'id' : 'edit', 'cls' : 'button-edit', 'val' : '修改', 'click' : edit},
                         {'id' : 'delete', 'cls' : 'button-del', 'val' : '删除', 'click' : del}]
