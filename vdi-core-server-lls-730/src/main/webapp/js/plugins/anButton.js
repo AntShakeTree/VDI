@@ -17,7 +17,7 @@ var buttonGroup = angular.module('buttonGroup', []);
     .directive('anButtons', function() {
         return {
         	template : '<div class="vdi-btn-group" >'
-        		+ '<button type="button" id={{button.id}} class="btn {{button.cls}} btn-lg btn-block vdi-btn-default" ng-click="button.click()" >{{button.val}}</button>'
+        		+ '<button type="button" id={{button.id}} class="btn {{button.cls}} btn-lg vdi-btn-default" ng-click="button.click()" >{{button.val}}</button>'
         		+ '</div>',
             replace : true,
             restrict : 'E',
