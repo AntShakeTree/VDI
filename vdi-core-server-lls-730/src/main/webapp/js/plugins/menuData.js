@@ -3,6 +3,7 @@
  */
 var menuData = [ {
 	title : "Data Center",
+	cls : "glyphicon glyphicon-tasks",
 	content : [ {
 		title : "Computing Pool",
 		url : "#/computingpool"
@@ -15,6 +16,7 @@ var menuData = [ {
 	} ]
 }, {
 	title : " Virtual Desktop",
+	cls : "glyphicon glyphicon-th-large",
 	content : [ {
 		title : "Connection",
 		url : "#"
@@ -30,6 +32,7 @@ var menuData = [ {
 	} ]
 }, {
 	title : "User",
+	cls : "glyphicon glyphicon-user",
 	content : [ {
 		title : "User",
 		url : "#"+STATIC_PAGE.USER.NAME
@@ -42,6 +45,7 @@ var menuData = [ {
 	} ]
 }, {
 	title : "Infrastructure",
+	cls : "glyphicon glyphicon-cloud",
 	content : [ {
 		title : "Core(Cluster,Power)",
 		url : "#"
@@ -60,6 +64,7 @@ var menuData = [ {
 	} ]
 }, {
 	title : "Configuration",
+	cls : "glyphicon glyphicon-wrench",
 	content : [ {
 		title : "License",
 		url : "#"

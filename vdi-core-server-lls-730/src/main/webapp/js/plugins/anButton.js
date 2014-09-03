@@ -21,7 +21,7 @@ buttonGroup
 				function() {
 					return {
 						template : '<div class="vdi-btn-group" >'
-								+ '<button type="button" id={{button.id}} style="width:120px;" class="btn {{button.cls}} btn-lg vdi-btn-default" ng-click="button.click()" >{{button.val}}</button>'
+								+ '<button type="button" id={{button.id}} style="width:120px;" class="btn btn-lg vdi-btn-default" ng-click="button.click()" ><span class={{button.cls}}></span>  {{button.val}}</button>'
 								+ '</div>',
 						replace : true,
 						restrict : 'E',
