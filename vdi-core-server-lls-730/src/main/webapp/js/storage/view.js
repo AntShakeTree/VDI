@@ -237,11 +237,17 @@
 //}
 rootApp.controller('storage.ctrl', function($scope) {
     var add = function() {
-        $scope.root.createModal({
-            templateUrl : "template/computingpool/create.html",
-            size : "",
-            width : "600px"
-        });
+        var modalConfig = {
+                type : "dialog",
+                title : "Create",
+                template : "view/storage/create.html",
+                width : "600px",
+                buttons : {
+                	ok : function() {},
+                	cancel : function() {}
+                }
+            };
+        $scope.root.createModal(modalConfig);
     };
     var edit = function() {
         return null;
