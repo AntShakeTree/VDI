@@ -1,6 +1,13 @@
 package com.vdi.dao;
 
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
+import com.vdi.dao.annotation.VDIDaoHelper;
+import com.vdi.dao.annotation.VDIDaoHelper.IgnoreValue;
+
+@JsonSerialize(include=Inclusion.NON_DEFAULT)
 public class PageRequest<V> implements Request<V> {
 	
 	private String sortkey;

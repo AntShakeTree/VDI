@@ -11,13 +11,16 @@ package com.vdi.vo.res;
 
 import java.util.List;
 
+import org.codehaus.jackson.annotate.JsonManagedReference;
+
 import com.vdi.dao.PageRequest;
 import com.vdi.dao.desktop.domain.ComputePoolEntity;
+import com.vdi.vo.res.ListComputePool.ComputePoolList;
 
 public class ListComputePool {
 	
 	private Header head;
-	
+	@JsonManagedReference
 	private ComputePoolList body;
 	
 	private PageRequest<ComputePoolEntity> page;
@@ -31,6 +34,16 @@ public class ListComputePool {
 	public void setHead(Header head) {
 		this.head = head;
 	}
+
+
+
+
+	
+
+
+
+
+	
 
 
 

@@ -6,13 +6,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import com.vdi.common.cache.CacheDomain;
 import com.vdi.dao.Request;
-import com.vdi.dao.annotation.DaoName;
 
 @Entity
 @Table(name = "desktop")
-@DaoName("Desktop")
 public class Desktop  implements CacheDomain , Request<Desktop>{
 	/*
 	 * CREATE TABLE `test`.`desktop` ( `idesktop` INT NOT NULL AUTO_INCREMENT,
@@ -22,7 +22,7 @@ public class Desktop  implements CacheDomain , Request<Desktop>{
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO) 
-	private long idesktop;
+	private Integer idesktop;
 	private String vmname;
 	private String vmid;
 	private Long poolid;
@@ -35,11 +35,11 @@ public class Desktop  implements CacheDomain , Request<Desktop>{
 		return vmname;
 	}
 
-	public long getIdesktop() {
+	public Integer getIdesktop() {
 		return idesktop;
 	}
 
-	public void setIdesktop(long idesktop) {
+	public void setIdesktop(Integer idesktop) {
 		this.idesktop = idesktop;
 	}
 
@@ -72,6 +72,7 @@ public class Desktop  implements CacheDomain , Request<Desktop>{
 	}
 
 	@Override
+	@JsonIgnore
 	public Object getId() {
 		// TODO Auto-generated method stub
 		return this.getIdesktop();

@@ -22,6 +22,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
@@ -29,17 +30,19 @@ import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import com.vdi.common.Constants;
 import com.vdi.common.cache.CacheDomain;
 import com.vdi.dao.PageRequest;
+import com.vdi.dao.annotation.VDIDaoHelper;
+import com.vdi.dao.annotation.VDIDaoHelper.IgnoreValue;
 
 @Entity
 @Table(name="computepool")
 @JsonSerialize(include=Inclusion.NON_DEFAULT)
-@JsonIgnoreProperties({"taskid","computePoolIdentity"})
+@JsonIgnoreProperties({"taskid","computepoolidentity"})
 public class ComputePoolEntity extends PageRequest<ComputePoolEntity> implements CacheDomain{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long idcomputepool;
-	@Column(nullable=false,unique=true)
+	private Integer idcomputepool;
 	private String computepoolname;
+
 	private int cpuamount;
 	private int cpurest;
 	private int memoryamount;
@@ -47,16 +50,17 @@ public class ComputePoolEntity extends PageRequest<ComputePoolEntity> implements
 	private String dispatchtype;
 	private String taskid;
 	private String note;
-	private String computePoolIdentity;
-	private int status;
-	@OneToMany(cascade=CascadeType.ALL,mappedBy="computePoolEntity", orphanRemoval=true,targetEntity=HostEntity.class,fetch=FetchType.EAGER)
-	private List<HostEntity> hosts=new ArrayList<HostEntity>();
+	private String computepoolidentity;
+	private Integer status;
+	@OneToMany(cascade=CascadeType.ALL,targetEntity=HostEntity.class,mappedBy="computePoolEntity",fetch=FetchType.EAGER)
+	private List<HostEntity> hosts;
+	
 	
 
-	public int getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
-	public void setStatus(int status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 	public String getComputepoolname() {
@@ -65,30 +69,35 @@ public class ComputePoolEntity extends PageRequest<ComputePoolEntity> implements
 	public void setComputepoolname(String computepoolname) {
 		this.computepoolname = computepoolname;
 	}
+	@VDIDaoHelper(ignore=IgnoreValue.ZERO)
 	public int getCpuamount() {
 		return cpuamount;
 	}
 	public void setCpuamount(int cpuamount) {
 		this.cpuamount = cpuamount;
 	}
+	@VDIDaoHelper(ignore=IgnoreValue.ZERO)
 	public int getCpurest() {
 		return cpurest;
 	}
 	public void setCpurest(int cpurest) {
 		this.cpurest = cpurest;
 	}
+	@VDIDaoHelper(ignore=IgnoreValue.ZERO)
 	public int getMemoryamount() {
 		return memoryamount;
 	}
 	public void setMemoryamount(int memoryamount) {
 		this.memoryamount = memoryamount;
 	}
+	@VDIDaoHelper(ignore=IgnoreValue.ZERO)
 	public int getMemoryrest() {
 		return memoryrest;
 	}
 	public void setMemoryrest(int memoryrest) {
 		this.memoryrest = memoryrest;
 	}
+	@VDIDaoHelper(ignore=IgnoreValue.NULLCOLLECTION)
 	public List<HostEntity> getHosts() {
 		return hosts;
 	}
@@ -96,6 +105,7 @@ public class ComputePoolEntity extends PageRequest<ComputePoolEntity> implements
 		this.hosts = hosts;
 	}
 	@Override
+	@JsonIgnore
 	public Object getId() {
 		return this.getIdcomputepool();
 	}
@@ -119,25 +129,28 @@ public class ComputePoolEntity extends PageRequest<ComputePoolEntity> implements
 	public void setNote(String note) {
 		this.note = note;
 	}
-	public String getComputePoolIdentity() {
-		return computePoolIdentity;
+
+	public String getComputepoolidentity() {
+		return computepoolidentity;
 	}
-	public void setComputePoolIdentity(String computePoolIdentity) {
-		this.computePoolIdentity = computePoolIdentity;
+	public void setComputepoolidentity(String computepoolidentity) {
+		this.computepoolidentity = computepoolidentity;
 	}
-	public Long getIdcomputepool() {
+	
+	public Integer getIdcomputepool() {
 		return idcomputepool;
 	}
-	public void setIdcomputepool(Long idcomputepool) {
+	public void setIdcomputepool(Integer idcomputepool) {
 		this.idcomputepool = idcomputepool;
 	}
+
 	public static final int CREATING = Constants.CREATING;
 	public static final int AVAILABLE = Constants.AVAILABLE;
 	public static final int DELETING = Constants.DELETING;
-	public static final int HOSTADDING = 503;
-	public static final int HOSTREMOVEING = 504;
-	public static final int UMOUNTING = 505;
-	public static final int MOUNTING = 506;
+	public static final int HOSTADDING = 3;
+	public static final int HOSTREMOVEING = 4;
+	public static final int UMOUNTING = Constants.UMOUNTING;
+	public static final int MOUNTING = Constants.MOUNTING;
 	public static final int ERROR=Constants.ERROR;
 } 
 	

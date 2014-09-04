@@ -7,47 +7,53 @@
  *
  */
 
-package com.vdi.dao.desktop.domain;
+package com.vdi.dao.desktop.domain.build;
 
 import static org.springframework.util.StringUtils.isEmpty;
 
 import org.springframework.util.Assert;
 
+import com.vdi.dao.desktop.domain.ComputePoolEntity;
 import com.vdi.support.desktop.lls.domain.resource.ComputePool;
-
+/**
+ * bulid tools;
+ * @author ant_shake_tree
+ *
+ */
 public class ComputePoolBuild {
 	private ComputePool computePool;
 	private ComputePoolEntity entity;
 
-	public ComputePoolBuild setDispatchtype() {
+	public ComputePoolBuild lls_dispatchtype() {
 		if (!isEmpty(entity.getDispatchtype())) {
 			this.computePool.setDispatchType(entity.getDispatchtype());
 		}
 		return this;
 	}
 
-	public ComputePoolBuild setComputePoolName() {
+	public ComputePoolBuild lls_computePoolName() {
 		if (!isEmpty(entity.getComputepoolname()))
 			this.computePool.setComputePoolName(entity.getComputepoolname());
 		return this;
 	}
 
-	public ComputePoolBuild setComputePoolIdentity() {
-		if (!isEmpty(entity.getComputePoolIdentity()))
+	public ComputePoolBuild lls_computePoolIdentity() {
+		if (!isEmpty(entity.getComputepoolidentity()))
 			this.computePool.setComputePoolIdentity(entity
-					.getComputePoolIdentity());
+					.getComputepoolidentity());
 		return this;
 	}
 
 	
 
-	public ComputePoolEntity bulidComputePoolEntity() {
+	public ComputePoolEntity bulidEntity() {
 		return entity;
 	}
 
-	public ComputePoolBuild entity_çomputepoolname() {
-		if (!isEmpty(computePool.getComputePoolIdentity()))
-			entity.setComputePoolIdentity(computePool.getComputePoolIdentity());
+	public ComputePoolBuild entity_computepoolname() {
+		if (!isEmpty(computePool.getComputePoolName())){
+			entity.setComputepoolname(computePool.getComputePoolName());
+		};
 		return this;
 	};
 
@@ -81,7 +87,7 @@ public class ComputePoolBuild {
 
 	public ComputePoolBuild entity_computePoolIdentity() {
 		if (!isEmpty(computePool.getComputePoolIdentity())) {
-			entity.setComputePoolIdentity(computePool.getComputePoolIdentity());
+			entity.setComputepoolidentity(computePool.getComputePoolIdentity());
 		}
 		return this;
 	};
@@ -118,7 +124,7 @@ public class ComputePoolBuild {
 		this.entity = entity;
 	}
 	
-	public ComputePool bulidComputePool() {
+	public ComputePool bulidLLSDomain() {
 		return this.computePool;
 	}
 }

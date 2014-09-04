@@ -43,8 +43,8 @@ public class Role  implements GrantedAuthority,CacheDomain,Request<Role>{
 	private Integer idrole;
 	private String authority;
 	private int parent=0;
-	public static String ROLE_ADMIN = "管理员";
-	public static String ROLE_USER = "用户";
+	public static final String ROLE_ADMIN = "ROLE_ADMIN";
+	public static final String ROLE_USER = "ROLE_USER";
 	
 	
 	@ManyToMany(cascade={CascadeType.ALL},targetEntity=User.class,fetch=FetchType.EAGER)

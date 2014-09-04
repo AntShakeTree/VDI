@@ -23,7 +23,7 @@ public class ComputePool extends BasicDomain{
 	public static final String HOSTREMOVEING = "hostRemoveing";
 	public static final String UMOUNTING = "umounting";
 	public static final String MOUNTING = "mounting";
-	public static final String LIST_COMPUTEPOOL_ACTION = "reqListComputPool";
+	public static final String LIST_COMPUTEPOOL_ACTION = "reqListComputePool";
 
 	
 	private String computePoolName;

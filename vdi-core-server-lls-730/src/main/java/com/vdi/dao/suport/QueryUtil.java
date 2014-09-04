@@ -1,9 +1,11 @@
 package com.vdi.dao.suport;
 
 import java.beans.PropertyDescriptor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.BeanWrapper;
@@ -15,6 +17,8 @@ import com.vdi.common.ParseJSON;
 import com.vdi.dao.GenericsUtils;
 import com.vdi.dao.PageRequest;
 import com.vdi.dao.Request;
+import com.vdi.dao.annotation.VDIDaoHelper;
+import com.vdi.dao.annotation.VDIDaoHelper.IgnoreValue;
 
 
 
@@ -39,6 +43,8 @@ public  class QueryUtil {
 	}
 
 	/**
+	 * @throws SecurityException 
+	 * @throws NoSuchFieldException 
 	 * @param <T>
 	 * @return
 	 * @Title: getHqlByDomain
@@ -47,7 +53,7 @@ public  class QueryUtil {
 	 * @return void 返回类型
 	 * @throws
 	 */
-	public static <T> QueryUtil getHqlByDomain(Request<T> req) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+	public static <T> QueryUtil getHqlByDomain(Request<T> req) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException, SecurityException {
 		BeanWrapper bean = new BeanWrapperImpl(req);
 		PropertyDescriptor[] pros = bean.getPropertyDescriptors();
 		StringBuffer hql = new StringBuffer();
@@ -59,12 +65,37 @@ public  class QueryUtil {
 			Method methodGetX = propertyDescriptor.getReadMethod(); // Read对应get()方法
 			Method methodSet = propertyDescriptor.getWriteMethod();
 			String properyName = propertyDescriptor.getName();
+//			Field filed =req.getClass().getField(properyName);ß
 			if (methodGetX != null && methodSet != null) {
 				Object reValue = methodGetX.invoke(req);
 				if (reValue == null||(reValue+"").equals("")) {
 					continue;
 				}
+				VDIDaoHelper daoHelper =methodGetX.getAnnotation(VDIDaoHelper.class);
+				boolean iscontinu =false;
+				if(daoHelper!=null){
+				IgnoreValue ignoreValue=	daoHelper.ignore();
+				
+				switch (ignoreValue) {
+				case ZERO:
+					if(Integer.parseInt(reValue+"")==0){
+						iscontinu=true;
+					}
+					break;
+				case NULLCOLLECTION:
+					Collection<?> c =	(Collection<?>) reValue;
+					if(c!=null&&c.size()<=0){
+						iscontinu=true;
+					}
+					break;
+				default:
+					break;
+				}
+				}
 				if (isContainsPageProperty(properyName)) {
+					continue;
+				}
+				if(iscontinu){
 					continue;
 				}
 				strs.add(reValue);

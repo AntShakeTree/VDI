@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.vdi.dao.desktop.ComputePoolDao;
 import com.vdi.dao.desktop.domain.ComputePoolEntity;
-import com.vdi.dao.desktop.domain.ComputePoolBuild;
+import com.vdi.dao.desktop.domain.build.ComputePoolBuild;
 import com.vdi.support.desktop.lls.domain.resource.ComputePool;
 import com.vdi.support.desktop.lls.services.AsynchronousComputePoolService;
 import com.vdi.vo.req.DeleteComputePool;
@@ -38,7 +38,7 @@ public class AsynchronousComputePoolServiceImpl implements
 		
 			ComputePoolEntity e = computePoolDao.get(ComputePoolEntity.class,
 					entity.getComputepoolid());
-			ComputePool pool =new ComputePoolBuild(e,new ComputePool()).setComputePoolIdentity().bulidComputePool();
+			ComputePool pool =new ComputePoolBuild(e,new ComputePool()).lls_computePoolIdentity().bulidLLSDomain();
 			pool.setAction(ComputePool.DELETE_COMPUTEPOOL_ACTION);
 			return asynchronousServiceImpl.excute(pool);
 		

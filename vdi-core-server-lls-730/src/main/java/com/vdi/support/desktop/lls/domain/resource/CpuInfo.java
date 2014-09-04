@@ -9,7 +9,7 @@ public class CpuInfo {
 	private double  cpuMHz;
 	private String modelName;
 	private int coreNum;
-	
+	private String vendor_id;
 	public int getCoreNum() {
 		return coreNum;
 	}
@@ -33,5 +33,12 @@ public class CpuInfo {
 	}
 	public void setModelName(String modelName) {
 		this.modelName = modelName;
+	}
+	public String getVendor_id() {
+		return vendor_id;
+	}
+	public void setVendor_id(String vendor_id) {
+		this.vendor_id = vendor_id;
 	}	
+	
 }
