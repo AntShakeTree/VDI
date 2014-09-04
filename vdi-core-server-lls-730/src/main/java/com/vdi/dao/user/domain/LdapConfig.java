@@ -9,32 +9,81 @@
 
 package com.vdi.dao.user.domain;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
+import com.vdi.common.cache.CacheDomain;
+import com.vdi.dao.PageRequest;
+
 @Entity
 @Table(name="ldapconfig")
-public class LdapConfig {
+public class LdapConfig extends PageRequest<LdapConfig> implements CacheDomain{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer idldap;
-	private String url;
+	private String address;
+	private int accesstype;
 	private String base;
 	private String principal;
+	private String dns;
 	@Transient
+	@JsonIgnore
 	private String password;
-	private String domainguid;
+	private int status;
+	
+	public int getStatus() {
+		return status;
+	}
+	
+	public int getAccesstype() {
+		return accesstype;
+	}
+
+	public void setAccesstype(int accesstype) {
+		this.accesstype = accesstype;
+	}
+
+	public String getDns() {
+		return dns;
+	}
+
+	public void setDns(String dns) {
+		this.dns = dns;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+	@OneToMany(cascade=CascadeType.ALL,mappedBy="ldapConfig",fetch=FetchType.LAZY)
+	private List<Organization> organizations;
+	
+	public List<Organization> getOrganizations() {
+		return organizations;
+	}
+	public void setOrganizations(List<Organization> organizations) {
+		this.organizations = organizations;
+	}
 	private long synctime;
-	public String getUrl() {
-		return url;
+	
+	
+	public String getAddress() {
+		return address;
 	}
-	public void setUrl(String url) {
-		this.url = url;
+	public void setAddress(String address) {
+		this.address = address;
 	}
+
 	public String getBase() {
 		return base;
 	}
@@ -60,17 +109,24 @@ public class LdapConfig {
 	public void setIdldap(Integer idldap) {
 		this.idldap = idldap;
 	}
-	public String getDomainguid() {
-		return domainguid;
-	}
-	public void setDomainguid(String domainguid) {
-		this.domainguid = domainguid;
-	}
 	public long getSynctime() {
 		return synctime;
 	}
 	public void setSynctime(long synctime) {
 		this.synctime = synctime;
 	}
+	@Override
+	@Transient
+	@JsonIgnore
+	public Object getId() {
+		return this.getIdldap();
+	}
 	
+	public static final int NORMAL=0;
+	public static final int DELETING=501;
+	public static final int ERROR=500;
+	public static final int SYNC=2;
+	public static final int CREATEING = 1;
+	public static final int READ_WRITE=636;
+	public static final int READONLY=389;
 }

@@ -21,4 +21,5 @@ public class Constants {
 	public static final int UMOUNTING = 505;
 	public static final int MOUNTING = 506;
 	public static final int RECOVING = 509;
+	public static final String LOCAL_DOMAIN_GUID = ConfigUtil.getKey("local.domain.guid");
 }

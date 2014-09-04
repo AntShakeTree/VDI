@@ -20,6 +20,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Transient;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 
 import com.vdi.common.cache.CacheDomain;
@@ -138,6 +139,7 @@ public class Role extends PageRequest<Role> implements GrantedAuthority,CacheDom
 
 	@Override
 	@Transient
+	@JsonIgnore
 	public Object getId() {
 		// TODO Auto-generated method stub
 		return getIdrole();

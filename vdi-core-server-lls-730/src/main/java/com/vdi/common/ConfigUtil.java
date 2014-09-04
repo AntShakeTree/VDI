@@ -12,7 +12,7 @@ import java.util.Properties;
 public class  ConfigUtil{
 	private static final Properties PROPERTIES = new Properties();
 	private  static String LLS_CONFIG="/llsConfig.properties";
-	private  static String ENV_CONFIG="/dev.properties";
+	private  static String ENV_CONFIG="/env.properties";
 	public static void loadConfigFileByPath(String path)  {
 		InputStream inputStream = ConfigUtil.class.getResourceAsStream(path);
 		try {

@@ -36,12 +36,13 @@ public class UserDaoTest {
 		Role admin =roleDao.findOneByKey("authority", Role.ROLE_ADMIN);
 		Role userrole =roleDao.findOneByKey("authority", Role.ROLE_ADMIN);
 		if(admin==null){
+			admin=new Role();
 			admin.setAuthority(Role.ROLE_ADMIN);
-//			admin.setAuthority(Role.ROLE_USER);
 			admin.setParent(0);
 			roleDao.save(admin);
 		}
 		if(userrole==null){
+			userrole=new Role();
 			userrole.setAuthority(Role.ROLE_USER);
 			userrole.setParent(admin.getIdrole());
 			roleDao.save(userrole);
@@ -68,6 +69,7 @@ public class UserDaoTest {
 	}
 	@Test
 	public void deleteUser(){
+		
 		List<User> ls =userDao.listRequest(new Request<User>() {
 		});
 		for (User user : ls) {
@@ -78,6 +80,13 @@ public class UserDaoTest {
 //		for (Domain domain : ds) {
 //			domainDao.delete(domain);
 //		}
+		
+	}
+	@Test
+	public void listUser(){
+		User user =new User();
+		user.setUsername("aaa");
+		List<User> us =userDao.listRequest(user );
 		
 	}
 }

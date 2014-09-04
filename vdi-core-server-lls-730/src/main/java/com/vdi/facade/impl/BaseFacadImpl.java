@@ -4,23 +4,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
+import com.vdi.common.ConfigUtil;
 import com.vdi.common.Session;
 import com.vdi.dao.Request;
 import com.vdi.dao.desktop.ComputePoolDao;
 import com.vdi.dao.desktop.HostDao;
 import com.vdi.dao.desktop.StorageDao;
-import com.vdi.dao.desktop.domain.ComputePoolEntity;
-import com.vdi.dao.desktop.domain.HostEntity;
-import com.vdi.dao.desktop.domain.StorageEntity;
-import com.vdi.dao.desktop.domain.build.ComputePoolBuild;
-import com.vdi.dao.desktop.domain.build.HostBulid;
-import com.vdi.dao.desktop.domain.build.StorageBuild;
 import com.vdi.dao.user.DomainDao;
 import com.vdi.dao.user.RoleDao;
 import com.vdi.dao.user.UserDao;
@@ -28,9 +20,6 @@ import com.vdi.dao.user.domain.Domain;
 import com.vdi.dao.user.domain.Role;
 import com.vdi.dao.user.domain.User;
 import com.vdi.facade.BaseFacad;
-import com.vdi.support.desktop.lls.domain.resource.ComputePool;
-import com.vdi.support.desktop.lls.domain.resource.Host;
-import com.vdi.support.desktop.lls.domain.storage.Storage;
 import com.vdi.support.desktop.lls.domain.task.Task;
 import com.vdi.support.desktop.lls.services.ComputePoolService;
 import com.vdi.support.desktop.lls.services.HostService;
@@ -49,7 +38,7 @@ public class BaseFacadImpl implements BaseFacad {
 	private @Autowired StorageDao storageDao;
 	private @Autowired StorageService storageService;
 	private @Autowired DomainDao domainDao;
-	private final static String local_guid = "asdfghjkllqwertyui";
+	private final static String local_guid = ConfigUtil.getKey("local.domain.guid");
 	private @Autowired RoleDao roleDao;
 	@Override
 	public JobResponse queryJob(Job job) {
@@ -94,6 +83,8 @@ public class BaseFacadImpl implements BaseFacad {
 			userrole.setParent(admin.getIdrole());
 			roleDao.save(userrole);
 		}
+		
+		
 		
 		if (users == null || users.size() == 0) {
 			User user = new User();

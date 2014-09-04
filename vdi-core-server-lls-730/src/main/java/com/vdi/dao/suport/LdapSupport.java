@@ -31,16 +31,18 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
+import javax.sound.sampled.Port;
 
 import org.slf4j.Logger;
+import org.springframework.stereotype.Component;
 
 import com.vdi.dao.user.domain.LdapConfig;
 import com.vdi.dao.user.domain.Organization;
 import com.vdi.dao.user.domain.User;
-
-public class LdapJNDI {
+@Component
+public class LdapSupport {
 	protected static Logger log = org.slf4j.LoggerFactory
-			.getLogger(LdapJNDI.class);
+			.getLogger(LdapSupport.class);
 	private static int UF_ACCOUNTDISABLE = 0x0002;
 	private static int UF_PASSWD_NOTREQD = 0x0020;
 	private static int UF_NORMAL_ACCOUNT = 0x0200;
@@ -51,7 +53,11 @@ public class LdapJNDI {
 		Hashtable<String, String> env = new Hashtable<String, String>();
 		env.put(Context.INITIAL_CONTEXT_FACTORY,
 				"com.sun.jndi.ldap.LdapCtxFactory");
-		env.put(Context.PROVIDER_URL, config.getUrl());
+		String url = "ldaps://"+config.getAddress()+":636";
+		if(config.getAccesstype()==LdapConfig.READONLY){
+			url ="ldap://"+config.getAddress()+":389";
+		}
+		env.put(Context.PROVIDER_URL, url);
 		env.put(Context.SECURITY_AUTHENTICATION, "simple");
 		env.put(Context.SECURITY_PRINCIPAL, config.getPrincipal());
 		env.put(Context.SECURITY_CREDENTIALS, config.getPassword());
@@ -207,29 +213,20 @@ public class LdapJNDI {
 //		}
 //	}
 
-	public boolean addUser(LdapConfig config, String userDN, String userName,
-			String userPwd) {
+	public static boolean createUser(User user) {
 
 		LdapContext ctx = null;
 		try {
-
-			ctx = createDirContext(config);
-			;
-			userDN = "cn=" + userName + "," + userDN;
+			ctx = createDirContext(user.getOrganization().getLdapConfig());
 			Attributes attrs = new BasicAttributes(true);
 			attrs.put("objectClass", "user");
-			attrs.put("sAMAccountName", userName);
-			attrs.put("cn", userName);
-			attrs.put(
-					"userAccountControl",
-					Integer.toString(UF_NORMAL_ACCOUNT + UF_PASSWD_NOTREQD
-							+ UF_PASSWORD_EXPIRED + UF_ACCOUNTDISABLE));
-			// Create the context
-			ctx.createSubcontext(userDN, attrs);
+			attrs.put("sAMAccountName", user.getUsername());
+			attrs.put("cn", user.getUsername());
+			attrs.put("userAccountControl",Integer.toString(UF_NORMAL_ACCOUNT + UF_PASSWD_NOTREQD+ UF_PASSWORD_EXPIRED + UF_ACCOUNTDISABLE));
+			String userdn=LdapHelp.getUserDn(user.getUsername(),user.getOrganization().getOrganizationname(), user.getDomain().getDomainbinddn());
+			ctx.createSubcontext(userdn, attrs);
 			ModificationItem[] mods = new ModificationItem[2];
-			// Replace the "unicdodePwd" attribute with a new value
-			// Password must be both Unicode and a quoted string
-			String newQuotedPassword = "\"" + userPwd + "\"";
+			String newQuotedPassword = "\"" + user.getPassword() + "\"";
 			byte[] newUnicodePassword = newQuotedPassword.getBytes("UTF-16LE");
 			mods[0] = new ModificationItem(DirContext.REPLACE_ATTRIBUTE,
 					new BasicAttribute("unicodePwd", newUnicodePassword));
@@ -237,9 +234,7 @@ public class LdapJNDI {
 					new BasicAttribute("userAccountControl",
 							Integer.toString(UF_NORMAL_ACCOUNT
 									+ UF_PASSWORD_EXPIRED)));
-			// update
-			ctx.modifyAttributes(userDN, mods);
-
+			ctx.modifyAttributes(userdn, mods);
 			mods = null;
 			return true;
 		} catch (NamingException e) {

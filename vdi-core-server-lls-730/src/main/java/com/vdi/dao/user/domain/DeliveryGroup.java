@@ -24,6 +24,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import com.vdi.common.cache.CacheDomain;
 import com.vdi.dao.Request;
 /**
@@ -85,9 +87,8 @@ public class DeliveryGroup implements Request<DeliveryGroup>,CacheDomain{
 	}
 	@Override
 	@Transient
+	@JsonIgnore
 	public Object getId() {
 		return this.getIdgroup();
 	}
-	
-	
 }

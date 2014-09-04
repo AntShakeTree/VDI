@@ -17,21 +17,25 @@ public class LdapJNDITest {
 	  String base = "DC=cws,DC=com";
 	  config.setBase(base);
 //	  config.setPrincipal("administrator\\cws.com");
-	  config.setPrincipal("cn=Administrator,cn=Users,dc=cws,dc=com");
+	  config.setPrincipal("cws\\administrator");
 	  config.setUrl("ldaps://20.2.100.110:636");
 	  config.setPassword("123.com");
       
       //��ѯDN��������Ϣ
 //      ldap.findAllUser(config);
 //      ldap.findAllOrganazations(config);
-      List<Organization> os=LdapJNDI.findAllOrganazations(config);
-  for (Organization string : os) {
-	String dns =string.getDistinguishedName();
-	String[] treename=dns.split("OU=");
-	for (String string2 : treename) {
-		System.out.println(string2+"==============================");
-	}
-}
+//      List<Organization> os=LdapJNDISupport.findAllOrganazations(config);
+//  for (Organization string : os) {
+//	String dns =string.getDistinguishedName();
+//	String[] treename=dns.split("OU=");
+//	for (String string2 : treename) {
+//		System.out.println(string2+"==============================");
+//	}
+	String userdn =LdapHelp.getUserDn("maxiaochaouuuuu", "ou5", "DC=cws,DC=com");
+	System.out.println(userdn);
+	LdapSupport.createUser(config, userdn,"maxiaochaouuuuu","123.comBN");
+	
+  }
       
       //ɾ���û�
 //      ldap.deleteUser(userDN);
@@ -53,4 +57,3 @@ public class LdapJNDITest {
 //     ldap.modifyUserInfo(attrs, userDN);
       
 	}
-}

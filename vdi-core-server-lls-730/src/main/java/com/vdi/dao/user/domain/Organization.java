@@ -23,6 +23,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import com.vdi.common.cache.CacheDomain;
 import com.vdi.dao.Request;
 
@@ -45,7 +47,18 @@ public class Organization implements Request<Organization>, CacheDomain {
 	private String guid;
 	private String distinguishedName;
 	private int level=0;
+	@ManyToOne
+	@JoinColumn(name="ldapconfigid")
+	private LdapConfig ldapConfig;
 	
+	public LdapConfig getLdapConfig() {
+		return ldapConfig;
+	}
+
+	public void setLdapConfig(LdapConfig ldapConfig) {
+		this.ldapConfig = ldapConfig;
+	}
+
 	public Set<DeliveryGroup> getGroups() {
 		return groups;
 	}
@@ -105,6 +118,7 @@ public class Organization implements Request<Organization>, CacheDomain {
 
 	@Override
 	@Transient
+	@JsonIgnore
 	public Object getId() {
 		return this.getIdorganization();
 	}

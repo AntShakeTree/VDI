@@ -9,10 +9,8 @@
 
 package com.vdi.service.user;
 
-import com.vdi.dao.user.domain.LdapConfig;
 
 
 public interface LdapService {
-	public void addLdapConfig(LdapConfig ldapConfig);
-	public boolean isExist(String url);
+
 }

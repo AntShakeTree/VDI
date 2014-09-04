@@ -62,6 +62,8 @@ public class ErrorCode {
 	public static final int INVALID_PASSWOED_POLICY = 0x303;
 	public static final int INVALID_USERNAME = 0x304;
 	public static final int INVALID_AUTACATION_POLICY = 0x401;
+	public static final int ORGANIZATION_NULL = 0x701;
+	public static final int LDAP_NULL = 0x702;
 
 	/********************* appstatus错误码 ***********************/
 	// 数据库连接异常
@@ -76,5 +78,11 @@ public class ErrorCode {
 	public final static int CHECKLOGIN_FAIL = 0xe2727106;
 
 	public final static int CLUSTER_DOWN = 0xe2727107;
+
+	public static final int LDAP_READER_ONLY = 703;
+
+	
+
+
 
 }

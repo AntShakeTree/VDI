@@ -23,8 +23,6 @@ import javax.persistence.Id;
  * @date 2013-2-3 上午12:47:40
  */
 public class Session {
-	private static final long serialVersionUID = 1L;
-
 	/**
 	 * 登录身份: 全局管理员.
 	 */

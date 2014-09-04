@@ -17,20 +17,5 @@ import com.vdi.dao.user.domain.LdapConfig;
 import com.vdi.service.user.LdapService;
 @Service
 public class LdapServiceImpl implements LdapService {
-	private @Autowired LdapConfigDao ldapconfigDao;
-	
-	@Override
-	public void addLdapConfig(LdapConfig ldapConfig) {
-		ldapconfigDao.save(ldapConfig);
-	}
-
-	
-	@Override
-	public boolean isExist(String url) {
-		if(ldapconfigDao.findOneByKey("url", url)!=null){
-			return true;
-		}
-		return false;
-	}
 
 }

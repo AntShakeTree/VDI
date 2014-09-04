@@ -35,6 +35,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.vdi.common.cache.CacheDomain;
 import com.vdi.dao.PageRequest;
 import com.vdi.dao.Request;
+import com.vdi.dao.annotation.VDIDaoHelper;
+import com.vdi.dao.annotation.VDIDaoHelper.IgnoreValue;
 
 /**
  * ClassName: TicketWrapper :
@@ -60,6 +62,7 @@ public class User extends PageRequest<User> implements UserDetails,CacheDomain{
 	private Set<DeliveryGroup> groups;
 	private String mobile;
 	private String email;
+	private int status=0;
 	@ManyToOne(fetch=FetchType.LAZY,targetEntity=Domain.class,cascade=CascadeType.MERGE)
 	@JoinColumn(name="domainguid")
 	private Domain domain;
@@ -75,6 +78,13 @@ public class User extends PageRequest<User> implements UserDetails,CacheDomain{
 
 
 
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
 
 	public String getTelephone() {
 		return telephone;
@@ -115,7 +125,7 @@ public class User extends PageRequest<User> implements UserDetails,CacheDomain{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
+	@VDIDaoHelper(ignore=IgnoreValue.DEFAULT)
 	public boolean isEnabled() {
 		return enabled;
 	}
@@ -217,5 +227,9 @@ public class User extends PageRequest<User> implements UserDetails,CacheDomain{
 		return this.getIduser();
 	}
 	
-
+	public static final int NORMAL=0;
+	public static final int ERROR=500;
+	public static final int SYNC=2;
+	public static final int DELETING=501;
+	//~
 }

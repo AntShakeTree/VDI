@@ -1,0 +1,7 @@
+package com.vdi.service.user;
+
+import com.vdi.dao.user.domain.LdapConfig;
+
+public interface LdapStateObserver {
+	void whenLdapStateChangeUpdateByLdapconfig(LdapConfig config);	
+}

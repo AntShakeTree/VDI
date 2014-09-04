@@ -3,7 +3,7 @@ package com.vdi.vo.res;
 import com.vdi.dao.user.domain.LdapConfig;
 
 public class LdapConfigResponse implements Response<LdapConfig>{
-	private Header head;
+	private Header head=new Header();
 	private LdapConfig body;
 	public Header getHead() {
 		return head;

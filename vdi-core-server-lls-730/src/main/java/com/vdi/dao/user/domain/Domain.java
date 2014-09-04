@@ -30,6 +30,7 @@ public class Domain extends PageRequest<Domain> implements CacheDomain{
 	private String guid;
 	private String domainname;
 
+	
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -78,6 +79,7 @@ public class Domain extends PageRequest<Domain> implements CacheDomain{
 	@JsonIgnore
 	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.REMOVE,mappedBy="domain")
 	private List<User> users;
+	
 	
 	public List<User> getUsers() {
 		return users;

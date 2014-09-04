@@ -24,7 +24,7 @@ import com.jolbox.bonecp.BoneCPDataSource;
  */
 @Configuration
 @EnableTransactionManagement
-@PropertySource("classpath:dev.properties")
+@PropertySource("classpath:env.properties")
 @EnableJpaRepositories(basePackages={ "com.vdi.dao"})
 @Order(1)
 public class PersistenceContext {
