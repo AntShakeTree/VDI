@@ -25,17 +25,17 @@ rootApp.controller('center.ctrl', function($scope) {
 		// 按钮组
 		buttonGroup : [ {
 			'id' : 'add',
-			'cls' : 'button-add',
+			'cls' : 'glyphicon glyphicon-plus',
 			'val' : 'Create',
 			'click' : add
 		}, {
 			'id' : 'edit',
-			'cls' : 'button-edit',
+			'cls' : 'glyphicon glyphicon-pencil',
 			'val' : 'Edit',
 			'click' : edit
 		}, {
 			'id' : 'delete',
-			'cls' : 'button-del',
+			'cls' : 'glyphicon glyphicon-trash',
 			'val' : 'Delete',
 			'click' : del
 		} ]
