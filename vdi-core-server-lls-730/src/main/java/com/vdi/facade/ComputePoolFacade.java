@@ -9,7 +9,10 @@
 
 package com.vdi.facade;
 
+import java.util.List;
+
 import com.vdi.dao.desktop.domain.ComputePoolEntity;
+import com.vdi.vo.req.ComputePoolIdReq;
 import com.vdi.vo.req.DeleteComputePool;
 import com.vdi.vo.res.ComputePoolRes;
 import com.vdi.vo.res.Header;
@@ -25,6 +28,9 @@ public interface ComputePoolFacade {
 	Header updateComputePool(ComputePoolEntity entity);
 	
 	public JobResponse deleteComputePool(DeleteComputePool entity);
-	public ComputePoolRes getComputPool(ComputePoolEntity entity);
-
+	
+	public ComputePoolRes getComputPool(ComputePoolIdReq entity);
+	
+	public void testSave(List<ComputePoolEntity> es);
+	
 }

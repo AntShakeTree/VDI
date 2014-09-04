@@ -21,13 +21,14 @@ import com.vdi.common.ErrorCode;
 import com.vdi.common.ExcecutorUtil;
 import com.vdi.common.VDIBeanUtils;
 import com.vdi.dao.desktop.ComputePoolDao;
-import com.vdi.dao.desktop.domain.ComputePoolBuild;
 import com.vdi.dao.desktop.domain.ComputePoolEntity;
+import com.vdi.dao.desktop.domain.build.ComputePoolBuild;
 import com.vdi.facade.ComputePoolFacade;
 import com.vdi.service.desktop.DeleteComputePoolTask;
 import com.vdi.support.desktop.lls.domain.resource.ComputePool;
 import com.vdi.support.desktop.lls.services.AsynchronousComputePoolService;
 import com.vdi.support.desktop.lls.services.ComputePoolService;
+import com.vdi.vo.req.ComputePoolIdReq;
 import com.vdi.vo.req.DeleteComputePool;
 import com.vdi.vo.res.ComputePoolRes;
 import com.vdi.vo.res.Header;
@@ -51,8 +52,8 @@ public class ComputePoolFacadeImpl implements ComputePoolFacade {
 		
 		String taskid =asynchronousComputePoolService
 				.createComputePool(new ComputePoolBuild(entity,new ComputePool())
-						.setComputePoolName()
-						.setDispatchtype().bulidComputePool());
+						.lls_computePoolName()
+						.lls_dispatchtype().bulidLLSDomain());
 		JobResponse res = new JobResponse();
 		res.setHead(new Header().setError(0));
 		Job body=new Job();
@@ -63,30 +64,16 @@ public class ComputePoolFacadeImpl implements ComputePoolFacade {
 
 	@Override
 	public ListComputePool listComputePool(ComputePoolEntity entity) {
+		Header head=new Header();
+		int error=0;
 		ListComputePool res = new ListComputePool();
 		ComputePoolList body=new ComputePoolList();
 		List<ComputePoolEntity> cs =computePoolDao.listRequest(entity);
-		List<ComputePool> cps=computePoolService.listComputePool(new ComputePoolBuild(entity, new ComputePool()).setComputePoolIdentity().setComputePoolName().bulidComputePool());
-		for (ComputePoolEntity computePoolEntity : cs) {
-			String identity=computePoolEntity.getComputePoolIdentity();
-			boolean isEx=false;
-			for (ComputePool computePool : cps) {
-				if(!StringUtils.isEmpty(identity)){
-					if(computePool.getComputePoolIdentity().equals(identity)){
-						isEx=true;
-						entity=new ComputePoolBuild(entity, computePool).entity_computePoolIdentity().entity_cpuamount().entity_cpurest().entity_dispatchtype().entity_memoryamount().entity_memoryrest().entity_status().bulidComputePoolEntity();
-						computePoolDao.update(entity);
-						continue;
-					}
-				}	
-			}
-			if(!isEx){
-				entity.setStatus(ComputePoolEntity.ERROR);
-				computePoolDao.update(entity);
-			}
-		}
 		body.setList(cs);
+		head.setError(error);
+		res.setHead(head);
 		res.setBody(body);
+		res.setPage(entity);
 		return res;
 	}
 
@@ -102,7 +89,6 @@ public class ComputePoolFacadeImpl implements ComputePoolFacade {
 	}
 
 	@Override
-	@Transactional
 	public JobResponse deleteComputePool(DeleteComputePool entity) {
 		Assert.notNull(entity);
 		JobResponse jobResponse=new JobResponse();
@@ -117,23 +103,32 @@ public class ComputePoolFacadeImpl implements ComputePoolFacade {
 	}
 
 	@Override
-	public ComputePoolRes getComputPool(ComputePoolEntity entity) {
+	@Transactional
+	public ComputePoolRes getComputPool(ComputePoolIdReq req) {
 		ComputePoolRes res=new ComputePoolRes();
 		Header head=new Header();
 		res.setHead(head);
-		if(entity.getIdcomputepool()==null){
+		if(req.getComputepoolid()==null){
 			res.setBody(null);
 			head.setError(ErrorCode.BAD_REQ);
 			return res;
 		}
-		entity = computePoolDao.get(ComputePoolEntity.class,entity.getIdcomputepool());
-		String identity=entity.getComputePoolIdentity();
-		if(!StringUtils.isEmpty(identity)){
-			ComputePool computePool=computePoolService.getComputePool(identity);
-				entity=new ComputePoolBuild(entity, computePool).entity_computePoolIdentity().entity_cpuamount().entity_cpurest().entity_dispatchtype().entity_memoryamount().entity_memoryrest().entity_status().bulidComputePoolEntity();
+		ComputePoolEntity	entity = computePoolDao.get(ComputePoolEntity.class,req.getComputepoolid());
+		String identity=entity.getComputepoolidentity();
+			if(!StringUtils.isEmpty(identity)){
+				ComputePool computePool=computePoolService.getComputePool(identity);
+				entity=new ComputePoolBuild(entity, computePool).entity_computePoolIdentity().entity_cpuamount().entity_cpurest().entity_dispatchtype().entity_memoryamount().entity_memoryrest().entity_status().bulidEntity();
 				computePoolDao.update(entity);
 		}
 		res.setBody(entity);
 		return res;
+	}
+
+	@Override
+	@Transactional
+	public void testSave(List<ComputePoolEntity> es) {
+		for (ComputePoolEntity computePoolEntity : es) {
+			computePoolDao.save(computePoolEntity);
+		}
 	}
 }

@@ -21,7 +21,10 @@ public class PageView {
 
 	public PageView(int maxresult, int currentpage) {
 		this.maxresult = maxresult;
-		this.currentpage = currentpage;
+		if(currentpage<1){
+			this.currentpage=1;}
+		else{
+		this.currentpage = currentpage;}
 	}
 
 	public long getTotalrecord() {

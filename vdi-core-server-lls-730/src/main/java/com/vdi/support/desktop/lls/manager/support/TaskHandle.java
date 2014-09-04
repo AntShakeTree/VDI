@@ -15,10 +15,10 @@ import org.springframework.stereotype.Component;
 import com.vdi.common.ParseJSON;
 import com.vdi.dao.desktop.ComputePoolDao;
 import com.vdi.dao.desktop.HostDao;
-import com.vdi.dao.desktop.domain.ComputePoolBuild;
 import com.vdi.dao.desktop.domain.ComputePoolEntity;
-import com.vdi.dao.desktop.domain.HostBulid;
 import com.vdi.dao.desktop.domain.HostEntity;
+import com.vdi.dao.desktop.domain.build.ComputePoolBuild;
+import com.vdi.dao.desktop.domain.build.HostBulid;
 import com.vdi.support.desktop.lls.domain.resource.ComputePool;
 import com.vdi.support.desktop.lls.domain.resource.Host;
 import com.vdi.support.desktop.lls.domain.task.Task;
@@ -46,7 +46,7 @@ public class TaskHandle {
 			b2 = ParseJSON.convertObjectToDomain(b2.getContent(),
 					ComputePool.class);
 			// ~~
-			ComputePoolEntity computePoolEntity= new ComputePoolBuild(new ComputePoolEntity(), b2).entity_cpuamount().entity_computePoolIdentity().entity_cpurest().entity_dispatchtype().entity_memoryrest().entity_status().entity_çomputepoolname().bulidComputePoolEntity();
+			ComputePoolEntity computePoolEntity= new ComputePoolBuild(new ComputePoolEntity(), b2).entity_cpuamount().entity_computePoolIdentity().entity_cpurest().entity_dispatchtype().entity_memoryrest().entity_status().entity_computepoolname().bulidEntity();
 			computePoolDao.update(computePoolEntity);
 		}
 		break;
@@ -67,7 +67,7 @@ public class TaskHandle {
 			Host hostE=hostService.getHost(hostIdentity);
 			hostE=ParseJSON.convertObjectToDomain(hostE.getContent(),
 					Host.class);
-			HostEntity entity = new HostBulid(new HostEntity(), hostE).hostEntity_hostIdentity().hostEntity_hostname().hostEntity_ipaddress().hostEntity_status().bulidHostEntity();
+			HostEntity entity = new HostBulid(new HostEntity(), hostE).entity_hostIdentity().entity_hostname().entity_address().entity_status().bulidEntity();
 			hostDao.save(entity);
 		}
 		break;

@@ -13,6 +13,7 @@ public class Job {
 	private String jobid;
 	private String progress;
 	private int error=0;
+	private String resourceid;
 	private String status;
 	public static final String SUCCESS="success";
 	public static final String RUNNING="running";
@@ -22,6 +23,13 @@ public class Job {
 	}
 	public void setJobid(String jobid) {
 		this.jobid = jobid;
+	}
+	
+	public String getResourceid() {
+		return resourceid;
+	}
+	public void setResourceid(String resourceid) {
+		this.resourceid = resourceid;
 	}
 	public String getProgress() {
 		return progress;

@@ -27,12 +27,19 @@ public class GenericsUtils {
 	public static Class getSuperClassGenricType(Class clazz) {
 		return getSuperClassGenricType(clazz, 0);
 	}
+
 	/*
-	 * If more than one interface  may be the return type is not the type of required
+	 * If more than one interface may be the return type is not the type of
+	 * required
 	 */
 	public static Class<?> getMethodParameterGenericsInterfaceType(Object req) {
-		ParameterizedType parameterizedType = (ParameterizedType) (req
-				.getClass().getGenericInterfaces()[0]);
+		ParameterizedType parameterizedType = null;
+		try {
+			parameterizedType = (ParameterizedType) (req.getClass()
+					.getGenericInterfaces()[0]);
+		} catch (Exception e) {
+			return getSuperClassGenricType(req.getClass());
+		}
 		return (Class<?>) parameterizedType.getActualTypeArguments()[0];
 	}
 	// public static Class getMethodGenericReturnType(Method method, int index)

@@ -9,7 +9,6 @@
 
 package com.vdi.vo.req;
 
-import java.util.List;
 
 
 public class DeleteComputePool {

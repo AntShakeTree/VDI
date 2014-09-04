@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.vdi.dao.desktop.domain.ComputePoolEntity;
 import com.vdi.facade.ComputePoolFacade;
+import com.vdi.vo.req.ComputePoolIdReq;
 import com.vdi.vo.req.DeleteComputePool;
 import com.vdi.vo.res.ComputePoolRes;
 import com.vdi.vo.res.Header;
@@ -22,25 +23,25 @@ public class ComputpoolController {
 	private static final String CONTEXT_TYPE = "application/json";
 	
 
-	@RequestMapping(value= "/listComputePool",method=RequestMethod.POST,produces={CONTEXT_TYPE},consumes={CONTEXT_TYPE})
-	@PostAuthorize("hasAuthority('ADMIN')")
+	@RequestMapping(value= "/listComputePools",method=RequestMethod.POST,produces={CONTEXT_TYPE},consumes={CONTEXT_TYPE})
+//	@PostAuthorize("hasAuthority('ROLE_ADMIN')")
 	public @ResponseBody ListComputePool listComputePool(ComputePoolEntity pool){
-		//~ 
 		return computePoolFacade.listComputePool(pool);
 	}
 	
-	@RequestMapping(value= "/getUser",method=RequestMethod.POST,produces={CONTEXT_TYPE},consumes={CONTEXT_TYPE})
-	@PostAuthorize("hasAuthority('ADMIN')")
+	@RequestMapping(value= "/createComputePool",method=RequestMethod.POST,produces={CONTEXT_TYPE},consumes={CONTEXT_TYPE})
+//	@PostAuthorize("hasAuthority('ROLE_ADMIN')")
 	public @ResponseBody JobResponse createComputePool(ComputePoolEntity entity){
 		return computePoolFacade.createComputePool(entity);
 	}
-//	@RequestMapping(value="deleteComputePool",method=RequestMethod.POST)
-//	public @ResponseBody JobResponse deleteComputePool(DeleteComputePool entity){
-//		return computePoolFacade.deleteComputePool(entity);
-//	}
-	@RequestMapping(value="deleteComputePool",method=RequestMethod.POST)
-	public @ResponseBody ComputePoolRes getComputePool(ComputePoolEntity entity){
+	@RequestMapping(value="/deleteComputePool",method=RequestMethod.POST)
+//	@PostAuthorize("hasAuthority('ROLE_ADMIN')")
+	public @ResponseBody JobResponse deleteComputePool(DeleteComputePool entity){
+		return computePoolFacade.deleteComputePool(entity);
+	}
+	@RequestMapping(value="/getComputePool",method=RequestMethod.POST)
+//	@PostAuthorize("hasAuthority('ROLE_ADMIN')")
+	public @ResponseBody ComputePoolRes getComputePool(ComputePoolIdReq entity){
 		return computePoolFacade.getComputPool(entity);
 	}
-	
 }

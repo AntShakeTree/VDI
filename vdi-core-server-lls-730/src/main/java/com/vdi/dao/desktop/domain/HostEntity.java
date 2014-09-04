@@ -19,39 +19,48 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonBackReference;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonManagedReference;
 
 import com.vdi.common.Constants;
 import com.vdi.common.cache.CacheDomain;
+import com.vdi.dao.PageRequest;
 import com.vdi.dao.Request;
 
 @Entity
 @Table(name="host")
-@JsonIgnoreProperties(value={"hostIdentity"})
-public class HostEntity implements Request<HostEntity>,CacheDomain{
+@JsonIgnoreProperties(value={"hostidentity"})
+public class HostEntity extends PageRequest<HostEntity> implements CacheDomain{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long idhost;
 	private String hostname;
-//	private String totalmem;∂
-	private String ipaddress;
-	private String hostIdentity;
-	private int status;
-	public String getHostIdentity() {
-		return hostIdentity;
-	}
-	public void setHostIdentity(String hostIdentity) {
-		this.hostIdentity = hostIdentity;
-	}
-	public String getIpaddress() {
-		return ipaddress;
-	}
-	public void setIpaddress(String ipaddress) {
-		this.ipaddress = ipaddress;
-	}
+	private String address;
+	@JsonIgnore
+	private String hostidentity;
+	private Integer status;
+
+	@ManyToOne
 	@JoinColumn(name="computepoolid")
-	@ManyToOne(cascade=CascadeType.ALL,targetEntity=ComputePoolEntity.class,optional=true,fetch=FetchType.EAGER)
+	@JsonIgnore
 	private ComputePoolEntity computePoolEntity;
+	public String getHostidentity() {
+		return hostidentity;
+	}
+	public void setHostidentity(String hostidentity) {
+		this.hostidentity = hostidentity;
+	}
+	
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+
 	public Long getIdhost() {
 		return idhost;
 	}
@@ -67,6 +76,7 @@ public class HostEntity implements Request<HostEntity>,CacheDomain{
 		this.computePoolEntity = computePoolEntity;
 	}
 	@Override
+	@JsonIgnore
 	public Object getId() {
 		return idhost;
 	}
@@ -78,21 +88,22 @@ public class HostEntity implements Request<HostEntity>,CacheDomain{
 	public void setHostname(String hostname) {
 		this.hostname = hostname;
 	}
-	public int getStatus() {
+	
+	
+	
+	public Integer getStatus() {
 		return status;
 	}
-	public void setStatus(int status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	
-	
 	public static final int CREATING=Constants.CREATING;
 	public static final int FREE=Constants.AVAILABLE;
 	public static final int DELETING=Constants.DELETING;
 	public static final int WORK=2;
-	public static final  int DISCON=504;
-	public static final int WORKDIS=503;
-	public static final  int FREEDIS=505;
-	public static final int RECOVING=506;
+	public static final  int DISCON=510;
+	public static final int WORKDIS=507;
+	public static final  int FREEDIS=508;
+	public static final int RECOVING=Constants.RECOVING;
 	public static final int ERROR=Constants.ERROR;
 }
