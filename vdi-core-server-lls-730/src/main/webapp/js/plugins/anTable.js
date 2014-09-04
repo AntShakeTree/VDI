@@ -15,6 +15,8 @@ angular.module('anTable', [])
             controller : function($scope, $element, $attrs) {
                 // 表格的默认配置
                 var defaults = {
+                    dataKey : "data",
+                    pageKey : "page",
                     pageNo : 1,
                     pageSizes : [25, 50, 100],
                     sortKey : "id",
@@ -23,22 +25,21 @@ angular.module('anTable', [])
                 };
                 // 表格的自定义配置与默认配置结合
                 var options = this.tableOptions = angular.extend({}, defaults, $scope.$eval($attrs.options));
+                // 想service中注入scope
+                anDataService.setScope($scope);
                 // 向后台请求数据
-                $scope.tableData =  $scope.$eval(options.data);
-                $scope.tablePage =  $scope.$eval(options.page);
-                /*anDataService.requestData({
+                anDataService.requestData({
                     method : options.method,
                     url : options.url,
-                    params : angular.extend({}, options.params, {
+                    dataKey : options.dataKey,
+                    pageKey : options.pageKey,
+                    data : angular.extend({}, options.params, {
                         pageNo : options.pageNo,
                         pageSize : options.pageSizes[0],
                         sortKey : options.sortKey,
                         ascend : options.ascend
                     })
-                }).success(function(data) {
-                	$scope.tableData = data.list;
-                	$scope.tablePage = data.page;
-                });*/
+                });
             }
         };
     })
@@ -94,13 +95,13 @@ angular.module('anTable', [])
             template : '<tr>'
             +               '<td colspan="12">'
             +                   '<div class="pagination">'
-            +                       'total {{tablePage.pageAmount}} page, every '
-            +                       '<select ng-model="anfoot.pageSize" ng-options="size for size in anfoot.sizes" class="pageNo" ng-change="anfoot.selectChange(anfoot.pageSize)"></select> items'
-            +                       '<a href="javascript:void(0)" ng-click="anfoot.firstPage()">&lt;&lt; First</a>'
-            +                       '<a href="javascript:void(0)" ng-click="anfoot.prevPage()">'+'&lt;&lt; Preious'+'</a>'
+            +                       '共有{{tablePage.pageAmount}}页, 每页 '
+            +                       '<select ng-model="anfoot.pageSize" ng-options="size for size in anfoot.sizes" ng-change="anfoot.selectChange(anfoot.pageSize)"></select>'
+            +                       '<a href="javascript:void(0)" ng-click="anfoot.firstPage()">«第一页</a>'
+            +                       '<a href="javascript:void(0)" ng-click="anfoot.prevPage()">«上一页</a>'
             +                       '<a href="javascript:void(0)" ng-repeat="no in anfoot.showNos" ng-click="anfoot.turnPage(no)" ng-class="{number : true, current : no ==  tablePage.pageNo}">{{no}}</a>'
-            +                       '<a href="javascript:void(0)" ng-click="anfoot.nextPage()">Next  &gt;&gt;</a>'
-            +                       '<a href="javascript:void(0)" ng-click="anfoot.lastPage()">Last  &gt;&gt;</a>'
+            +                       '<a href="javascript:void(0)" ng-click="anfoot.nextPage()">下一页 »</a>'
+            +                       '<a href="javascript:void(0)" ng-click="anfoot.lastPage()">最后一页 »</a>'
             +                   '</div>'
             +                   '<div class="clear"></div>'
             +               '</td>'
@@ -119,7 +120,7 @@ angular.module('anTable', [])
                             return;
                         }
                         anDataService.requestData({
-                        	params : {
+                        	data : {
                                 pageNo : no
                             }
                         });
@@ -145,7 +146,7 @@ angular.module('anTable', [])
                     },
                     selectChange : function(size) {
                     	anDataService.requestData({
-                    		params : {
+                    		data : {
                                 pageSize : size
                             }
                         });
@@ -202,15 +203,29 @@ angular.module('anTable', [])
      */
     .factory('anDataService', function($http) {
         return function() {
+        	var scope = {};
         	// 缓存上次的请求信息
             var request = {};
+            // 解析key
+            var parseKey = function(key) {
+                return key.split(".");
+            };
             return {
+            	getScope : function() {
+            		return scope;
+            	},
+            	setScope : function(s) {
+            		scope = s;
+            	},
                 // req包括：url, params, pageno, pagesize,
                 requestData : function(req) {
                     if(req) {
                         angular.extend(request, req);
                     }
-                    return $http(request);
+                    $http(request).success(function(data) {
+                    	scope.tableData = eval("data." + request.dataKey);
+                    	scope.tablePage = eval("data." + request.pageKey);
+                    });
                 }
             };
         }();

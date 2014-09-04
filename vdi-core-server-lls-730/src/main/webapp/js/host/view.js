@@ -242,12 +242,14 @@ rootApp.controller('host.ctrl', function($scope) {
     	    pageAmount : 20
     	};
     $scope.tableOptions = {
-            data : 'tableData',
+    		url:'http://localhost:8080/vdi-core-server-lls/services/listHosts',
+            data : {},
             method : 'POST',
             page : 'tablePage',
             pageNo : 1,
             pageSize : 10,
             sortKey : 'id',
+            dataKey:"body.list",
             ascend : 1,
             needSelect : true,
             columns :
@@ -266,14 +268,14 @@ rootApp.controller('host.ctrl', function($scope) {
                     render:function(v){
                     	var res=null;
                     	switch(v){
-                    		case 501:res="创建中"; break;
-                    		case 1:res="正常使用";break;
-                    		case 502:res="删除中";break;
-                    		case 500:res="错误";break;
-                    		case 2:res="正在工作";break;
-                    		case 507:res="工作断开连接";break;
-                    		case 508:res="空闲断开连接";break;
-                    		case 509:res="正在恢复";break;
+                    		case 501:res="Creating"; break;
+                    		case 1:res="Normal";break;
+                    		case 502:res="Deleting";break;
+                    		case 500:res="Error";break;
+                    		case 2:res="Operating";break;
+                    		case 507:res="Operating Disconnect";break;
+                    		case 508:res="Free Disconnect";break;
+                    		case 509:res="Recovering";break;
                     	}
                     	return res;
                     }
