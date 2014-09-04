@@ -16,7 +16,7 @@ rootApp.controller('rootCtrl.frameCtrl', function($scope) {
     return {
         template : '<ul>'
         +               '<li ng-repeat="main in menu.menuData">'
-        +                   '<a href="javascript:void(0)" class="nav-top-item no-submenu" ng-click="menu.mainClick(main)" ng-class="{current : main.selected}" ng-init="main.selected = $first">{{main.title}}</a>'
+        +                   '<a href="javascript:void(0)" class="nav-top-item no-submenu" ng-click="menu.mainClick(main)" ng-class="{current : main.selected}" ng-init="main.selected = $first"><span class="menu-span {{main.cls}}"></span> {{main.title}}</a>'
         +                   '<ul ng-show="main.selected" class="animate animate-{{main.content.length}}">'
         +                       '<li ng-repeat="sub in main.content">'
         +                           '<a href="{{sub.url}}" ng-click="menu.subClick(sub)" ng-class="{current : sub.selected}" ng-init="sub.selected = $first&&main.selected">{{sub.title}}</a>'

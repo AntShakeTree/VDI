@@ -297,7 +297,7 @@ a.remove-link:hover {
                 }
 
 .content-box-header {
-                background: #e5e5e5 url('../images/bg-content-box.gif') top left repeat-x;
+                background-color:#ECF0F1;
                 margin-top: 1px;
                 height: 40px;
                 }
