@@ -284,7 +284,9 @@ rootApp.controller('storage.ctrl', function($scope) {
     	    pageAmount : 20
     	};
     $scope.tableOptions = {
-            data : 'tableData',
+    		url:'http://localhost:8080/vdi-core-server-lls/services/listStorages',
+            data : {},
+            dataKey:'body.list',
             method : 'POST',
             page : 'tablePage',
             pageNo : 1,
@@ -308,21 +310,28 @@ rootApp.controller('storage.ctrl', function($scope) {
                     render:function(v){
                     	var res=null;
                     	switch(v){
-                    		case 1:res="正常使用"; break;
-                    		case 3:res="主机添加中";break;
-                    		case 4:res="主机移除中";break;
-                    		case 501:res="创建中";break;
-                    		case 502:res="删除中";break;
-                    		case 505:res="卸载中";break;
-                    		case 506:res="装载中";break;
-                    		case 509:res="恢复中";break;
+                    		case 1:res="Normal"; break;
+                    		case 3:res="Adding Host";break;
+                    		case 4:res="Removing Host";break;
+                    		case 501:res="Creating";break;
+                    		case 502:res="Deleting";break;
+                    		case 505:res="Unloading";break;
+                    		case 506:res="Loading";break;
+                    		case 509:res="Recovering";break;
                     	}
                     	return res;
                     }
                 }, {
-                    field : 'address',
+                    field : 'host',
                     displayName : 'Address',
-                    colWidth : ''
+                    colWidth : '',
+                    render:function(v){
+                    	if(v){
+                    		return v.address;
+                    	}else{
+                    		return null;
+                    	}
+                    }
                 }, {
                     field : 'totalsize',
                     displayName : 'Total Size',

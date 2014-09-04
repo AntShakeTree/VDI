@@ -51,12 +51,14 @@ rootApp.controller('center.ctrl', function($scope) {
 		pageAmount : 20
 	};
 	$scope.tableOptions = {
-		data : 'tableData',
+		url:'http://localhost:8080/vdi-core-server-lls/services/listCenters',
+		data : {},
+		dataKey:'body.list',
 		method : 'POST',
 		page : 'tablePage',
 		pageNo : 1,
 		pageSize : 10,
-		sortKey : 'Idcenter',
+		sortKey : 'idcenter',
 		ascend : 1,
 		needSelect : true,
 		columns : [ {
