@@ -64,7 +64,7 @@ var menuData = [ {
 	} ]
 }, {
 	title : "Configuration",
-	cls : "glyphicon glyphicon-wrench",
+	cls : "glyphicon glyphicon-cog",
 	content : [ {
 		title : "License",
 		url : "#"
