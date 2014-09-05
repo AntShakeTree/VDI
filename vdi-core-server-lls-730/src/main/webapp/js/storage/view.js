@@ -258,9 +258,9 @@ rootApp.controller('storage.ctrl', function($scope) {
     //数据模型
     $scope.storagemodel = {
         //按钮组
-        buttonGroup : [{'id' : 'add', 'cls' : 'button-add', 'val' : 'Create', 'click' : add},
-                        {'id' : 'edit', 'cls' : 'button-edit', 'val' : 'Edit', 'click' : edit},
-                        {'id' : 'delete', 'cls' : 'button-del', 'val' : 'Delete', 'click' : del}]
+        buttonGroup : [{'id' : 'add', 'cls' : 'glyphicon glyphicon-plus', 'val' : 'Create', 'click' : add},
+                        {'id' : 'edit', 'cls' : 'glyphicon glyphicon-pencil', 'val' : 'Edit', 'click' : edit},
+                        {'id' : 'delete', 'cls' : 'glyphicon glyphicon-trash', 'val' : 'Delete', 'click' : del}]
     };
     //计算池列表假数据
     $scope.tableData = [{
@@ -278,7 +278,7 @@ rootApp.controller('storage.ctrl', function($scope) {
     	totalsize : 60,
     	free : 140
     }];
-    $scope.demo = {
+    $scope.tablePage = {
     	    pageNo : 5,
     	    pageSize : 10,
     	    pageAmount : 20

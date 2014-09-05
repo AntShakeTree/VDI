@@ -226,9 +226,9 @@ rootApp.controller('host.ctrl', function($scope) {
     // 数据模型
     $scope.hostmodel = {
         // 按钮组
-        buttonGroup : [{'id' : 'add', 'cls' : 'button-add', 'val' : '创建', 'click' : add},
-                        {'id' : 'edit', 'cls' : 'button-edit', 'val' : '修改', 'click' : edit},
-                        {'id' : 'delete', 'cls' : 'button-del', 'val' : '删除', 'click' : del}]
+            buttonGroup : [{'id' : 'add', 'cls' : 'glyphicon glyphicon-plus', 'val' : 'Create', 'click' : add},
+                           {'id' : 'edit', 'cls' : 'glyphicon glyphicon-pencil', 'val' : 'Edit', 'click' : edit},
+                           {'id' : 'delete', 'cls' : 'glyphicon glyphicon-trash', 'val' : 'Delete', 'click' : del}]
     };
     //计算池列表假数据
     $scope.tableData = [{
@@ -236,7 +236,7 @@ rootApp.controller('host.ctrl', function($scope) {
     	address : "192.168.10.56",
     	status : 501
     }];
-    $scope.demo = {
+    $scope.tablePage = {
     	    pageNo : 5,
     	    pageSize : 10,
     	    pageAmount : 20
