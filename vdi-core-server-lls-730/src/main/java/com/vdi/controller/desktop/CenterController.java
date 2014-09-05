@@ -38,6 +38,7 @@ public class CenterController {
 		body.setList(list);
 		center.setBody(body);
 		center.setHead(head);
+		center.setPage(entity);
 		return center;
 	}
 }

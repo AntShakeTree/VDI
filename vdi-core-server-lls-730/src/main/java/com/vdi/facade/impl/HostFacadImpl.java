@@ -48,6 +48,7 @@ public class HostFacadImpl implements HostFacad {
 		List<HostEntity> hostEntities=hostDao.listRequest(entity);
 		body.setList(hostEntities);
 		response.setBody(body);
+		response.setPage(entity);
 		return response;
 	}
 

@@ -32,6 +32,7 @@ public class StorageFacadImpl implements StorageFacad {
 		head.setError(error);
 		res.setHead(head);
 		res.setBody(body);
+		res.setPage(entity);
 		return res;
 	}
 	@Override
