@@ -11,37 +11,34 @@ package com.vdi.dao.user.domain;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-
-import org.codehaus.jackson.annotate.JsonIgnore;
-
-import com.vdi.common.cache.CacheDomain;
-import com.vdi.dao.PageRequest;
-
-@Entity
-@Table(name="ldapconfig")
-public class LdapConfig extends PageRequest<LdapConfig> implements CacheDomain{
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+public class LdapConfig{
 	private Integer idldap;
 	private String address;
 	private int accesstype;
 	private String base;
 	private String principal;
 	private String dns;
-	@Transient
-	@JsonIgnore
 	private String password;
 	private int status;
+	private String guid;
+	private Domain domain;
 	
+	public Domain getDomain() {
+		return domain;
+	}
+
+	public void setDomain(Domain domain) {
+		this.domain = domain;
+	}
+
+	public String getGuid() {
+		return guid;
+	}
+
+	public void setGuid(String guid) {
+		this.guid = guid;
+	}
+
 	public int getStatus() {
 		return status;
 	}
@@ -65,7 +62,6 @@ public class LdapConfig extends PageRequest<LdapConfig> implements CacheDomain{
 	public void setStatus(int status) {
 		this.status = status;
 	}
-	@OneToMany(cascade=CascadeType.ALL,mappedBy="ldapConfig",fetch=FetchType.LAZY)
 	private List<Organization> organizations;
 	
 	public List<Organization> getOrganizations() {
@@ -114,12 +110,6 @@ public class LdapConfig extends PageRequest<LdapConfig> implements CacheDomain{
 	}
 	public void setSynctime(long synctime) {
 		this.synctime = synctime;
-	}
-	@Override
-	@Transient
-	@JsonIgnore
-	public Object getId() {
-		return this.getIdldap();
 	}
 	
 	public static final int NORMAL=0;

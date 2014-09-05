@@ -1,5 +1,5 @@
-@SuppressWarnings("rawtypes" )  
- public static ArrayList<String> getDNSRecs(String domain, String provider,  
+  @SuppressWarnings("rawtypes" )  
+  public static ArrayList<String> getDNSRecs(String domain, String provider,  
             String [] types, int timeout, int retryCount) throws NamingException {  
         
       ArrayList<String> results = new ArrayList<String>(15);  

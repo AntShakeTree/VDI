@@ -5,17 +5,12 @@
  * Date:2014年8月15日上午9:27:26
  * Copyright (c) 2014 All Rights Reserved.
  *
-*/
+ */
 
 package com.vdi.dao.user.domain;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
@@ -23,14 +18,11 @@ import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
 import com.vdi.common.cache.CacheDomain;
 import com.vdi.dao.PageRequest;
-@Entity
-@JsonSerialize(include=Inclusion.NON_DEFAULT)
-public class Domain extends PageRequest<Domain> implements CacheDomain{
-	@Id
-	private String guid;
-	private String domainname;
 
-	
+@Entity
+@JsonSerialize(include = Inclusion.NON_DEFAULT)
+public class Domain extends PageRequest<Domain> implements CacheDomain {
+
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -67,7 +59,13 @@ public class Domain extends PageRequest<Domain> implements CacheDomain{
 	 * 默认本地域的ID.
 	 */
 	public static final int DEFAULT_DOMAIN_ID = 0;
-	
+	@Id
+	private String guid;
+	private String domainname;
+	private String address;
+	private String dns;
+	private String accesstype;
+	private String principal;
 	private int domaintype;
 	private String domainnetworkname;
 	private String domainservername;
@@ -76,84 +74,127 @@ public class Domain extends PageRequest<Domain> implements CacheDomain{
 	private String domainbindpass;
 	private String notes;
 	private int status;
-	@JsonIgnore
-	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.REMOVE,mappedBy="domain")
-	private List<User> users;
-	
-	
-	public List<User> getUsers() {
-		return users;
+
+	public String getAddress() {
+		return address;
 	}
-	public void setUsers(List<User> users) {
-		this.users = users;
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
+
+	public String getDns() {
+		return dns;
+	}
+
+	public void setDns(String dns) {
+		this.dns = dns;
+	}
+
+	public String getAccesstype() {
+		return accesstype;
+	}
+
+	public void setAccesstype(String accesstype) {
+		this.accesstype = accesstype;
+	}
+
+	public String getPrincipal() {
+		return principal;
+	}
+
+	public void setPrincipal(String principal) {
+		this.principal = principal;
+	}
+
 	public String getGuid() {
 		return guid;
 	}
+
 	public void setGuid(String guid) {
 		this.guid = guid;
 	}
+
 	public String getDomainname() {
 		return domainname;
 	}
+
 	public void setDomainname(String domainname) {
 		this.domainname = domainname;
 	}
+
 	public int getDomaintype() {
 		return domaintype;
 	}
+
 	public void setDomaintype(int domaintype) {
 		this.domaintype = domaintype;
 	}
+
 	public String getDomainnetworkname() {
 		return domainnetworkname;
 	}
+
 	public void setDomainnetworkname(String domainnetworkname) {
 		this.domainnetworkname = domainnetworkname;
 	}
+
 	public String getDomainservername() {
 		return domainservername;
 	}
+
 	public void setDomainservername(String domainservername) {
 		this.domainservername = domainservername;
 	}
+
 	public int getDomainserverport() {
 		return domainserverport;
 	}
+
 	public void setDomainserverport(int domainserverport) {
 		this.domainserverport = domainserverport;
 	}
+
 	public String getDomainbinddn() {
 		return domainbinddn;
 	}
+
 	public void setDomainbinddn(String domainbinddn) {
 		this.domainbinddn = domainbinddn;
 	}
+
 	public String getDomainbindpass() {
 		return domainbindpass;
 	}
+
 	public void setDomainbindpass(String domainbindpass) {
 		this.domainbindpass = domainbindpass;
 	}
+
 	public String getNotes() {
 		return notes;
 	}
+
 	public void setNotes(String notes) {
 		this.notes = notes;
 	}
+
 	public int getStatus() {
 		return status;
 	}
+
 	public void setStatus(int status) {
 		this.status = status;
 	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
 	@Override
 	@JsonIgnore
 	public Object getId() {
 		return this.getGuid();
 	}
-	
+
 }
