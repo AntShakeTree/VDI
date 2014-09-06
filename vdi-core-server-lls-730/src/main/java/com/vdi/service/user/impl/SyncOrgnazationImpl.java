@@ -12,15 +12,15 @@ import com.vdi.dao.user.OrganizationDao;
 import com.vdi.dao.user.domain.LdapConfig;
 import com.vdi.dao.user.domain.Organization;
 import com.vdi.service.user.LdapStateSubject;
-import com.vdi.service.user.SyncOrgnazation;
-import com.vdi.service.user.SyncUser;
+import com.vdi.service.user.SyncOrgnazationObserver;
+import com.vdi.service.user.SyncUserObserver;
 
 @Service
-public class SyncOrgnazationImpl implements SyncOrgnazation {
+public class SyncOrgnazationImpl implements SyncOrgnazationObserver {
 	@Autowired
 	private OrganizationDao organizationDao;
 	@Autowired
-	private SyncUser syncUser;
+	private SyncUserObserver syncUser;
 
 	@Override
 	public void whenLdapStateChangeUpdateByLdapconfig(LdapStateSubject subject,

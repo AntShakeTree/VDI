@@ -1,12 +1,9 @@
 package com.vdi.facade.impl;
 
-import javax.naming.NamingException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vdi.common.VDIBeanUtils;
-import com.vdi.dao.suport.LdapHelp;
 import com.vdi.dao.suport.LdapSupport;
 import com.vdi.dao.user.DomainDao;
 import com.vdi.dao.user.OrganizationDao;
@@ -28,7 +25,7 @@ public class OriganazationFacadImpl implements OriganazationFacad {
 		OrganizationResponse response =new OrganizationResponse();
 		Domain domaindaoEntity = domainDao.get(Domain.class,organization.getDomainguid());
 		if (domaindaoEntity.getDomaintype()!=Domain.DOMAIN_TYPE_LOCAL) {
-			LdapConfig ldapconfig =new LdapConfig();
+			LdapConfig ldapconfig =domaindaoEntity.getConfig();
 			VDIBeanUtils.copyPropertiesByNotNull(domaindaoEntity, ldapconfig, null);
 			LdapSupport.createOU(ldapconfig, organization);
 		}

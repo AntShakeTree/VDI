@@ -13,10 +13,10 @@ import com.vdi.dao.user.domain.LdapConfig;
 import com.vdi.dao.user.domain.Organization;
 import com.vdi.dao.user.domain.User;
 import com.vdi.service.user.LdapStateSubject;
-import com.vdi.service.user.SyncUser;
+import com.vdi.service.user.SyncUserObserver;
 
 @Service
-public class SyncUserImpl implements SyncUser {
+public class SyncUserObserverImpl implements SyncUserObserver {
 	private @Autowired UserDao userDao;
 	private @Autowired DomainDao domainDao;
 	@Override

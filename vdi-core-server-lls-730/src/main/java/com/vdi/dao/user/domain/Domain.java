@@ -11,6 +11,7 @@ package com.vdi.dao.user.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -22,6 +23,7 @@ import com.vdi.common.cache.CacheDomain;
 import com.vdi.dao.PageRequest;
 
 @Entity
+@Table(name="domainentity")
 @JsonSerialize(include = Inclusion.NON_DEFAULT)
 public class Domain extends PageRequest<Domain> implements CacheDomain {
 

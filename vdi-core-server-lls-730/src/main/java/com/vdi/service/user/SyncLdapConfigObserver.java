@@ -1,6 +1,5 @@
-package com.vdi.service;
+package com.vdi.service.user;
 
-import com.vdi.service.user.LdapStateObserver;
 
 public interface SyncLdapConfigObserver extends LdapStateObserver{
 

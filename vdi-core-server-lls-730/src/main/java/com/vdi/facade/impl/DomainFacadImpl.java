@@ -19,9 +19,9 @@ import com.vdi.dao.user.domain.Domain;
 import com.vdi.dao.user.domain.LdapConfig;
 import com.vdi.dao.user.domain.LdapConfigEntity;
 import com.vdi.facade.DomainFacad;
-import com.vdi.service.user.DeleteOrganization;
+import com.vdi.service.user.RemoveOrganizationObserver;
 import com.vdi.service.user.LdapStateSubject;
-import com.vdi.service.user.SyncOrgnazation;
+import com.vdi.service.user.SyncOrgnazationObserver;
 import com.vdi.vo.req.DomainIdsReq;
 import com.vdi.vo.res.DomainResponse;
 import com.vdi.vo.res.Header;
@@ -32,8 +32,8 @@ import com.vdi.vo.res.ListDomainResponse.ListDomain;
 public class DomainFacadImpl implements DomainFacad {
 	private @Autowired DomainDao domainDao;
 	private @Autowired LdapStateSubject ldapStateSubject;
-	private @Autowired DeleteOrganization deleteOrganization;
-	private @Autowired SyncOrgnazation syncOrgnazation;
+	private @Autowired RemoveOrganizationObserver deleteOrganization;
+	private @Autowired SyncOrgnazationObserver syncOrgnazation;
 	private @Autowired LdapConfigDao ldapConfigDao;
 
 	@Override

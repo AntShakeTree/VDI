@@ -49,7 +49,7 @@ public class DeliveryGroup implements Request<DeliveryGroup>,CacheDomain{
 	@JoinTable(name = "groups_users", inverseJoinColumns = @JoinColumn(name = "groupid"), joinColumns = @JoinColumn(name = "userid"))  	
 	private Set<User> users;
 	@ManyToMany(cascade = CascadeType.REFRESH,fetch=FetchType.EAGER)  
-	@JoinTable(name = "origanazations_users", inverseJoinColumns = @JoinColumn(name = "groupid"), joinColumns = @JoinColumn(name = "oraganizationid"))  	
+	@JoinTable(name = "origanazations_groups", inverseJoinColumns = @JoinColumn(name = "groupid"), joinColumns = @JoinColumn(name = "oraganizationid"))  	
 	private Set<Organization> origanazations;
 	public Integer getIdgroup() {
 		return idgroup;

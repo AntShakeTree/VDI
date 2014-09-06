@@ -25,7 +25,6 @@ import com.vdi.dao.user.RoleDao;
 import com.vdi.dao.user.domain.Role;
 import com.vdi.dao.user.domain.User;
 import com.vdi.dao.user.domain.bulid.RoleBuild;
-import com.vdi.service.user.SessionService;
 import com.vdi.service.user.UserService;
 
 /**
@@ -37,8 +36,7 @@ import com.vdi.service.user.UserService;
 @Component("ticketAuthenticationProvider")
 public class TicketAuthenticationProvider implements AuthenticationProvider {
 
-	@Autowired
-	private SessionService sessionService;
+
 	@Autowired
 	private UserService userService;
 	private @Autowired RoleDao roleDao;
