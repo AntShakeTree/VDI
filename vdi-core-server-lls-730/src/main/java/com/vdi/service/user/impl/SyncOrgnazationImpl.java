@@ -21,10 +21,9 @@ public class SyncOrgnazationImpl implements SyncOrgnazationObserver {
 	private OrganizationDao organizationDao;
 	@Autowired
 	private SyncUserObserver syncUser;
-
+	private LdapConfig config;
 	@Override
-	public void whenLdapStateChangeUpdateByLdapconfig(LdapStateSubject subject,
-			LdapConfig config) {
+	public void whenLdapStateChangeUpdateByLdapconfig(LdapStateSubject subject) {
 		if (config.getStatus() != LdapConfig.SYNC) {
 			return;
 		}
@@ -40,6 +39,11 @@ public class SyncOrgnazationImpl implements SyncOrgnazationObserver {
 		
 		} catch (NamingException e) {
 		}
+	}
+	@Override
+	public void setLdapConfig(LdapConfig config) {
+		this.config=config;
+		
 	}
 
 }

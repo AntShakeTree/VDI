@@ -19,9 +19,10 @@ import com.vdi.service.user.SyncUserObserver;
 public class SyncUserObserverImpl implements SyncUserObserver {
 	private @Autowired UserDao userDao;
 	private @Autowired DomainDao domainDao;
+	private LdapConfig config;
 	@Override
 	public void whenLdapStateChangeUpdateByLdapconfig(
-			LdapStateSubject stateSubject, LdapConfig config) {
+			LdapStateSubject stateSubject) {
 		// TODO Auto-generated method stub
 		if (config.getStatus() != LdapConfig.SYNC_USER) {
 			return;
@@ -36,6 +37,10 @@ public class SyncUserObserverImpl implements SyncUserObserver {
 		Domain dao =domainDao.get(Domain.class,config.getGuid());
 		dao.setStatus(LdapConfig.NORMAL);
 		domainDao.save(dao);
+	}
+	@Override
+	public void setLdapConfig(LdapConfig config) {
+		this.config=config;
 	}
 
 }

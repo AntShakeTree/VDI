@@ -8,12 +8,16 @@ import com.vdi.service.user.LdapStateSubject;
 @Service
 public class RemoveOrganizationObserverImpl implements
 		RemoveOrganizationObserver {
-
+	private LdapConfig config;
 	@Override
 	public void whenLdapStateChangeUpdateByLdapconfig(
-			LdapStateSubject stateSubject, LdapConfig config) {
+			LdapStateSubject stateSubject) {
 		// TODO Auto-generated method stub
 
+	}
+	@Override
+	public void setLdapConfig(LdapConfig config) {
+		this.config=config;
 	}
 
 }

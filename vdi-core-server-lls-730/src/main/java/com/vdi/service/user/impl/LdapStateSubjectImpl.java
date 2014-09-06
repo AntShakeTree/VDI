@@ -17,13 +17,12 @@ import com.vdi.service.user.LdapStateSubject;
 public class LdapStateSubjectImpl implements LdapStateSubject {
 	private static final List<LdapStateObserver> ldapStateObservers = Collections
 			.synchronizedList(new ArrayList<LdapStateObserver>());
-	private LdapConfig ldapConfig;
 
 	@Override
 	public void registerStateChangeObserver(LdapStateObserver observer,
 			LdapConfig ldapConfig) {
+		observer.setLdapConfig(ldapConfig);
 		ldapStateObservers.add(observer);
-		this.ldapConfig = ldapConfig;
 		ldapStateObservers.notifyAll();
 	}
 
@@ -55,7 +54,7 @@ public class LdapStateSubjectImpl implements LdapStateSubject {
 									.remove(0);
 							ldapStateObserver
 									.whenLdapStateChangeUpdateByLdapconfig(
-											ldapStateSubjectImpl, ldapConfig);
+											ldapStateSubjectImpl);
 						}
 					}
 				}
