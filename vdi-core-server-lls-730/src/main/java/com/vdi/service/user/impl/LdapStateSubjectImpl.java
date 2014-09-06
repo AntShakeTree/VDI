@@ -21,9 +21,17 @@ public class LdapStateSubjectImpl implements LdapStateSubject {
 	@Override
 	public void registerStateChangeObserver(LdapStateObserver observer,
 			LdapConfig ldapConfig) {
-		observer.setLdapConfig(ldapConfig);
-		ldapStateObservers.add(observer);
-		ldapStateObservers.notifyAll();
+		synchronized (ldapStateObservers) {
+			while(ldapStateObservers.size()!=0){
+				try {
+					ldapStateObservers.wait();
+				} catch (InterruptedException e) {
+				}
+			}
+			observer.setLdapConfig(ldapConfig);
+			ldapStateObservers.add(observer);
+			ldapStateObservers.notifyAll();
+		}
 	}
 
 	@Override
@@ -49,12 +57,16 @@ public class LdapStateSubjectImpl implements LdapStateSubject {
 							} catch (InterruptedException e) {
 							}
 						}
-						while (ldapStateObservers.size() != 0) {
+						if (ldapStateObservers.size() != 0) {
 							LdapStateObserver ldapStateObserver = ldapStateObservers
 									.remove(0);
-							ldapStateObserver
-									.whenLdapStateChangeUpdateByLdapconfig(
-											ldapStateSubjectImpl);
+							
+							ldapStateObservers.notifyAll();
+							try {
+								ldapStateObserver.whenLdapStateChangeUpdateByLdapconfig(ldapStateSubjectImpl);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
 						}
 					}
 				}

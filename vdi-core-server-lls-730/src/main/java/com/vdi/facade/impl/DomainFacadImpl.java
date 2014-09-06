@@ -3,6 +3,7 @@ package com.vdi.facade.impl;
 import java.util.List;
 
 import javax.naming.NamingException;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,6 +49,7 @@ public class DomainFacadImpl implements DomainFacad {
 	}
 
 	@Override
+	@Transactional
 	public DomainResponse createDomain(Domain domain) throws Exception {
 		DomainResponse response = new DomainResponse();
 		int or = domain.getAccesstype();
@@ -61,7 +63,7 @@ public class DomainFacadImpl implements DomainFacad {
 		domain = LdapSupport.createDomain(config);
 		config.setStatus(LdapConfig.NORMAL);
 		config.setGuid(domain.getGuid());
-		domain.setDns(this.genneralDns(domain.getAddress()));
+		domain.setDns(domain.getDns());
 		domainDao.save(domain);
 		response.setBody(domain);
 		return response;
@@ -97,9 +99,8 @@ public class DomainFacadImpl implements DomainFacad {
 	public Header deleteDomain(DomainIdsReq req) {
 		for (String id : req.getDomainguids()) {
 			Domain domain = domainDao.get(Domain.class, id);
-			LdapConfig config = new LdapConfig();
+			LdapConfig config = domain.getConfig();
 			domain.setStatus(LdapConfig.DELETING);
-			VDIBeanUtils.copyPropertiesByNotNull(domain, config, null);
 			config.setDomain(domain);
 			config.setStatus(LdapConfig.DELETING);
 			ldapStateSubject.registerStateChangeObserver(deleteOrganization,
@@ -151,8 +152,7 @@ public class DomainFacadImpl implements DomainFacad {
 		entity.setDomainguid(req.getDomainguid());
 		List<LdapConfigEntity> es = ldapConfigDao.listRequest(entity);
 		for (LdapConfigEntity ldapConfigEntity : es) {
-			LdapConfig config = new LdapConfig();
-			VDIBeanUtils.copyPropertiesByNotNull(dao, config, null);
+			LdapConfig config = dao.getConfig();
 			config.setStatus(LdapConfig.SYNC);
 			config.setGuid(dao.getGuid());
 			config.setBase(dao.getDomainbinddn());
@@ -166,19 +166,7 @@ public class DomainFacadImpl implements DomainFacad {
 		return new Header();
 	}
 
-	public String genneralDns(String ip) {
-		StringBuilder result = new StringBuilder();
-		RuntimeUtils.shell(result, "nslookup " + ip);
-		String res = result.toString().trim().toLowerCase();
-		res = res.replaceAll("\\s", "");
-		String dns =null;
-		try {
-			String ress = res.substring(res.indexOf("server:") + 7);
-			dns= ress.substring(0, ress.indexOf(":")).replaceAll(
-					"[a-z]", "");
-		} catch (Exception e) {
-			return null;
-		}
-		return dns;
+	public boolean genneralDns(String ip) {
+		return true;
 	}
 }

@@ -18,7 +18,6 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
-import com.vdi.common.VDIBeanUtils;
 import com.vdi.common.cache.CacheDomain;
 import com.vdi.dao.PageRequest;
 
@@ -225,7 +224,13 @@ public class Domain extends PageRequest<Domain> implements CacheDomain {
 	@JsonIgnore
 	public LdapConfig getConfig(){
 		LdapConfig config = new LdapConfig();
-		VDIBeanUtils.copyPropertiesByNotNull(this, config, null);
+		//VDIBeanUtils.copyPropertiesByNotNull(this, config, null);
+		config.setAccesstype(this.accesstype);
+		config.setAddress(this.address);config.setDns(this.getDns());
+		config.setBase(this.domainbinddn);
+		config.setGuid(this.getGuid());
+		config.setPassword(this.getDomainbindpass());
+		config.setPrincipal(this.getPrincipal());
 		return config;
 	}
 }

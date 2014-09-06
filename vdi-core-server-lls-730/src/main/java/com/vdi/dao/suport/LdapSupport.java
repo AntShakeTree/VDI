@@ -227,6 +227,7 @@ public class LdapSupport {
 					String ou = organization.getBinddn();
 					String[] ous = ou.split("ou");
 					organization.setLevel(ous.length - 1);
+					organization.setDomainguid(config.getGuid());
 					list.add(organization);
 				}
 			}
