@@ -58,7 +58,7 @@ public class DomainFacadImpl implements DomainFacad {
 					ExceptionHandle.err.warn(ErrorCode.LDAP_READER_ONLY));
 		}
 		LdapConfig config = domain.getConfig();
-		domain = LdapSupport.createDomain(config);
+		LdapSupport.createDomain(config,domain);
 		config.setStatus(LdapConfig.NORMAL);
 		config.setGuid(domain.getGuid());
 		domain.setDns(this.genneralDns(domain.getAddress()));
@@ -124,7 +124,7 @@ public class DomainFacadImpl implements DomainFacad {
 		Assert.notNull(domain.getDomainbinddn());
 		Assert.notNull(domain.getAccesstype());
 		Assert.notNull(domain.getAddress());
-		Assert.notNull(this.genneralDns(domain.getAddress()));
+	//	Assert.notNull(this.genneralDns(domain.getAddress()));//
 		LdapConfig config = domain.getConfig();
 		if (domain.getAccesstype() == LdapConfig.READ_WRITE) {
 			try {

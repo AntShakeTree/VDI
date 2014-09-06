@@ -68,7 +68,7 @@ public class Domain extends PageRequest<Domain> implements CacheDomain {
 	private String domainname;
 	private String address;
 	private String dns;
-	private int accesstype;
+	private Integer accesstype;
 	private String principal;
 	private int domaintype;
 	private String domainnetworkname;
@@ -115,11 +115,13 @@ public class Domain extends PageRequest<Domain> implements CacheDomain {
 
 
 
-	public int getAccesstype() {
+
+
+	public Integer getAccesstype() {
 		return accesstype;
 	}
 
-	public void setAccesstype(int accesstype) {
+	public void setAccesstype(Integer accesstype) {
 		this.accesstype = accesstype;
 	}
 
@@ -225,7 +227,13 @@ public class Domain extends PageRequest<Domain> implements CacheDomain {
 	@JsonIgnore
 	public LdapConfig getConfig(){
 		LdapConfig config = new LdapConfig();
-		VDIBeanUtils.copyPropertiesByNotNull(this, config, null);
+		//VDIBeanUtils.copyPropertiesByNotNull(this, config, null);
+		config.setAccesstype(this.accesstype);
+		config.setAddress(this.address);config.setDns(this.getDns());
+		config.setBase(this.domainbinddn);
+		config.setGuid(this.getGuid());
+		config.setPassword(this.getDomainbindpass());
+		config.setPrincipal(this.getPrincipal());
 		return config;
 	}
 }

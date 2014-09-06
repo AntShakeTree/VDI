@@ -73,33 +73,31 @@ public class LdapSupport {
 	/**
 	 * 
 	 * @param config
+	 * @param domain2 
 	 * @throws Exception
 	 */
-	public static Domain createDomain(LdapConfig config) throws Exception {
+	public static void createDomain(LdapConfig config, Domain domain) throws Exception {
 
 		LdapContext ctx = createDirContext(config);
 		SearchControls ctls = new SearchControls();
 		String[] attrIDs = { "pwdHistoryLength", "objectGUID", "pwdProperties",
-				"distinguishedName" };
+				"distinguishedName","minPwdLength" };
 
 		ctls.setReturningAttributes(attrIDs);
 		ctls.setSearchScope(SearchControls.OBJECT_SCOPE);
 		String filter = "(objectCategory=*)";
 		NamingEnumeration<SearchResult> answer = ctx.search(config.getBase(),
 				filter, ctls);
-		Domain domain = null;
 		try {
 			while (answer.hasMore()) {
 				SearchResult sr = answer.next();
 				Attributes attrs = sr.getAttributes();
-				domain = LdapHelp.buildDomain(config, attrs);
+				 LdapHelp.buildDomain(config,domain, attrs);
 			}
-			return domain;
 		} catch (PartialResultException e) {
 		} finally {
 			ctx.close();
 		}
-		return domain;
 	}
 
 	/**
