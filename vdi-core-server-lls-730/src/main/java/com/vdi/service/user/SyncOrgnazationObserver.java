@@ -1,5 +1,5 @@
 package com.vdi.service.user;
 
-public interface SyncOrgnazationObserver extends LdapStateObserver {
+public interface SyncOrgnazationObserver extends UsreStateObserver {
 
 }

@@ -21,7 +21,7 @@ import com.vdi.dao.user.domain.UserMapBridge;
 import com.vdi.dao.user.domain.LdapConfigEntity;
 import com.vdi.facade.DomainFacad;
 import com.vdi.service.user.RemoveOrganizationObserver;
-import com.vdi.service.user.LdapStateSubject;
+import com.vdi.service.user.UserStateSubject;
 import com.vdi.service.user.SyncOrgnazationObserver;
 import com.vdi.vo.req.DomainIdsReq;
 import com.vdi.vo.res.DomainResponse;
@@ -32,7 +32,7 @@ import com.vdi.vo.res.ListDomainResponse.ListDomain;
 @Service
 public class DomainFacadImpl implements DomainFacad {
 	private @Autowired DomainDao domainDao;
-	private @Autowired LdapStateSubject ldapStateSubject;
+	private @Autowired UserStateSubject ldapStateSubject;
 	private @Autowired RemoveOrganizationObserver deleteOrganization;
 	private @Autowired SyncOrgnazationObserver syncOrgnazation;
 	private @Autowired LdapConfigDao ldapConfigDao;
@@ -104,7 +104,7 @@ public class DomainFacadImpl implements DomainFacad {
 			VDIBeanUtils.copyPropertiesByNotNull(domain, config, null);
 			config.setDomain(domain);
 			config.setStatus(UserMapBridge.DELETING);
-			ldapStateSubject.registerStateChangeObserver(deleteOrganization,
+			ldapStateSubject.registerUserStateChangeObserver(deleteOrganization,
 					config);
 		}
 		return new Header();
@@ -162,7 +162,7 @@ public class DomainFacadImpl implements DomainFacad {
 			config.setBase(ldapConfigEntity.getBaseurl());
 			dao.setStatus(UserMapBridge.SYNC);
 			domainDao.update(dao);
-			ldapStateSubject.registerStateChangeObserver(syncOrgnazation,
+			ldapStateSubject.registerUserStateChangeObserver(syncOrgnazation,
 					config);
 		}
 		return new Header();

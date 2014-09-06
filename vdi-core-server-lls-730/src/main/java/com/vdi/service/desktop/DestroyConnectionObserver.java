@@ -1,7 +1,7 @@
 package com.vdi.service.desktop;
 
-import com.vdi.service.user.LdapStateObserver;
+import com.vdi.service.user.UsreStateObserver;
 
-public interface DestroyConnectionObserver extends LdapStateObserver {
+public interface DestroyConnectionObserver extends UsreStateObserver {
 
 }

@@ -1,5 +1,5 @@
 package com.vdi.service.user;
 
 
-public interface CreateDomainService extends LdapStateObserver {
+public interface CreateDomainService extends UsreStateObserver {
 }

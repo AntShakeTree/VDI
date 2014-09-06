@@ -11,7 +11,7 @@ import com.vdi.dao.user.UserDao;
 import com.vdi.dao.user.domain.UserMapBridge;
 import com.vdi.dao.user.domain.Organization;
 import com.vdi.service.desktop.DestroyConnectionObserver;
-import com.vdi.service.user.LdapStateSubject;
+import com.vdi.service.user.UserStateSubject;
 import com.vdi.service.user.RemoveLdapConfigObserver;
 
 @Service
@@ -21,8 +21,8 @@ public class RemoveLdapConfigObserverImpl implements RemoveLdapConfigObserver {
 	@Autowired private UserDao userDao;
 	@Autowired private DestroyConnectionObserver destroyConnectionObserver;
 	@Override
-	public void whenLdapStateChangeUpdateByLdapconfig(
-			LdapStateSubject stateSubject) {
+	public void whenUserStateChangeUpdateByLdapconfig(
+			UserStateSubject stateSubject) {
 	//	organizationDao.excuteHql("update Organization set status=? where domainguid=?", LdapConfig.DELETING,config.getGuid());
 		//organizationDao.excuteHql("update User set status=? where domainguid=?", LdapConfig.DELETING,config.getGuid());
 		
@@ -31,7 +31,7 @@ public class RemoveLdapConfigObserverImpl implements RemoveLdapConfigObserver {
 	}
 
 	@Override
-	public void setLdapConfig(UserMapBridge config) {
+	public void setUserMapBridge(UserMapBridge config) {
 		this.config = config;
 	}
 }

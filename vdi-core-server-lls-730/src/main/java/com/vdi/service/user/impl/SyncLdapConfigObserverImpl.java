@@ -11,7 +11,7 @@ import com.vdi.dao.user.LdapConfigDao;
 import com.vdi.dao.user.OrganizationDao;
 import com.vdi.dao.user.domain.UserMapBridge;
 import com.vdi.dao.user.domain.Organization;
-import com.vdi.service.user.LdapStateSubject;
+import com.vdi.service.user.UserStateSubject;
 import com.vdi.service.user.SyncLdapConfigObserver;
 import com.vdi.service.user.SyncUserObserver;
 
@@ -26,8 +26,8 @@ public class SyncLdapConfigObserverImpl implements SyncLdapConfigObserver {
 	@Autowired
 	private SyncUserObserver syncUserObserver;
 	@Override
-	public void whenLdapStateChangeUpdateByLdapconfig(
-			LdapStateSubject stateSubject) throws Exception {
+	public void whenUserStateChangeUpdateByLdapconfig(
+			UserStateSubject stateSubject) throws Exception {
 		if (config.getStatus() != UserMapBridge.SYNC) {
 			return;
 		}
@@ -39,7 +39,7 @@ public class SyncLdapConfigObserverImpl implements SyncLdapConfigObserver {
 			}
 			config.setOrganizations(os);
 			config.setStatus(UserMapBridge.SYNC_USER);
-			stateSubject.registerStateChangeObserver(syncUserObserver, config);
+			stateSubject.registerUserStateChangeObserver(syncUserObserver, config);
 		} catch (Exception e) {
 			config.getEntity().setStatus(UserMapBridge.ERROR);
 			ldapConfigDao.update(config.getEntity());
@@ -47,7 +47,7 @@ public class SyncLdapConfigObserverImpl implements SyncLdapConfigObserver {
 	}
 
 	@Override
-	public void setLdapConfig(UserMapBridge config) {
+	public void setUserMapBridge(UserMapBridge config) {
 		this.config = config;
 	}
 

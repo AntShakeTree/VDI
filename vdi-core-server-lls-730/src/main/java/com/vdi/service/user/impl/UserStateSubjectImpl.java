@@ -10,32 +10,32 @@ import org.springframework.stereotype.Service;
 
 import com.vdi.common.ExcecutorUtil;
 import com.vdi.dao.user.domain.UserMapBridge;
-import com.vdi.service.user.LdapStateObserver;
-import com.vdi.service.user.LdapStateSubject;
+import com.vdi.service.user.UsreStateObserver;
+import com.vdi.service.user.UserStateSubject;
 
 @Service
-public class LdapStateSubjectImpl implements LdapStateSubject {
-	private static final List<LdapStateObserver> ldapStateObservers = Collections
-			.synchronizedList(new ArrayList<LdapStateObserver>());
+public class UserStateSubjectImpl implements UserStateSubject {
+	private static final List<UsreStateObserver> ldapStateObservers = Collections
+			.synchronizedList(new ArrayList<UsreStateObserver>());
 
 	@Override
-	public void registerStateChangeObserver(LdapStateObserver observer,
+	public void registerUserStateChangeObserver(UsreStateObserver observer,
 			UserMapBridge ldapConfig) {
 		synchronized (ldapStateObservers) {
-			while(ldapStateObservers.size()!=0){
-				try {
-					ldapStateObservers.wait();
-				} catch (InterruptedException e) {
-				}
-			}
-			observer.setLdapConfig(ldapConfig);
+//			while(ldapStateObservers.size()!=0){
+//				try {
+//					ldapStateObservers.wait();
+//				} catch (InterruptedException e) {
+//				}
+//			}
+			observer.setUserMapBridge(ldapConfig);
 			ldapStateObservers.add(observer);
 			ldapStateObservers.notifyAll();
 		}
 	}
 
 	@Override
-	public void removeStateChangeObserver(LdapStateObserver observer) {
+	public void removeUserStateChangeObserver(UsreStateObserver observer) {
 		ldapStateObservers.remove(observer);
 	}
 
@@ -44,7 +44,7 @@ public class LdapStateSubjectImpl implements LdapStateSubject {
 		this.start(this);
 	}
 
-	private void start(final LdapStateSubjectImpl ldapStateSubjectImpl) {
+	private void start(final UserStateSubjectImpl ldapStateSubjectImpl) {
 		ExcecutorUtil.execute(new Runnable() {
 
 			@Override
@@ -58,12 +58,12 @@ public class LdapStateSubjectImpl implements LdapStateSubject {
 							}
 						}
 						if (ldapStateObservers.size() != 0) {
-							LdapStateObserver ldapStateObserver = ldapStateObservers
+							UsreStateObserver ldapStateObserver = ldapStateObservers
 									.remove(0);
 							
-							ldapStateObservers.notifyAll();
+//							ldapStateObservers.notifyAll();
 							try {
-								ldapStateObserver.whenLdapStateChangeUpdateByLdapconfig(ldapStateSubjectImpl);
+								ldapStateObserver.whenUserStateChangeUpdateByLdapconfig(ldapStateSubjectImpl);
 							} catch (Exception e) {
 								e.printStackTrace();
 							}

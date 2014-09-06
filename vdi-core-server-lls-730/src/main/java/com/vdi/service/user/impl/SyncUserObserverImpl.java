@@ -13,7 +13,7 @@ import com.vdi.dao.user.domain.Domain;
 import com.vdi.dao.user.domain.UserMapBridge;
 import com.vdi.dao.user.domain.Organization;
 import com.vdi.dao.user.domain.User;
-import com.vdi.service.user.LdapStateSubject;
+import com.vdi.service.user.UserStateSubject;
 import com.vdi.service.user.SyncUserObserver;
 
 @Service
@@ -23,8 +23,8 @@ public class SyncUserObserverImpl implements SyncUserObserver {
 	private UserMapBridge config;
 	private @Autowired OrganizationDao orgnazaionDao;
 	@Override
-	public void whenLdapStateChangeUpdateByLdapconfig(
-			LdapStateSubject stateSubject) {
+	public void whenUserStateChangeUpdateByLdapconfig(
+			UserStateSubject stateSubject) {
 		if (config.getStatus() != UserMapBridge.SYNC_USER) {
 			return;
 		}
@@ -43,7 +43,7 @@ public class SyncUserObserverImpl implements SyncUserObserver {
 		domainDao.update(dao);
 	}
 	@Override
-	public void setLdapConfig(UserMapBridge config) {
+	public void setUserMapBridge(UserMapBridge config) {
 		this.config=config;
 	}
 

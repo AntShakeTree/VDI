@@ -13,7 +13,7 @@ import com.vdi.dao.user.UserDao;
 import com.vdi.dao.user.domain.UserMapBridge;
 import com.vdi.dao.user.domain.Organization;
 import com.vdi.service.desktop.DestroyConnectionObserver;
-import com.vdi.service.user.LdapStateSubject;
+import com.vdi.service.user.UserStateSubject;
 import com.vdi.service.user.SyncOrgnazationObserver;
 import com.vdi.service.user.SyncUserObserver;
 
@@ -28,7 +28,7 @@ public class SyncOrgnazationImpl implements SyncOrgnazationObserver {
 	private UserMapBridge config;
 	private  @Autowired DestroyConnectionObserver destroyConnectionObserver;
 	@Override
-	public void whenLdapStateChangeUpdateByLdapconfig(LdapStateSubject subject) {
+	public void whenUserStateChangeUpdateByLdapconfig(UserStateSubject subject) {
 		if (config.getStatus() != UserMapBridge.SYNC) {
 			return;
 		}
@@ -52,17 +52,17 @@ public class SyncOrgnazationImpl implements SyncOrgnazationObserver {
 			if(os.size()>0){
 				organizationDao.excuteHql("update Organization set status=? where status =? and domainguid=?",UserMapBridge.DELETING, UserMapBridge.SYNCING,config.getGuid());
 				config.setOrganizations(os);
-				subject.registerStateChangeObserver(destroyConnectionObserver, config);
+				subject.registerUserStateChangeObserver(destroyConnectionObserver, config);
 			}
 			//
 			config.setStatus(UserMapBridge.SYNC_USER);
 			config.setOrganizations(ls);
-			subject.registerStateChangeObserver(syncUser, config);
+			subject.registerUserStateChangeObserver(syncUser, config);
 		} catch (NamingException e) {
 		}
 	}
 	@Override
-	public void setLdapConfig(UserMapBridge config) {
+	public void setUserMapBridge(UserMapBridge config) {
 		this.config=config;
 		
 	}

@@ -4,18 +4,18 @@ import org.springframework.stereotype.Service;
 
 import com.vdi.dao.user.domain.UserMapBridge;
 import com.vdi.service.desktop.DestroyConnectionObserver;
-import com.vdi.service.user.LdapStateSubject;
+import com.vdi.service.user.UserStateSubject;
 @Service
 public class DestroyConnectionObserverImpl implements DestroyConnectionObserver {
 	private UserMapBridge config;
 	@Override
-	public void whenLdapStateChangeUpdateByLdapconfig(
-			LdapStateSubject stateSubject) throws Exception {
+	public void whenUserStateChangeUpdateByLdapconfig(
+			UserStateSubject stateSubject) throws Exception {
 		
 	}
 
 	@Override
-	public void setLdapConfig(UserMapBridge config) {
+	public void setUserMapBridge(UserMapBridge config) {
 		this.config=config;
 	}
 

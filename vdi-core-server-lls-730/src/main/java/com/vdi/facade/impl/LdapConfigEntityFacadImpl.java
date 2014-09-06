@@ -11,7 +11,7 @@ import com.vdi.dao.user.domain.Domain;
 import com.vdi.dao.user.domain.UserMapBridge;
 import com.vdi.dao.user.domain.LdapConfigEntity;
 import com.vdi.facade.LdapConfigEntityFacad;
-import com.vdi.service.user.LdapStateSubject;
+import com.vdi.service.user.UserStateSubject;
 import com.vdi.service.user.RemoveLdapConfigObserver;
 import com.vdi.service.user.SyncLdapConfigObserver;
 import com.vdi.service.user.SyncOrgnazationObserver;
@@ -25,7 +25,7 @@ import com.vdi.vo.res.ListLdapConfigRespones.ListLdapConfig;
 public class LdapConfigEntityFacadImpl implements LdapConfigEntityFacad {
 	private @Autowired LdapConfigDao ldapConfigDao;
 	private @Autowired DomainDao domainDao;
-	private @Autowired LdapStateSubject ldapStateSubject;
+	private @Autowired UserStateSubject ldapStateSubject;
 	private @Autowired SyncLdapConfigObserver ldapConfigSync;
 	private @Autowired RemoveLdapConfigObserver removeLdapConfig;
 	private @Autowired SyncOrgnazationObserver syncOrgnazation;
@@ -41,7 +41,7 @@ public class LdapConfigEntityFacadImpl implements LdapConfigEntityFacad {
 		ldapconfig.setStatus(UserMapBridge.SYNC);
 		
 		ldapStateSubject
-				.registerStateChangeObserver(syncOrgnazation, ldapconfig);
+				.registerUserStateChangeObserver(syncOrgnazation, ldapconfig);
 		ldapConfigDao.save(config);
 		ldapconfig.setEntity(config);
 		config.setStatus(UserMapBridge.SYNC);
@@ -65,7 +65,7 @@ public class LdapConfigEntityFacadImpl implements LdapConfigEntityFacad {
 			ldapconfig.setEntity(entity);
 			ldapConfigDao.update(entity);
 			ldapStateSubject
-					.registerStateChangeObserver(removeLdapConfig, ldapconfig);
+					.registerUserStateChangeObserver(removeLdapConfig, ldapconfig);
 		}
 		return new Header();
 	}
@@ -83,7 +83,7 @@ public class LdapConfigEntityFacadImpl implements LdapConfigEntityFacad {
 		ldapconfig.setStatus(UserMapBridge.SYNC);
 		
 		ldapStateSubject
-				.registerStateChangeObserver(ldapConfigSync, ldapconfig);
+				.registerUserStateChangeObserver(ldapConfigSync, ldapconfig);
 		ldapConfigDao.update(config);
 		ldapconfig.setEntity(config);
 		config.setStatus(UserMapBridge.SYNC);
