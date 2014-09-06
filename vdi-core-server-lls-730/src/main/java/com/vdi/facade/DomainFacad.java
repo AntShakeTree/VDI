@@ -9,11 +9,11 @@ import com.vdi.vo.res.ListDomainResponse;
 public interface DomainFacad {
 	public ListDomainResponse listDomains(Domain domain);
 
-	public DomainResponse createDomain(Domain domain);
+	public DomainResponse createDomain(Domain domain)  throws Exception;
 
-	public Header updateDomain(Domain domain);
+	public Header updateDomain(Domain domain) throws Exception;
 
-	public Header delteDomain(DomainIdsReq req);
+	public Header deleteDomain(DomainIdsReq req);
 
 	public DomainResponse getDomain(DomainIdsReq req);
 

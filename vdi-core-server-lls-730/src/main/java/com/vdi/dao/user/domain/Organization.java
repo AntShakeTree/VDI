@@ -35,29 +35,48 @@ public class Organization implements Request<Organization>, CacheDomain {
 	private Integer idorganization;
 	private String organizationname;
 	@ManyToOne(fetch = FetchType.EAGER)
-	// 这里设置JoinColum设置了外键的名字，并且parent是关系维护端
-	@JoinColumn(name = "parent")
-	private Organization parent;
-	@OneToMany(cascade = { CascadeType.ALL }, mappedBy = "organization", targetEntity = User.class, fetch = FetchType.LAZY)
-	private Set<User> users;
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "parent")
-	private Set<Organization> childrens;
+	private Integer parent;
 	@ManyToMany(cascade=CascadeType.REFRESH,targetEntity=DeliveryGroup.class,mappedBy="origanazations")
 	private Set<DeliveryGroup> groups;
 	private String guid;
-	private String distinguishedName;
+	private String binddn;
 	private int level=0;
-	@ManyToOne
-	@JoinColumn(name="ldapconfigid")
-	private LdapConfig ldapConfig;
+	private String fullname;
+	private String domainguid;
+	private int status;
 	
-	public LdapConfig getLdapConfig() {
-		return ldapConfig;
+	public int getStatus() {
+		return status;
 	}
 
-	public void setLdapConfig(LdapConfig ldapConfig) {
-		this.ldapConfig = ldapConfig;
+	public void setStatus(int status) {
+		this.status = status;
 	}
+
+	public Integer getParent() {
+		return parent;
+	}
+
+	public void setParent(Integer parent) {
+		this.parent = parent;
+	}
+
+	public String getDomainguid() {
+		return domainguid;
+	}
+
+	public void setDomainguid(String domainguid) {
+		this.domainguid = domainguid;
+	}
+
+	public String getFullname() {
+		return fullname;
+	}
+
+	public void setFullname(String fullname) {
+		this.fullname = fullname;
+	}
+
 
 	public Set<DeliveryGroup> getGroups() {
 		return groups;
@@ -91,30 +110,8 @@ public class Organization implements Request<Organization>, CacheDomain {
 		this.organizationname = organizationname;
 	}
 
-	public Organization getParent() {
-		return parent;
-	}
 
-	public Organization setParent(Organization parent) {
-		this.parent = parent;
-		return this;
-	}
 
-	public Set<User> getUsers() {
-		return users;
-	}
-
-	public void setUsers(Set<User> users) {
-		this.users = users;
-	}
-
-	public Set<Organization> getChildrens() {
-		return childrens;
-	}
-
-	public void setChildrens(Set<Organization> childrens) {
-		this.childrens = childrens;
-	}
 
 	@Override
 	@Transient
@@ -130,13 +127,13 @@ public class Organization implements Request<Organization>, CacheDomain {
 	public void setGuid(String guid) {
 		this.guid = guid;
 	}
-	@Transient
-	public String getDistinguishedName() {
-		return distinguishedName;
+
+	public String getBinddn() {
+		return binddn;
 	}
 
-	public void setDistinguishedName(String distinguishedName) {
-		this.distinguishedName = distinguishedName;
+	public void setBinddn(String binddn) {
+		this.binddn = binddn;
 	}
 
 }

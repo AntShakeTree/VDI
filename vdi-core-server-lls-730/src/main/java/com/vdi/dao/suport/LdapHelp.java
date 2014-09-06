@@ -48,6 +48,8 @@ public  class LdapHelp {
 	public static int UF_PASSWORD_NEVER_EXPIRED = 0x10200;
 	public static String FILLTER_ORGNAZATION = "(|(objectCategory=groupPolicyContainer)(|(objectCategory=container)(objectCategory=organizationalUnit)))";
 	public static String FILLTER_USER = "(&(objectCategory=user)(objectClass=user))";
+	public static final String DOMAIN_BINDDN="objectGUID";
+	
 
 	public static String getUserDn(String username, String oun,
 			String basedomain) {
@@ -73,13 +75,23 @@ public  class LdapHelp {
 		return user;
 	}
 
-	public static Domain buildDomain(LdapConfig config) {
+	public static Domain buildDomain(LdapConfig config,Attributes attributes) {
 		Domain domain = new Domain();
 		domain.setDomainbinddn(config.getBase());
 		domain.setDomainbindpass(config.getPassword());
 		domain.setDomainname(findDomainName(config.getBase()));
 		domain.setStatus(Domain.DOMAIN_STATUS_MAINTAINING);
 		domain.setDomaintype(Domain.DOMAIN_TYPE_MSAD);
+		String pwdps=attributes.get("pwdProperties")+"";
+		if("1".equals(pwdps)){
+			domain.setPasswordpolicy(true);	
+		}else{
+			domain.setPasswordpolicy(false);
+		}
+		domain.setGuid(getGUID(attributes));
+		domain.setDomainbinddn(attributes.get("distinguishedName")+"");
+		int passwordlen=Integer.parseInt(attributes.get("minPwdLength")+"");
+		domain.setPasswordlen(passwordlen);
 		return domain;
 	}
 
@@ -97,10 +109,10 @@ public  class LdapHelp {
 			isEnd.compareAndSet(isEnd.get(), false);
 			return null;
 		}
-
-		organization.setOrganizationname(( ou+ "").toLowerCase().replace("ou:", "").trim());
+		String fullname =OU.toString().toLowerCase().trim();
+		organization.setOrganizationname(fullname.substring(fullname.lastIndexOf("ou=")+3));
 		System.out.println(organization.getOrganizationname());
-		organization.setDistinguishedName(attributes.get("distinguishedName")+"");
+		organization.setBinddn(attributes.get("distinguishedName")+"");
 		organization.setGuid(getGUID(attributes));
 		return organization;
 	}

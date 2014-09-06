@@ -103,7 +103,7 @@ public class BaseFacadImpl implements BaseFacad {
 				domain.setDomainserverport(0);
 				domainDao.save(domain);
 			}
-			user.setDomain(domain);
+			user.setDomainguid(domain.getGuid());
 			user.setRoles(roles);
 			userDao.save(user);
 		}

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.vdi.dao.suport.JPADaoSuport;
 import com.vdi.dao.user.LdapConfigDao;
-import com.vdi.dao.user.domain.LdapConfig;
+import com.vdi.dao.user.domain.LdapConfigEntity;
 @Repository
-public class LdapConfigDaoImpl extends JPADaoSuport<LdapConfig> implements LdapConfigDao {
+public class LdapConfigDaoImpl extends JPADaoSuport<LdapConfigEntity> implements LdapConfigDao {
 }

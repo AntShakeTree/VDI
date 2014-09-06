@@ -37,8 +37,9 @@ public class LdapStateSubjectImpl implements LdapStateSubject{
 					} catch (InterruptedException e) {
 					}
 				}
-				for (LdapStateObserver ldapStateObserver : ldapStateObservers) {
-					ldapStateObserver.whenLdapStateChangeUpdateByLdapconfig(this,this.ldapConfig);
+				while(ldapStateObservers.size()!=0){
+					LdapStateObserver	ldapStateObserver =ldapStateObservers.remove(0);
+					ldapStateObserver.whenLdapStateChangeUpdateByLdapconfig(this,this.ldapConfig);					
 				}
 			}
 		}

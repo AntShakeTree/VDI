@@ -12,6 +12,7 @@ package com.vdi.dao.user.domain;
 import java.util.List;
 
 public class LdapConfig{
+	
 	private Integer idldap;
 	private String address;
 	private int accesstype;
@@ -22,7 +23,24 @@ public class LdapConfig{
 	private int status;
 	private String guid;
 	private Domain domain;
-	
+	private LdapConfigEntity entity;
+	private User user;
+	public LdapConfigEntity getEntity() {
+		return entity;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public void setEntity(LdapConfigEntity entity) {
+		this.entity = entity;
+	}
+
 	public Domain getDomain() {
 		return domain;
 	}
@@ -119,4 +137,5 @@ public class LdapConfig{
 	public static final int CREATEING = 1;
 	public static final int READ_WRITE=636;
 	public static final int READONLY=389;
+	public static final int SYNC_USER=3;
 }

@@ -19,9 +19,7 @@ public class LdapConfigEntity extends PageRequest<LdapConfigEntity> implements C
 	private Integer idldapcinfig;
 	private String baseurl;
 	private int status;
-	@ManyToOne
-	@JoinColumn(name="domainguid")
-	private Domain domain;
+	private String domainguid;
 	public Integer getIdldapcinfig() {
 		return idldapcinfig;
 	}
@@ -43,12 +41,15 @@ public class LdapConfigEntity extends PageRequest<LdapConfigEntity> implements C
 	public void setBaseurl(String baseurl) {
 		this.baseurl = baseurl;
 	}
-	public Domain getDomain() {
-		return domain;
+
+	public String getDomainguid() {
+		return domainguid;
 	}
-	public void setDomain(Domain domain) {
-		this.domain = domain;
+
+	public void setDomainguid(String domainguid) {
+		this.domainguid = domainguid;
 	}
+
 	@Override
 	public Object getId() {
 		return this.getIdldapcinfig();

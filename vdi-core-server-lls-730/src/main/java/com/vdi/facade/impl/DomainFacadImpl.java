@@ -2,14 +2,22 @@ package com.vdi.facade.impl;
 
 import java.util.List;
 
+import javax.naming.NamingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import com.vdi.common.ErrorCode;
+import com.vdi.common.ExceptionHandle;
+import com.vdi.common.RuntimeUtils;
 import com.vdi.common.VDIBeanUtils;
+import com.vdi.dao.suport.LdapSupport;
 import com.vdi.dao.user.DomainDao;
+import com.vdi.dao.user.LdapConfigDao;
 import com.vdi.dao.user.domain.Domain;
 import com.vdi.dao.user.domain.LdapConfig;
+import com.vdi.dao.user.domain.LdapConfigEntity;
 import com.vdi.facade.DomainFacad;
 import com.vdi.service.user.DeleteOrganization;
 import com.vdi.service.user.LdapStateSubject;
@@ -26,6 +34,8 @@ public class DomainFacadImpl implements DomainFacad {
 	private @Autowired LdapStateSubject ldapStateSubject;
 	private @Autowired DeleteOrganization deleteOrganization;
 	private @Autowired SyncOrgnazation syncOrgnazation;
+	private @Autowired LdapConfigDao ldapConfigDao;
+
 	@Override
 	public ListDomainResponse listDomains(Domain domain) {
 		ListDomainResponse response = new ListDomainResponse();
@@ -38,28 +48,42 @@ public class DomainFacadImpl implements DomainFacad {
 	}
 
 	@Override
-	public DomainResponse createDomain(Domain domain) {
-		this.validateDomain(domain);
+	public DomainResponse createDomain(Domain domain) throws Exception {
 		DomainResponse response = new DomainResponse();
-		LdapConfig config = new LdapConfig();
-		VDIBeanUtils.copyPropertiesByNotNull(domain, config, null);
+		int or = domain.getAccesstype();
+		this.validateDomain(domain);
+		int vafter = domain.getAccesstype();
+		if (or != vafter) {
+			response.getHead().setError(
+					ExceptionHandle.err.warn(ErrorCode.LDAP_READER_ONLY));
+		}
+		LdapConfig config = domain.getConfig();
+		domain = LdapSupport.createDomain(config);
 		config.setStatus(LdapConfig.NORMAL);
 		config.setGuid(domain.getGuid());
+		domain.setDns(this.genneralDns(domain.getAddress()));
 		domainDao.save(domain);
 		response.setBody(domain);
 		return response;
 	}
 
 	@Override
-	public Header updateDomain(Domain domain) {
+	public Header updateDomain(Domain domain) throws Exception {
+		// this.validateDomain(domain);
+		Header response = new Header();
+		int or = domain.getAccesstype();
 		this.validateDomain(domain);
+		int vafter = domain.getAccesstype();
+		if (or != vafter) {
+			response.setError(ExceptionHandle.err
+					.warn(ErrorCode.LDAP_READER_ONLY));
+		}
 		Assert.notNull(domain.getGuid());
 		Domain dao = domainDao.get(Domain.class, domain.getGuid());
 		Assert.notNull(dao);
 		//
 		VDIBeanUtils.copyPropertiesByNotNull(domain, dao, null);
 		//
-		Header response = new Header();
 		LdapConfig config = new LdapConfig();
 		VDIBeanUtils.copyPropertiesByNotNull(domain, config, null);
 		config.setStatus(LdapConfig.NORMAL);
@@ -70,7 +94,7 @@ public class DomainFacadImpl implements DomainFacad {
 	}
 
 	@Override
-	public Header delteDomain(DomainIdsReq req) {
+	public Header deleteDomain(DomainIdsReq req) {
 		for (String id : req.getDomainguids()) {
 			Domain domain = domainDao.get(Domain.class, id);
 			LdapConfig config = new LdapConfig();
@@ -78,7 +102,8 @@ public class DomainFacadImpl implements DomainFacad {
 			VDIBeanUtils.copyPropertiesByNotNull(domain, config, null);
 			config.setDomain(domain);
 			config.setStatus(LdapConfig.DELETING);
-			ldapStateSubject.registerStateChangeObserver(deleteOrganization, config);
+			ldapStateSubject.registerStateChangeObserver(deleteOrganization,
+					config);
 		}
 		return new Header();
 	}
@@ -86,35 +111,74 @@ public class DomainFacadImpl implements DomainFacad {
 	@Override
 	public DomainResponse getDomain(DomainIdsReq req) {
 		Assert.notNull(req.getDomainguid());
-		DomainResponse response =new DomainResponse();
+		DomainResponse response = new DomainResponse();
 		response.setBody(this.domainDao.get(Domain.class, req.getDomainguid()));
 		return response;
 	}
 
-	private void validateDomain(Domain domain) {
+	private void validateDomain(Domain domain) throws NamingException {
 		Assert.notNull(domain);
-		Assert.notNull(domain.getDns());
+		// Assert.notNull(domain.getDns());
 		Assert.notNull(domain.getDomainbindpass());
 		Assert.notNull(domain.getPrincipal());
 		Assert.notNull(domain.getDomainbinddn());
 		Assert.notNull(domain.getAccesstype());
 		Assert.notNull(domain.getAddress());
-		// 验证 dns
+		Assert.notNull(this.genneralDns(domain.getAddress()));
+		LdapConfig config = domain.getConfig();
+		if (domain.getAccesstype() == LdapConfig.READ_WRITE) {
+			try {
+				config.setAccesstype(LdapConfig.READ_WRITE);
+				LdapSupport.createDirContext(config);
+				return;
+			} catch (NamingException e) {
+				config.setAccesstype(LdapConfig.READONLY);
+				LdapSupport.createDirContext(config);
+				domain.setAccesstype(LdapConfig.READONLY);
+			}
+		} else {
+			config.setAccesstype(LdapConfig.READONLY);
+			LdapSupport.createDirContext(config);
+		}
+
 	}
 
 	@Override
 	public Header syncDomain(DomainIdsReq req) {
 		Assert.notNull(req.getDomainguid());
-		Domain dao =domainDao.get(Domain.class,req.getDomainguid());
-		LdapConfig config =new LdapConfig();
-		VDIBeanUtils.copyPropertiesByNotNull(dao, config, null);
-		config.setStatus(LdapConfig.SYNC);
-		config.setGuid(dao.getGuid());
-		config.setBase(dao.getDomainbinddn());
-		config.setDomain(dao);
-		dao.setStatus(LdapConfig.SYNC);
-		domainDao.update(dao);
-		ldapStateSubject.registerStateChangeObserver(syncOrgnazation, config);
+		Domain dao = domainDao.get(Domain.class, req.getDomainguid());
+		LdapConfigEntity entity = new LdapConfigEntity();
+		entity.setDomainguid(req.getDomainguid());
+		List<LdapConfigEntity> es = ldapConfigDao.listRequest(entity);
+		for (LdapConfigEntity ldapConfigEntity : es) {
+			LdapConfig config = new LdapConfig();
+			VDIBeanUtils.copyPropertiesByNotNull(dao, config, null);
+			config.setStatus(LdapConfig.SYNC);
+			config.setGuid(dao.getGuid());
+			config.setBase(dao.getDomainbinddn());
+			config.setDomain(dao);
+			config.setBase(ldapConfigEntity.getBaseurl());
+			dao.setStatus(LdapConfig.SYNC);
+			domainDao.update(dao);
+			ldapStateSubject.registerStateChangeObserver(syncOrgnazation,
+					config);
+		}
 		return new Header();
+	}
+
+	public String genneralDns(String ip) {
+		StringBuilder result = new StringBuilder();
+		RuntimeUtils.shell(result, "nslookup " + ip);
+		String res = result.toString().trim().toLowerCase();
+		res = res.replaceAll("\\s", "");
+		String dns =null;
+		try {
+			String ress = res.substring(res.indexOf("server:") + 7);
+			dns= ress.substring(0, ress.indexOf(":")).replaceAll(
+					"[a-z]", "");
+		} catch (Exception e) {
+			return null;
+		}
+		return dns;
 	}
 }

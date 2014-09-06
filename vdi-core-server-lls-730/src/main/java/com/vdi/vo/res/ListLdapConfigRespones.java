@@ -2,12 +2,14 @@ package com.vdi.vo.res;
 
 import java.util.List;
 
+import com.vdi.dao.PageRequest;
 import com.vdi.dao.user.domain.LdapConfig;
+import com.vdi.dao.user.domain.LdapConfigEntity;
 
 public class ListLdapConfigRespones {
 	private Header head=new Header();
 	private ListLdapConfig body;
-	
+	private PageRequest<LdapConfigEntity> page;
 	public Header getHead() {
 		return head;
 	}
@@ -25,13 +27,13 @@ public class ListLdapConfigRespones {
 	}
 
 	public static class ListLdapConfig{
-		List<LdapConfig> list;
+		List<LdapConfigEntity> list;
 
-		public List<LdapConfig> getList() {
+		public List<LdapConfigEntity> getList() {
 			return list;
 		}
 
-		public void setList(List<LdapConfig> list) {
+		public void setList(List<LdapConfigEntity> list) {
 			this.list = list;
 		}
 		

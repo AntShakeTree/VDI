@@ -11,11 +11,13 @@ package com.vdi.dao.user.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
+import com.vdi.common.VDIBeanUtils;
 import com.vdi.common.cache.CacheDomain;
 import com.vdi.dao.PageRequest;
 
@@ -64,7 +66,7 @@ public class Domain extends PageRequest<Domain> implements CacheDomain {
 	private String domainname;
 	private String address;
 	private String dns;
-	private String accesstype;
+	private int accesstype;
 	private String principal;
 	private int domaintype;
 	private String domainnetworkname;
@@ -74,6 +76,24 @@ public class Domain extends PageRequest<Domain> implements CacheDomain {
 	private String domainbindpass;
 	private String notes;
 	private int status;
+	private int passwordlen;
+	private boolean passwordpolicy;
+
+	public int getPasswordlen() {
+		return passwordlen;
+	}
+
+	public void setPasswordlen(int passwordlen) {
+		this.passwordlen = passwordlen;
+	}
+
+	public boolean isPasswordpolicy() {
+		return passwordpolicy;
+	}
+
+	public void setPasswordpolicy(boolean passwordpolicy) {
+		this.passwordpolicy = passwordpolicy;
+	}
 
 	public String getAddress() {
 		return address;
@@ -91,11 +111,13 @@ public class Domain extends PageRequest<Domain> implements CacheDomain {
 		this.dns = dns;
 	}
 
-	public String getAccesstype() {
+
+
+	public int getAccesstype() {
 		return accesstype;
 	}
 
-	public void setAccesstype(String accesstype) {
+	public void setAccesstype(int accesstype) {
 		this.accesstype = accesstype;
 	}
 
@@ -193,8 +215,15 @@ public class Domain extends PageRequest<Domain> implements CacheDomain {
 
 	@Override
 	@JsonIgnore
+	@Transient
 	public Object getId() {
 		return this.getGuid();
 	}
-
+	@Transient
+	@JsonIgnore
+	public LdapConfig getConfig(){
+		LdapConfig config = new LdapConfig();
+		VDIBeanUtils.copyPropertiesByNotNull(this, config, null);
+		return config;
+	}
 }

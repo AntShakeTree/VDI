@@ -63,9 +63,7 @@ public class User extends PageRequest<User> implements UserDetails,CacheDomain{
 	private String mobile;
 	private String email;
 	private int status=0;
-	@ManyToOne(fetch=FetchType.LAZY,targetEntity=Domain.class,cascade=CascadeType.MERGE)
-	@JoinColumn(name="domainguid")
-	private Domain domain;
+	private String domainguid;
 	@ManyToMany(cascade = { CascadeType.MERGE,CascadeType.REFRESH }, targetEntity = Role.class, fetch = FetchType.EAGER)
 	@JoinTable(name = "userroles", inverseJoinColumns = @JoinColumn(name = "userid"), joinColumns = @JoinColumn(name = "roleid"))
 	private Set<Role> roles;
@@ -204,14 +202,6 @@ public class User extends PageRequest<User> implements UserDetails,CacheDomain{
 		this.roles = roles;
 	}
 
-	public Domain getDomain() {
-		return domain;
-	}
-
-	public void setDomain(Domain domain) {
-		this.domain = domain;
-	}
-
 	public Organization getOrganization() {
 		return organization;
 	}
@@ -226,10 +216,13 @@ public class User extends PageRequest<User> implements UserDetails,CacheDomain{
 	public Object getId() {
 		return this.getIduser();
 	}
+
+	public String getDomainguid() {
+		return domainguid;
+	}
+
+	public void setDomainguid(String domainguid) {
+		this.domainguid = domainguid;
+	}
 	
-	public static final int NORMAL=0;
-	public static final int ERROR=500;
-	public static final int SYNC=2;
-	public static final int DELETING=501;
-	//~
 }

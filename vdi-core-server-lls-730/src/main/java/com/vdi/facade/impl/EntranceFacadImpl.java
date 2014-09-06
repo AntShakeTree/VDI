@@ -36,7 +36,7 @@ public class EntranceFacadImpl implements EntranceFacad {
 		if(domain.getDomaintype()==Domain.DOMAIN_TYPE_LOCAL){
 			//user.setPassword(loginInfo.getPassword());
 			user.setUsername(loginInfo.getUsername());
-			user.setDomain(domain);
+			user.setDomainguid(domain.getGuid());
 			List<User> users =userDao.listRequest(user);
 			if(users==null){
 				response.getHead().setError(ExceptionHandle.err.error((ErrorCode.INVALID_USERNAME)));

@@ -16,6 +16,7 @@ import javax.naming.NameNotFoundException;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.PartialResultException;
+import javax.naming.directory.Attribute;
 import javax.naming.directory.Attributes;
 import javax.naming.directory.BasicAttribute;
 import javax.naming.directory.BasicAttributes;
@@ -31,14 +32,15 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
-import javax.sound.sampled.Port;
 
 import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
 
+import com.vdi.dao.user.domain.Domain;
 import com.vdi.dao.user.domain.LdapConfig;
 import com.vdi.dao.user.domain.Organization;
 import com.vdi.dao.user.domain.User;
+
 @Component
 public class LdapSupport {
 	protected static Logger log = org.slf4j.LoggerFactory
@@ -53,9 +55,9 @@ public class LdapSupport {
 		Hashtable<String, String> env = new Hashtable<String, String>();
 		env.put(Context.INITIAL_CONTEXT_FACTORY,
 				"com.sun.jndi.ldap.LdapCtxFactory");
-		String url = "ldaps://"+config.getAddress()+":636";
-		if(config.getAccesstype()==LdapConfig.READONLY){
-			url ="ldap://"+config.getAddress()+":389";
+		String url = "ldaps://" + config.getAddress() + ":636";
+		if (config.getAccesstype() == LdapConfig.READONLY) {
+			url = "ldap://" + config.getAddress() + ":389";
 		}
 		env.put(Context.PROVIDER_URL, url);
 		env.put(Context.SECURITY_AUTHENTICATION, "simple");
@@ -66,6 +68,68 @@ public class LdapSupport {
 		env.put("java.naming.ldap.factory.socket",
 				VDISSLSocketFactory.class.getName());
 		return new InitialLdapContext(env, null);
+	}
+
+	/**
+	 * 
+	 * @param config
+	 * @throws Exception
+	 */
+	public static Domain createDomain(LdapConfig config) throws Exception {
+
+		LdapContext ctx = createDirContext(config);
+		SearchControls ctls = new SearchControls();
+		String[] attrIDs = { "pwdHistoryLength", "objectGUID", "pwdProperties",
+				"distinguishedName" };
+
+		ctls.setReturningAttributes(attrIDs);
+		ctls.setSearchScope(SearchControls.OBJECT_SCOPE);
+		String filter = "(objectCategory=*)";
+		NamingEnumeration<SearchResult> answer = ctx.search(config.getBase(),
+				filter, ctls);
+		Domain domain = null;
+		try {
+			while (answer.hasMore()) {
+				SearchResult sr = answer.next();
+				Attributes attrs = sr.getAttributes();
+				domain = LdapHelp.buildDomain(config, attrs);
+			}
+			return domain;
+		} catch (PartialResultException e) {
+		} finally {
+			ctx.close();
+		}
+		return domain;
+	}
+
+	/**
+	 * 
+	 * createOU: <br/>
+	 * 
+	 * @author tree
+	 * @param ctx
+	 * @param organizationname
+	 * @param basedomain
+	 * @throws NamingException
+	 * @since JDK 1.7
+	 */
+	public static void createOU(LdapConfig config, Organization organization)
+			throws NamingException {
+		LdapContext ctx = createDirContext(config);
+		try {
+			Attributes create = new BasicAttributes(true);
+			Attribute objectclass = new BasicAttribute(LdapHelp.OBJECT_CLASS);
+			objectclass.add(LdapHelp.TOP);
+			objectclass.add(LdapHelp.OBJECT_CLASS_ORGANIZATION);
+			create.put(objectclass);
+			create.put(new BasicAttribute(LdapHelp.OU, organization
+					.getOrganizationname()));
+			ctx.createSubcontext(
+					LdapHelp.getOUDn(organization.getOrganizationname(),
+							config.getBase()), create);
+		} finally {
+			ctx.close();
+		}
 	}
 
 	public boolean authenticate(LdapConfig config, String userDn,
@@ -98,13 +162,14 @@ public class LdapSupport {
 	}
 
 	// 根据组来查询所有用户
-	public List<User> findUsers(LdapConfig config, String... orgnazationname) {
+	public static List<User> findUsers(LdapConfig config,
+			Organization organization) {
 		LdapContext ctx = null;
 		List<User> users = new ArrayList<User>();
 		try {
 			ctx = createDirContext(config);
 			NamingEnumeration<SearchResult> searchResult = ctx.search(
-					config.getBase(), LdapHelp.FILLTER_USER, null);
+					organization.getBinddn(), LdapHelp.FILLTER_USER, null);
 			SearchResult result = null;
 
 			while (searchResult.hasMore()) {
@@ -134,7 +199,7 @@ public class LdapSupport {
 		LdapContext ctx = null;
 		List<Organization> list = new ArrayList<Organization>();
 		String searchbase = config.getBase();
-		SearchControls ctls = new SearchControls(); 
+		SearchControls ctls = new SearchControls();
 		String[] attrIDs = { "objectGUID", "distinguishedName", "OU" };
 		ctls.setReturningAttributes(attrIDs);
 		ctls.setSearchScope(SearchControls.SUBTREE_SCOPE);
@@ -151,15 +216,19 @@ public class LdapSupport {
 		SearchResult result = null;
 
 		try {
-			AtomicBoolean  isEnd=new AtomicBoolean(true);
-			while (answer.hasMore()&&isEnd.get()) {
+			AtomicBoolean isEnd = new AtomicBoolean(true);
+			while (answer.hasMore() && isEnd.get()) {
 				// answer.next();
 				result = answer.next();
 				Attributes attributes = result.getAttributes();
-				Organization organization = LdapHelp
-						.buildOrganzation(attributes,isEnd);
-				if(organization!=null)
-				list.add(organization);
+				Organization organization = LdapHelp.buildOrganzation(
+						attributes, isEnd);
+				if (organization != null) {
+					String ou = organization.getBinddn();
+					String[] ous = ou.split("ou");
+					organization.setLevel(ous.length - 1);
+					list.add(organization);
+				}
 			}
 		} catch (PartialResultException e) {
 		} finally {
@@ -169,61 +238,67 @@ public class LdapSupport {
 
 	}
 
-//	private static void recursiveQueryOrgnazations(LdapContext ctx,
-//			Organization root, List<Organization> os) throws NamingException {
-//		if (os == null) {
-//			os = new ArrayList<Organization>();
-//		}
-//		String searchbase = root.getDistinguishedName();
-//		SearchControls ctls = new SearchControls();
-//		String[] attrIDs = { "objectGUID", "distinguishedName", "OU" };
-//		ctls.setReturningAttributes(attrIDs);
-//		ctls.setSearchScope(SearchControls.SUBTREE_SCOPE);
-//		String filter = "(|(objectCategory=groupPolicyContainer)(|(objectCategory=container)(objectCategory=organizationalUnit)))";
-//		NamingEnumeration<SearchResult> answer = null;
-//		try {
-//			answer = ctx.search(searchbase, filter, ctls);
-//		} catch (NameNotFoundException e) {
-//			log.warn("{} not found.", searchbase);
-//
-//			return;
-//		}
-//		SearchResult result = null;
-//
-//		try {
-//			while (answer.hasMore()) {
-//				// answer.next();
-//				result = answer.next();
-//				Attributes attributes = result.getAttributes();
-//				Organization organization = LdapHelp
-//						.buildOrganzation(attributes);
-//				organization.setParent(root);
-//				os.add(organization);
-//				recursiveQueryOrgnazations(ctx, organization, os);
-//			}
-//		} catch (PartialResultException e) {
-//		} finally {
-//			if (ctx != null) {
-//				try {
-//					ctx.close();
-//				} catch (NamingException e) {
-//				}
-//				ctx = null;
-//			}
-//		}
-//	}
+	// private static void recursiveQueryOrgnazations(LdapContext ctx,
+	// Organization root, List<Organization> os) throws NamingException {
+	// if (os == null) {
+	// os = new ArrayList<Organization>();
+	// }
+	// String searchbase = root.getDistinguishedName();
+	// SearchControls ctls = new SearchControls();
+	// String[] attrIDs = { "objectGUID", "distinguishedName", "OU" };
+	// ctls.setReturningAttributes(attrIDs);
+	// ctls.setSearchScope(SearchControls.SUBTREE_SCOPE);
+	// String filter =
+	// "(|(objectCategory=groupPolicyContainer)(|(objectCategory=container)(objectCategory=organizationalUnit)))";
+	// NamingEnumeration<SearchResult> answer = null;
+	// try {
+	// answer = ctx.search(searchbase, filter, ctls);
+	// } catch (NameNotFoundException e) {
+	// log.warn("{} not found.", searchbase);
+	//
+	// return;
+	// }
+	// SearchResult result = null;
+	//
+	// try {
+	// while (answer.hasMore()) {
+	// // answer.next();
+	// result = answer.next();
+	// Attributes attributes = result.getAttributes();
+	// Organization organization = LdapHelp
+	// .buildOrganzation(attributes);
+	// organization.setParent(root);
+	// os.add(organization);
+	// recursiveQueryOrgnazations(ctx, organization, os);
+	// }
+	// } catch (PartialResultException e) {
+	// } finally {
+	// if (ctx != null) {
+	// try {
+	// ctx.close();
+	// } catch (NamingException e) {
+	// }
+	// ctx = null;
+	// }
+	// }
+	// }
 
-	public static boolean createUser(User user) {
-
+	public static boolean createUser(LdapConfig config) {
+		User user = config.getUser();
 		LdapContext ctx = null;
 		try {
-			ctx = createDirContext(user.getOrganization().getLdapConfig());
+			ctx = createDirContext(config);
 			Attributes attrs = new BasicAttributes(true);
 			attrs.put("objectClass", "user");
 			attrs.put("sAMAccountName", user.getUsername());
 			attrs.put("cn", user.getUsername());
-			attrs.put("userAccountControl",Integer.toString(UF_NORMAL_ACCOUNT + UF_PASSWD_NOTREQD+ UF_PASSWORD_EXPIRED + UF_ACCOUNTDISABLE));
-			String userdn=LdapHelp.getUserDn(user.getUsername(),user.getOrganization().getOrganizationname(), user.getDomain().getDomainbinddn());
+			attrs.put(
+					"userAccountControl",
+					Integer.toString(UF_NORMAL_ACCOUNT + UF_PASSWD_NOTREQD
+							+ UF_PASSWORD_EXPIRED + UF_ACCOUNTDISABLE));
+			String userdn = LdapHelp.getUserDn(user.getUsername(), user
+					.getOrganization().getOrganizationname(), config
+					.getDomain().getDomainbinddn());
 			ctx.createSubcontext(userdn, attrs);
 			ModificationItem[] mods = new ModificationItem[2];
 			String newQuotedPassword = "\"" + user.getPassword() + "\"";
