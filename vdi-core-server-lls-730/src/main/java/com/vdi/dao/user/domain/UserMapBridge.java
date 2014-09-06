@@ -11,7 +11,8 @@ package com.vdi.dao.user.domain;
 
 import java.util.List;
 
-public class LdapConfig{
+public class UserMapBridge{
+
 	
 	private Integer idldap;
 	private String address;
@@ -26,7 +27,16 @@ public class LdapConfig{
 	private LdapConfigEntity entity;
 	private User user;
 	private Organization organization;
+	private List<User> users;
 	
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
+
 	public Organization getOrganization() {
 		return organization;
 	}
@@ -144,8 +154,10 @@ public class LdapConfig{
 	public static final int DELETING=501;
 	public static final int ERROR=500;
 	public static final int SYNC=2;
+	public static final int SYNCING=3;
+
 	public static final int CREATEING = 1;
 	public static final int READ_WRITE=636;
 	public static final int READONLY=389;
-	public static final int SYNC_USER=3;
+	public static final int SYNC_USER=4;
 }

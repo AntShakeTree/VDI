@@ -8,7 +8,7 @@ import com.vdi.dao.suport.LdapSupport;
 import com.vdi.dao.user.DomainDao;
 import com.vdi.dao.user.OrganizationDao;
 import com.vdi.dao.user.domain.Domain;
-import com.vdi.dao.user.domain.LdapConfig;
+import com.vdi.dao.user.domain.UserMapBridge;
 import com.vdi.dao.user.domain.Organization;
 import com.vdi.facade.OriganazationFacad;
 import com.vdi.vo.req.OrganizationIdsReq;
@@ -25,11 +25,11 @@ public class OriganazationFacadImpl implements OriganazationFacad {
 		OrganizationResponse response =new OrganizationResponse();
 		Domain domaindaoEntity = domainDao.get(Domain.class,organization.getDomainguid());
 		if (domaindaoEntity.getDomaintype()!=Domain.DOMAIN_TYPE_LOCAL) {
-			LdapConfig ldapconfig =domaindaoEntity.getConfig();
+			UserMapBridge ldapconfig =domaindaoEntity.getConfig();
 			VDIBeanUtils.copyPropertiesByNotNull(domaindaoEntity, ldapconfig, null);
 			LdapSupport.createOU(ldapconfig, organization);
 		}
-		organization.setStatus(LdapConfig.NORMAL);
+		organization.setStatus(UserMapBridge.NORMAL);
 		organizationDao.save(organization);
 		return response;
 	}

@@ -37,9 +37,9 @@ import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
 
 import com.vdi.dao.user.domain.Domain;
-import com.vdi.dao.user.domain.LdapConfig;
 import com.vdi.dao.user.domain.Organization;
 import com.vdi.dao.user.domain.User;
+import com.vdi.dao.user.domain.UserMapBridge;
 
 @Component
 public class LdapSupport {
@@ -50,13 +50,13 @@ public class LdapSupport {
 	private static int UF_NORMAL_ACCOUNT = 0x0200;
 	private static int UF_PASSWORD_EXPIRED = 0x800000;
 
-	public static LdapContext createDirContext(LdapConfig config)
+	public static LdapContext createDirContext(UserMapBridge config)
 			throws NamingException {
 		Hashtable<String, String> env = new Hashtable<String, String>();
 		env.put(Context.INITIAL_CONTEXT_FACTORY,
 				"com.sun.jndi.ldap.LdapCtxFactory");
 		String url = "ldaps://" + config.getAddress() + ":636";
-		if (config.getAccesstype() == LdapConfig.READONLY) {
+		if (config.getAccesstype() == UserMapBridge.READONLY) {
 			url = "ldap://" + config.getAddress() + ":389";
 		}
 		env.put(Context.PROVIDER_URL, url);
@@ -75,7 +75,7 @@ public class LdapSupport {
 	 * @param config
 	 * @throws Exception
 	 */
-	public static Domain createDomain(LdapConfig config) throws Exception {
+	public static Domain createDomain(UserMapBridge config) throws Exception {
 
 		LdapContext ctx = createDirContext(config);
 		SearchControls ctls = new SearchControls();
@@ -113,7 +113,7 @@ public class LdapSupport {
 	 * @throws NamingException
 	 * @since JDK 1.7
 	 */
-	public static void createOU(LdapConfig config, Organization organization)
+	public static void createOU(UserMapBridge config, Organization organization)
 			throws NamingException {
 		LdapContext ctx = createDirContext(config);
 		try {
@@ -132,7 +132,7 @@ public class LdapSupport {
 		}
 	}
 
-	public boolean authenticate(LdapConfig config, String userDn,
+	public boolean authenticate(UserMapBridge config, String userDn,
 			String password) {
 		LdapContext ctx = null;
 		try {
@@ -162,7 +162,7 @@ public class LdapSupport {
 	}
 
 	// 根据组来查询所有用户
-	public static List<User> findUsers(LdapConfig config,
+	public static List<User> findUsers(UserMapBridge config,
 			Organization organization) {
 		LdapContext ctx = null;
 		List<User> users = new ArrayList<User>();
@@ -194,7 +194,7 @@ public class LdapSupport {
 		return users;
 	}
 
-	public static List<Organization> findAllOrganazations(LdapConfig config)
+	public static List<Organization> findAllOrganazations(UserMapBridge config)
 			throws NamingException {
 		LdapContext ctx = null;
 		List<Organization> list = new ArrayList<Organization>();
@@ -227,6 +227,7 @@ public class LdapSupport {
 					String ou = organization.getBinddn();
 					String[] ous = ou.split("ou");
 					organization.setLevel(ous.length - 1);
+					organization.setLdapconfigid(config.getIdldap());
 					organization.setDomainguid(config.getGuid());
 					list.add(organization);
 				}
@@ -284,7 +285,7 @@ public class LdapSupport {
 	// }
 	// }
 
-	public static boolean createUser(LdapConfig config) {
+	public static boolean createUser(UserMapBridge config) {
 		User user = config.getUser();
 		LdapContext ctx = null;
 		try {
@@ -330,7 +331,7 @@ public class LdapSupport {
 		return false;
 	}
 
-	public boolean modifyPassword(LdapConfig config, String userPwd,
+	public boolean modifyPassword(UserMapBridge config, String userPwd,
 			String userDN) {
 		LdapContext ctx = null;
 		try {
@@ -399,7 +400,7 @@ public class LdapSupport {
 	// }
 	// return false;
 	// }
-	public boolean deleteUser(LdapConfig config, String userDN) {
+	public boolean deleteUser(UserMapBridge config, String userDN) {
 		LdapContext ctx = null;
 		try {
 

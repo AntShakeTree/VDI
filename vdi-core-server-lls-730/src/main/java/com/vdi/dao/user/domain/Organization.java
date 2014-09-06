@@ -42,8 +42,18 @@ public class Organization implements Request<Organization>, CacheDomain {
 	private int level=0;
 	private String fullname;
 	private String domainguid;
+	@JsonIgnore
+	private Integer ldapconfigid;
 	private int status;
 	
+	public Integer getLdapconfigid() {
+		return ldapconfigid;
+	}
+
+	public void setLdapconfigid(Integer ldapconfigid) {
+		this.ldapconfigid = ldapconfigid;
+	}
+
 	public int getStatus() {
 		return status;
 	}

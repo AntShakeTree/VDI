@@ -12,15 +12,17 @@ package com.vdi.dao.suport;
 import java.io.UnsupportedEncodingException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import javax.naming.NamingException;
 import javax.naming.directory.Attributes;
 
 import sun.misc.BASE64Encoder;
 
 import com.vdi.dao.user.domain.Domain;
-import com.vdi.dao.user.domain.LdapConfig;
 import com.vdi.dao.user.domain.Organization;
 import com.vdi.dao.user.domain.User;
+import com.vdi.dao.user.domain.UserMapBridge;
 
+@SuppressWarnings("restriction")
 public  class LdapHelp {
 	public static final String USERACCOUNTCONTROL = "userAccountControl";
 	public static String TOP = "top";
@@ -42,7 +44,7 @@ public  class LdapHelp {
 	public static int UF_ACCOUNTDISABLE = 0x0002;
 	public static int UF_PASSWD_NOTREQD = 0x0020;
 	public static int UF_PASSWD_CANT_CHANGE = 0x0040;
-	private static int UF_NORMAL_ACCOUNT = 0x0200;
+//	private static int UF_NORMAL_ACCOUNT = 0x0200;
 	public static int UF_DONT_EXPIRE_PASSWD = 0x10000;
 	public static int UF_PASSWORD_EXPIRED = 0x800000;
 	public static int UF_PASSWORD_NEVER_EXPIRED = 0x10200;
@@ -61,21 +63,21 @@ public  class LdapHelp {
 		return OU + "=" + oun + "," + basedomain;
 	}
 
-	public static User bulidUser(Attributes attrs) {
+	public static User bulidUser(Attributes attrs) throws NamingException {
 		User user = new User();
-		user.setUsername(attrs.get(USERNAME).toString());
-		user.setEmail(attrs.get(E_MAIL) + "");
+		user.setUsername(attrs.get(USERNAME).get().toString());
+		user.setEmail(attrs.get(E_MAIL).get() + "");
 		user.setEnabled(true);
-		user.setMobile(attrs.get(MOBILE) + "");
-		user.setRealname(attrs.get(SURNAME) + "" + attrs.get(GIVENNAME));
-		user.setTelephone(attrs.get("telephoneNumber") + "");
-		user.setAddress(attrs.get("streetAddress") + "");
-		user.setNotes(attrs.get("description") + "");
+		user.setMobile(attrs.get(MOBILE).get() + "");
+		user.setRealname(attrs.get(SURNAME).get() + "" + attrs.get(GIVENNAME).get());
+		user.setTelephone(attrs.get("telephoneNumber").get() + "");
+		user.setAddress(attrs.get("streetAddress").get() + "");
+		user.setNotes(attrs.get("description").get() + "");
 
 		return user;
 	}
 
-	public static Domain buildDomain(LdapConfig config,Attributes attributes) {
+	public static Domain buildDomain(UserMapBridge config,Attributes attributes) {
 		Domain domain = new Domain();
 		domain.setDomainbinddn(config.getBase());
 		domain.setDomainbindpass(config.getPassword());
@@ -102,7 +104,7 @@ public  class LdapHelp {
 		return rootSearchBase;
 	}
 
-	public static Organization buildOrganzation(Attributes attributes, AtomicBoolean isEnd) {
+	public static Organization buildOrganzation(Attributes attributes, AtomicBoolean isEnd) throws NamingException {
 		Organization organization = new Organization();
 		Object ou =attributes.get(OU);
 		if(ou==null){
@@ -111,8 +113,7 @@ public  class LdapHelp {
 		}
 		String fullname =OU.toString().toLowerCase().trim();
 		organization.setOrganizationname(fullname.substring(fullname.lastIndexOf("ou=")+3));
-		System.out.println(organization.getOrganizationname());
-		organization.setBinddn(attributes.get("distinguishedName")+"");
+		organization.setBinddn((attributes.get("distinguishedName").get())+"");
 		organization.setGuid(getGUID(attributes));
 		return organization;
 	}

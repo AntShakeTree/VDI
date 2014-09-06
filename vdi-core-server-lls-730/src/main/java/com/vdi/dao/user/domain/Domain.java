@@ -222,8 +222,8 @@ public class Domain extends PageRequest<Domain> implements CacheDomain {
 	}
 	@Transient
 	@JsonIgnore
-	public LdapConfig getConfig(){
-		LdapConfig config = new LdapConfig();
+	public UserMapBridge getConfig(){
+		UserMapBridge config = new UserMapBridge();
 		//VDIBeanUtils.copyPropertiesByNotNull(this, config, null);
 		config.setAccesstype(this.accesstype);
 		config.setAddress(this.address);config.setDns(this.getDns());

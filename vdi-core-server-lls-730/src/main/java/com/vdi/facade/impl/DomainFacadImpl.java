@@ -17,7 +17,7 @@ import com.vdi.dao.suport.LdapSupport;
 import com.vdi.dao.user.DomainDao;
 import com.vdi.dao.user.LdapConfigDao;
 import com.vdi.dao.user.domain.Domain;
-import com.vdi.dao.user.domain.LdapConfig;
+import com.vdi.dao.user.domain.UserMapBridge;
 import com.vdi.dao.user.domain.LdapConfigEntity;
 import com.vdi.facade.DomainFacad;
 import com.vdi.service.user.RemoveOrganizationObserver;
@@ -59,11 +59,11 @@ public class DomainFacadImpl implements DomainFacad {
 			response.getHead().setError(
 					ExceptionHandle.err.warn(ErrorCode.LDAP_READER_ONLY));
 		}
-		LdapConfig config = domain.getConfig();
+		UserMapBridge config = domain.getConfig();
 		domain = LdapSupport.createDomain(config);
-		config.setStatus(LdapConfig.NORMAL);
+		config.setStatus(UserMapBridge.NORMAL);
 		config.setGuid(domain.getGuid());
-		domain.setDns(domain.getDns());
+		domain.setDns(this.genneralDns(domain.getAddress()));
 		domainDao.save(domain);
 		response.setBody(domain);
 		return response;
@@ -86,9 +86,9 @@ public class DomainFacadImpl implements DomainFacad {
 		//
 		VDIBeanUtils.copyPropertiesByNotNull(domain, dao, null);
 		//
-		LdapConfig config = new LdapConfig();
+		UserMapBridge config = new UserMapBridge();
 		VDIBeanUtils.copyPropertiesByNotNull(domain, config, null);
-		config.setStatus(LdapConfig.NORMAL);
+		config.setStatus(UserMapBridge.NORMAL);
 		config.setGuid(domain.getGuid());
 		domainDao.update(dao);
 		response.setError(0);
@@ -99,10 +99,11 @@ public class DomainFacadImpl implements DomainFacad {
 	public Header deleteDomain(DomainIdsReq req) {
 		for (String id : req.getDomainguids()) {
 			Domain domain = domainDao.get(Domain.class, id);
-			LdapConfig config = domain.getConfig();
-			domain.setStatus(LdapConfig.DELETING);
+			UserMapBridge config = new UserMapBridge();
+			domain.setStatus(UserMapBridge.DELETING);
+			VDIBeanUtils.copyPropertiesByNotNull(domain, config, null);
 			config.setDomain(domain);
-			config.setStatus(LdapConfig.DELETING);
+			config.setStatus(UserMapBridge.DELETING);
 			ldapStateSubject.registerStateChangeObserver(deleteOrganization,
 					config);
 		}
@@ -126,19 +127,19 @@ public class DomainFacadImpl implements DomainFacad {
 		Assert.notNull(domain.getAccesstype());
 		Assert.notNull(domain.getAddress());
 		Assert.notNull(this.genneralDns(domain.getAddress()));
-		LdapConfig config = domain.getConfig();
-		if (domain.getAccesstype() == LdapConfig.READ_WRITE) {
+		UserMapBridge config = domain.getConfig();
+		if (domain.getAccesstype() == UserMapBridge.READ_WRITE) {
 			try {
-				config.setAccesstype(LdapConfig.READ_WRITE);
+				config.setAccesstype(UserMapBridge.READ_WRITE);
 				LdapSupport.createDirContext(config);
 				return;
 			} catch (NamingException e) {
-				config.setAccesstype(LdapConfig.READONLY);
+				config.setAccesstype(UserMapBridge.READONLY);
 				LdapSupport.createDirContext(config);
-				domain.setAccesstype(LdapConfig.READONLY);
+				domain.setAccesstype(UserMapBridge.READONLY);
 			}
 		} else {
-			config.setAccesstype(LdapConfig.READONLY);
+			config.setAccesstype(UserMapBridge.READONLY);
 			LdapSupport.createDirContext(config);
 		}
 
@@ -152,13 +153,14 @@ public class DomainFacadImpl implements DomainFacad {
 		entity.setDomainguid(req.getDomainguid());
 		List<LdapConfigEntity> es = ldapConfigDao.listRequest(entity);
 		for (LdapConfigEntity ldapConfigEntity : es) {
-			LdapConfig config = dao.getConfig();
-			config.setStatus(LdapConfig.SYNC);
+			UserMapBridge config = new UserMapBridge();
+			VDIBeanUtils.copyPropertiesByNotNull(dao, config, null);
+			config.setStatus(UserMapBridge.SYNC);
 			config.setGuid(dao.getGuid());
 			config.setBase(dao.getDomainbinddn());
 			config.setDomain(dao);
 			config.setBase(ldapConfigEntity.getBaseurl());
-			dao.setStatus(LdapConfig.SYNC);
+			dao.setStatus(UserMapBridge.SYNC);
 			domainDao.update(dao);
 			ldapStateSubject.registerStateChangeObserver(syncOrgnazation,
 					config);
@@ -166,7 +168,19 @@ public class DomainFacadImpl implements DomainFacad {
 		return new Header();
 	}
 
-	public boolean genneralDns(String ip) {
-		return true;
+	public String genneralDns(String ip) {
+		StringBuilder result = new StringBuilder();
+		RuntimeUtils.shell(result, "nslookup " + ip);
+		String res = result.toString().trim().toLowerCase();
+		res = res.replaceAll("\\s", "");
+		String dns =null;
+		try {
+			String ress = res.substring(res.indexOf("server:") + 7);
+			dns= ress.substring(0, ress.indexOf(":")).replaceAll(
+					"[a-z]", "");
+		} catch (Exception e) {
+			return null;
+		}
+		return dns;
 	}
 }

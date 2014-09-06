@@ -10,7 +10,7 @@ import com.vdi.dao.user.DomainDao;
 import com.vdi.dao.user.OrganizationDao;
 import com.vdi.dao.user.UserDao;
 import com.vdi.dao.user.domain.Domain;
-import com.vdi.dao.user.domain.LdapConfig;
+import com.vdi.dao.user.domain.UserMapBridge;
 import com.vdi.dao.user.domain.Organization;
 import com.vdi.dao.user.domain.User;
 import com.vdi.service.user.LdapStateSubject;
@@ -20,29 +20,30 @@ import com.vdi.service.user.SyncUserObserver;
 public class SyncUserObserverImpl implements SyncUserObserver {
 	private @Autowired UserDao userDao;
 	private @Autowired DomainDao domainDao;
-	private LdapConfig config;
+	private UserMapBridge config;
 	private @Autowired OrganizationDao orgnazaionDao;
 	@Override
 	public void whenLdapStateChangeUpdateByLdapconfig(
 			LdapStateSubject stateSubject) {
-		if (config.getStatus() != LdapConfig.SYNC_USER) {
+		if (config.getStatus() != UserMapBridge.SYNC_USER) {
 			return;
 		}
 		for (Organization organization : config.getOrganizations()) {
 			List<User> us = LdapSupport.findUsers(config, organization);
 			for (User user : us) {
+				user.setDomainguid(config.getGuid());
 				userDao.save(user);
 			}
-			organization.setStatus(LdapConfig.NORMAL);
+			organization.setStatus(UserMapBridge.NORMAL);
 			orgnazaionDao.update(organization);
 		}
-		config.setStatus(LdapConfig.NORMAL);
+		config.setStatus(UserMapBridge.NORMAL);
 		Domain dao =domainDao.get(Domain.class,config.getGuid());
-		dao.setStatus(LdapConfig.NORMAL);
+		dao.setStatus(UserMapBridge.NORMAL);
 		domainDao.update(dao);
 	}
 	@Override
-	public void setLdapConfig(LdapConfig config) {
+	public void setLdapConfig(UserMapBridge config) {
 		this.config=config;
 	}
 

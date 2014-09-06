@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.vdi.dao.user.domain.LdapConfig;
+import com.vdi.dao.user.domain.UserMapBridge;
 import com.vdi.service.user.LdapService;
 
 import test.config.TestConfig;
@@ -25,7 +25,7 @@ public class LdapServiceImplTest {
 	private @Autowired LdapService ldapService; 
 	@Test
 	public void testAddLdapConfig() {
-		LdapConfig ldapConfig=new LdapConfig();
+		UserMapBridge ldapConfig=new UserMapBridge();
 		ldapConfig.setBase("dc=domain1,dc=com");
 		ldapConfig.setUrl("ldap://20.1.136.193:389");
 		ldapConfig.setPrincipal("domain1\\administrator");

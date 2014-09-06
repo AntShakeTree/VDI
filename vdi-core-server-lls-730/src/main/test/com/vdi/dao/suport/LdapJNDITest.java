@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.naming.NamingException;
 
-import com.vdi.dao.user.domain.LdapConfig;
+import com.vdi.dao.user.domain.UserMapBridge;
 import com.vdi.dao.user.domain.Organization;
 import com.vdi.dao.user.domain.User;
 
@@ -13,7 +13,7 @@ public class LdapJNDITest {
 
 	public static void main(String[] args) throws NamingException {
 		// TODO Auto-generated method stub
-		LdapConfig config=new LdapConfig();
+		UserMapBridge config=new UserMapBridge();
 	  String base = "DC=cws,DC=com";
 	  config.setBase(base);
 //	  config.setPrincipal("administrator\\cws.com");

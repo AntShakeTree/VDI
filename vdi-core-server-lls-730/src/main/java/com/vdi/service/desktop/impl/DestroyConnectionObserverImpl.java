@@ -1,20 +1,19 @@
-package com.vdi.service.user.impl;
+package com.vdi.service.desktop.impl;
 
 import org.springframework.stereotype.Service;
 
 import com.vdi.dao.user.domain.UserMapBridge;
-import com.vdi.service.user.RemoveOrganizationObserver;
+import com.vdi.service.desktop.DestroyConnectionObserver;
 import com.vdi.service.user.LdapStateSubject;
 @Service
-public class RemoveOrganizationObserverImpl implements
-		RemoveOrganizationObserver {
+public class DestroyConnectionObserverImpl implements DestroyConnectionObserver {
 	private UserMapBridge config;
 	@Override
 	public void whenLdapStateChangeUpdateByLdapconfig(
-			LdapStateSubject stateSubject) {
-		// TODO Auto-generated method stub
-
+			LdapStateSubject stateSubject) throws Exception {
+		
 	}
+
 	@Override
 	public void setLdapConfig(UserMapBridge config) {
 		this.config=config;

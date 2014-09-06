@@ -9,7 +9,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 
 import com.vdi.common.ExcecutorUtil;
-import com.vdi.dao.user.domain.LdapConfig;
+import com.vdi.dao.user.domain.UserMapBridge;
 import com.vdi.service.user.LdapStateObserver;
 import com.vdi.service.user.LdapStateSubject;
 
@@ -20,7 +20,7 @@ public class LdapStateSubjectImpl implements LdapStateSubject {
 
 	@Override
 	public void registerStateChangeObserver(LdapStateObserver observer,
-			LdapConfig ldapConfig) {
+			UserMapBridge ldapConfig) {
 		synchronized (ldapStateObservers) {
 			while(ldapStateObservers.size()!=0){
 				try {
