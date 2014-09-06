@@ -9,7 +9,6 @@
 package com.vdi.dao.user.domain;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -21,9 +20,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -34,7 +30,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.vdi.common.cache.CacheDomain;
 import com.vdi.dao.PageRequest;
-import com.vdi.dao.Request;
 import com.vdi.dao.annotation.VDIDaoHelper;
 import com.vdi.dao.annotation.VDIDaoHelper.IgnoreValue;
 
@@ -67,9 +62,7 @@ public class User extends PageRequest<User> implements UserDetails,CacheDomain{
 	@ManyToMany(cascade = { CascadeType.MERGE,CascadeType.REFRESH }, targetEntity = Role.class, fetch = FetchType.EAGER)
 	@JoinTable(name = "userroles", inverseJoinColumns = @JoinColumn(name = "userid"), joinColumns = @JoinColumn(name = "roleid"))
 	private Set<Role> roles;
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "organizationid")////这里设置JoinColum设置了外键的名字，并且organization是关系维护端 
-	private Organization organization;
+	private Integer organizationid;
 	private String telephone;
 	private String address;
 	private String notes;
@@ -202,12 +195,14 @@ public class User extends PageRequest<User> implements UserDetails,CacheDomain{
 		this.roles = roles;
 	}
 
-	public Organization getOrganization() {
-		return organization;
+
+
+	public Integer getOrganizationid() {
+		return organizationid;
 	}
 
-	public void setOrganization(Organization organization) {
-		this.organization = organization;
+	public void setOrganizationid(Integer organizationid) {
+		this.organizationid = organizationid;
 	}
 
 	@Override

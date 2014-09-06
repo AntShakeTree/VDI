@@ -296,8 +296,7 @@ public class LdapSupport {
 					"userAccountControl",
 					Integer.toString(UF_NORMAL_ACCOUNT + UF_PASSWD_NOTREQD
 							+ UF_PASSWORD_EXPIRED + UF_ACCOUNTDISABLE));
-			String userdn = LdapHelp.getUserDn(user.getUsername(), user
-					.getOrganization().getOrganizationname(), config
+			String userdn = LdapHelp.getUserDn(user.getUsername(), config.getOrganization().getOrganizationname(), config
 					.getDomain().getDomainbinddn());
 			ctx.createSubcontext(userdn, attrs);
 			ModificationItem[] mods = new ModificationItem[2];

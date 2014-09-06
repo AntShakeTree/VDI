@@ -34,7 +34,7 @@ public class Organization implements Request<Organization>, CacheDomain {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer idorganization;
 	private String organizationname;
-	@ManyToOne(fetch = FetchType.EAGER)
+	
 	private Integer parent;
 	@ManyToMany(cascade=CascadeType.REFRESH,targetEntity=DeliveryGroup.class,mappedBy="origanazations")
 	private Set<DeliveryGroup> groups;

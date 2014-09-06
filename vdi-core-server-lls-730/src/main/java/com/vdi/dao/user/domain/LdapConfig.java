@@ -25,6 +25,16 @@ public class LdapConfig{
 	private Domain domain;
 	private LdapConfigEntity entity;
 	private User user;
+	private Organization organization;
+	
+	public Organization getOrganization() {
+		return organization;
+	}
+
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
+	}
+
 	public LdapConfigEntity getEntity() {
 		return entity;
 	}
