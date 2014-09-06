@@ -67,7 +67,7 @@ public class Domain extends PageRequest<Domain> implements CacheDomain {
 	private String domainname;
 	private String address;
 	private String dns;
-	private int accesstype;
+	private Integer accesstype;
 	private String principal;
 	private int domaintype;
 	private String domainnetworkname;
@@ -114,11 +114,13 @@ public class Domain extends PageRequest<Domain> implements CacheDomain {
 
 
 
-	public int getAccesstype() {
+
+
+	public Integer getAccesstype() {
 		return accesstype;
 	}
 
-	public void setAccesstype(int accesstype) {
+	public void setAccesstype(Integer accesstype) {
 		this.accesstype = accesstype;
 	}
 

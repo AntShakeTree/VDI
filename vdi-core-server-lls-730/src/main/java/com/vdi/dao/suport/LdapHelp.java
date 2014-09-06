@@ -44,7 +44,7 @@ public  class LdapHelp {
 	public static int UF_ACCOUNTDISABLE = 0x0002;
 	public static int UF_PASSWD_NOTREQD = 0x0020;
 	public static int UF_PASSWD_CANT_CHANGE = 0x0040;
-//	private static int UF_NORMAL_ACCOUNT = 0x0200;
+
 	public static int UF_DONT_EXPIRE_PASSWD = 0x10000;
 	public static int UF_PASSWORD_EXPIRED = 0x800000;
 	public static int UF_PASSWORD_NEVER_EXPIRED = 0x10200;
@@ -77,22 +77,27 @@ public  class LdapHelp {
 		return user;
 	}
 
-	public static Domain buildDomain(UserMapBridge config,Attributes attributes) {
-		Domain domain = new Domain();
+
+	public static Domain buildDomain(UserMapBridge config,Domain domain, Attributes attributes) throws NamingException {
+		domain.setAccesstype(config.getAccesstype());
+		domain.setAddress(config.getAddress());
+		domain.setDns(config.getDns());
 		domain.setDomainbinddn(config.getBase());
+		domain.setPrincipal(config.getPrincipal());
 		domain.setDomainbindpass(config.getPassword());
 		domain.setDomainname(findDomainName(config.getBase()));
-		domain.setStatus(Domain.DOMAIN_STATUS_MAINTAINING);
 		domain.setDomaintype(Domain.DOMAIN_TYPE_MSAD);
-		String pwdps=attributes.get("pwdProperties")+"";
-		if("1".equals(pwdps)){
+		Object pwdps=attributes.get("pwdProperties").get();
+		if("1".equals(pwdps+"")){
 			domain.setPasswordpolicy(true);	
 		}else{
 			domain.setPasswordpolicy(false);
 		}
 		domain.setGuid(getGUID(attributes));
-		domain.setDomainbinddn(attributes.get("distinguishedName")+"");
-		int passwordlen=Integer.parseInt(attributes.get("minPwdLength")+"");
+		domain.setDomainbinddn(attributes.get("distinguishedName").get()+"");
+		//int passwordlen=0;
+	//System.err.print(attributes.get("minPwdLength").get());	
+		int passwordlen=Integer.parseInt(attributes.get("minPwdLength").get()+"");
 		domain.setPasswordlen(passwordlen);
 		return domain;
 	}

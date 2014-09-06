@@ -60,7 +60,7 @@ public class DomainFacadImpl implements DomainFacad {
 					ExceptionHandle.err.warn(ErrorCode.LDAP_READER_ONLY));
 		}
 		UserMapBridge config = domain.getConfig();
-		domain = LdapSupport.createDomain(config);
+		LdapSupport.createDomain(config,domain);
 		config.setStatus(UserMapBridge.NORMAL);
 		config.setGuid(domain.getGuid());
 		domain.setDns(this.genneralDns(domain.getAddress()));
