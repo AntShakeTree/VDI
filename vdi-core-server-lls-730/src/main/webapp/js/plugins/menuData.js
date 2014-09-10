@@ -6,10 +6,10 @@ var menuData = [ {
 	cls : "glyphicon glyphicon-tasks",
 	content : [ {
 		title : "Computing Pool",
-		url : "#/computingpool"
+		url : STATIC_PAGE.COMPUTINGPOOL.NAME
 	}, {
 		title : "Storage",
-		url : "#/storage"
+		url : STATIC_PAGE.STORAGE.NAME
 	}, {
 		title : "Network",
 		url : "#/network"

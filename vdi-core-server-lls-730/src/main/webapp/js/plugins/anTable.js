@@ -222,6 +222,9 @@ angular.module('anTable', [])
                     if(req) {
                         angular.extend(request, req);
                     }
+                    if(!req.url){
+                    	return;
+                    }
                     $http(request).success(function(data) {
                     	scope.tableData = eval("data." + request.dataKey);
                     	scope.tablePage = eval("data." + request.pageKey);
