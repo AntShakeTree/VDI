@@ -6,10 +6,10 @@ var menuData = [ {
 	cls : "glyphicon glyphicon-tasks",
 	content : [ {
 		title : "Computing Pool",
-		url : STATIC_PAGE.COMPUTINGPOOL.NAME
+		url : "#" + STATIC_PAGE.COMPUTINGPOOL.NAME
 	}, {
 		title : "Storage",
-		url : STATIC_PAGE.STORAGE.NAME
+		url : "#" + STATIC_PAGE.STORAGE.NAME
 	}, {
 		title : "Network",
 		url : "#/network"
@@ -22,7 +22,7 @@ var menuData = [ {
 		url : "#"
 	}, {
 		title : "Desktop Pool",
-		url : "#"+STATIC_PAGE.DESKTOPPOOL.NAME
+		url : "#" + STATIC_PAGE.DESKTOPPOOL.NAME
 	}, {
 		title : "Template(and VM)",
 		url : "#"

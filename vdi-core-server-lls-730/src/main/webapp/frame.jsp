@@ -16,6 +16,9 @@
 <link type="text/css" rel="stylesheet" href="<%=basePath%>css/style.css" />
 <link type="text/css" rel="stylesheet" href="<%=basePath%>css/invalid.css" />
 <link type="text/css" rel="stylesheet" href="<%=basePath%>css/main.css" />
+<script type="text/javascript">
+basePath = '<%=basePath%>';
+</script>
 </head>
 <body ng-controller="rootCtrl">
 	<div id="sidebar" class="outer-west" ng-controller="rootCtrl.frameCtrl">
