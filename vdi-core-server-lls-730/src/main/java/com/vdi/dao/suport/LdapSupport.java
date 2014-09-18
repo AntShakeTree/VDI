@@ -543,4 +543,9 @@ public class LdapSupport {
 		}
 	}
 
+	public static void delOU(UserMapBridge ldapconfig, Organization organization) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

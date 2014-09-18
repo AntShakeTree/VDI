@@ -1,18 +1,14 @@
 package com.vdi.service.user.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.vdi.dao.suport.LdapSupport;
 import com.vdi.dao.user.OrganizationDao;
 import com.vdi.dao.user.UserDao;
 import com.vdi.dao.user.domain.UserMapBridge;
-import com.vdi.dao.user.domain.Organization;
 import com.vdi.service.desktop.DestroyConnectionObserver;
-import com.vdi.service.user.UserStateSubject;
 import com.vdi.service.user.RemoveLdapConfigObserver;
+import com.vdi.service.user.UserStateSubject;
 
 @Service
 public class RemoveLdapConfigObserverImpl implements RemoveLdapConfigObserver {

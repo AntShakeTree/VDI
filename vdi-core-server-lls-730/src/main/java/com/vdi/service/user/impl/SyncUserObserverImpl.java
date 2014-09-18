@@ -10,11 +10,11 @@ import com.vdi.dao.user.DomainDao;
 import com.vdi.dao.user.OrganizationDao;
 import com.vdi.dao.user.UserDao;
 import com.vdi.dao.user.domain.Domain;
-import com.vdi.dao.user.domain.UserMapBridge;
 import com.vdi.dao.user.domain.Organization;
 import com.vdi.dao.user.domain.User;
-import com.vdi.service.user.UserStateSubject;
+import com.vdi.dao.user.domain.UserMapBridge;
 import com.vdi.service.user.SyncUserObserver;
+import com.vdi.service.user.UserStateSubject;
 
 @Service
 public class SyncUserObserverImpl implements SyncUserObserver {
@@ -31,8 +31,17 @@ public class SyncUserObserverImpl implements SyncUserObserver {
 		for (Organization organization : config.getOrganizations()) {
 			List<User> us = LdapSupport.findUsers(config, organization);
 			for (User user : us) {
-				user.setDomainguid(config.getGuid());
-				userDao.save(user);
+				User hql=new User();
+				hql.setOrganizationid(organization.getIdorganization());
+				hql.setUsername(user.getUsername());
+				List<User> users = userDao.listRequest(hql);
+				if(users!=null&&users.size()>0){
+					userDao.update(user);
+				}else{
+					user.setOrganizationid(organization.getIdorganization());
+					user.setDomainguid(config.getGuid());
+					userDao.save(user);
+				}
 			}
 			organization.setStatus(UserMapBridge.NORMAL);
 			orgnazaionDao.update(organization);

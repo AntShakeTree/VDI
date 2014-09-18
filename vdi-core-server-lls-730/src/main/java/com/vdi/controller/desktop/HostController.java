@@ -1,5 +1,7 @@
 package com.vdi.controller.desktop;
 
+import static com.vdi.controller.BaseController.CONTEXT_TYPE;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,8 +13,6 @@ import com.vdi.facade.HostFacad;
 import com.vdi.vo.req.HostIdReq;
 import com.vdi.vo.res.HostResponse;
 import com.vdi.vo.res.ListHostResponse;
-
-import static com.vdi.controller.BaseController.CONTEXT_TYPE;
 @Controller
 public class HostController {
 	public @Autowired HostFacad hostFacad;

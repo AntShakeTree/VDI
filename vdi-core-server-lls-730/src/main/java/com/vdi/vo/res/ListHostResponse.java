@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.vdi.dao.PageRequest;
 import com.vdi.dao.desktop.domain.HostEntity;
-import com.vdi.support.desktop.lls.domain.resource.Host;
 
 public class ListHostResponse {
 	private Header head=new Header().setError(0);

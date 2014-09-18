@@ -18,13 +18,11 @@ import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 import com.vdi.common.ErrorCode;
-import com.vdi.common.ExcecutorUtil;
 import com.vdi.common.VDIBeanUtils;
 import com.vdi.dao.desktop.ComputePoolDao;
 import com.vdi.dao.desktop.domain.ComputePoolEntity;
 import com.vdi.dao.desktop.domain.build.ComputePoolBuild;
 import com.vdi.facade.ComputePoolFacade;
-import com.vdi.service.desktop.DeleteComputePoolTask;
 import com.vdi.support.desktop.lls.domain.resource.ComputePool;
 import com.vdi.support.desktop.lls.services.AsynchronousComputePoolService;
 import com.vdi.support.desktop.lls.services.ComputePoolService;
@@ -36,7 +34,6 @@ import com.vdi.vo.res.Job;
 import com.vdi.vo.res.JobResponse;
 import com.vdi.vo.res.ListComputePool;
 import com.vdi.vo.res.ListComputePool.ComputePoolList;
-import com.vdi.vo.res.Response;
 
 @Service
 public class ComputePoolFacadeImpl implements ComputePoolFacade {

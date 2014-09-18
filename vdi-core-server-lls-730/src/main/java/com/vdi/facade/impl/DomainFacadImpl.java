@@ -17,12 +17,12 @@ import com.vdi.dao.suport.LdapSupport;
 import com.vdi.dao.user.DomainDao;
 import com.vdi.dao.user.LdapConfigDao;
 import com.vdi.dao.user.domain.Domain;
-import com.vdi.dao.user.domain.UserMapBridge;
 import com.vdi.dao.user.domain.LdapConfigEntity;
+import com.vdi.dao.user.domain.UserMapBridge;
 import com.vdi.facade.DomainFacad;
 import com.vdi.service.user.RemoveOrganizationObserver;
-import com.vdi.service.user.UserStateSubject;
 import com.vdi.service.user.SyncOrgnazationObserver;
+import com.vdi.service.user.UserStateSubject;
 import com.vdi.vo.req.DomainIdsReq;
 import com.vdi.vo.res.DomainResponse;
 import com.vdi.vo.res.Header;
@@ -83,11 +83,7 @@ public class DomainFacadImpl implements DomainFacad {
 		Assert.notNull(domain.getGuid());
 		Domain dao = domainDao.get(Domain.class, domain.getGuid());
 		Assert.notNull(dao);
-		//
-		VDIBeanUtils.copyPropertiesByNotNull(domain, dao, null);
-		//
-		UserMapBridge config = new UserMapBridge();
-		VDIBeanUtils.copyPropertiesByNotNull(domain, config, null);
+		UserMapBridge config = domain.getConfig();
 		config.setStatus(UserMapBridge.NORMAL);
 		config.setGuid(domain.getGuid());
 		domainDao.update(dao);
@@ -155,12 +151,12 @@ public class DomainFacadImpl implements DomainFacad {
 		for (LdapConfigEntity ldapConfigEntity : es) {
 			UserMapBridge config = new UserMapBridge();
 			VDIBeanUtils.copyPropertiesByNotNull(dao, config, null);
-			config.setStatus(UserMapBridge.SYNC);
+			config.setStatus(UserMapBridge.SYNC_OU);
 			config.setGuid(dao.getGuid());
 			config.setBase(dao.getDomainbinddn());
 			config.setDomain(dao);
 			config.setBase(ldapConfigEntity.getBaseurl());
-			dao.setStatus(UserMapBridge.SYNC);
+			dao.setStatus(UserMapBridge.SYNC_OU);
 			domainDao.update(dao);
 			ldapStateSubject.registerUserStateChangeObserver(syncOrgnazation,
 					config);

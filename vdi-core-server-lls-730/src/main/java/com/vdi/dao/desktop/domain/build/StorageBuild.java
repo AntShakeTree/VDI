@@ -1,9 +1,9 @@
 package com.vdi.dao.desktop.domain.build;
 
 
-import org.springframework.util.Assert;
+import static org.springframework.util.StringUtils.isEmpty;
 
-import  static org.springframework.util.StringUtils.isEmpty;
+import org.springframework.util.Assert;
 
 import com.vdi.dao.desktop.domain.StorageEntity;
 import com.vdi.support.desktop.lls.domain.storage.Storage;

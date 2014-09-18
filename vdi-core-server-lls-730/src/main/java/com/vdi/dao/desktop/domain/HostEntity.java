@@ -9,9 +9,7 @@
 
 package com.vdi.dao.desktop.domain;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,15 +17,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.codehaus.jackson.annotate.JsonBackReference;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
-import org.codehaus.jackson.annotate.JsonManagedReference;
 
 import com.vdi.common.Constants;
 import com.vdi.common.cache.CacheDomain;
 import com.vdi.dao.PageRequest;
-import com.vdi.dao.Request;
 
 @Entity
 @Table(name="host")

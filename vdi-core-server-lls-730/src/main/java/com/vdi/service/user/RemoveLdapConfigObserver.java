@@ -1,5 +1,5 @@
 package com.vdi.service.user;
 
-public interface RemoveLdapConfigObserver extends UsreStateObserver{
+public interface RemoveLdapConfigObserver extends UserStateObserver{
 
 }

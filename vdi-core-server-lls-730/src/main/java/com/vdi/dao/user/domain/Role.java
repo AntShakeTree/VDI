@@ -8,7 +8,6 @@
  */
 package com.vdi.dao.user.domain;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -25,7 +24,6 @@ import org.springframework.security.core.GrantedAuthority;
 
 import com.vdi.common.cache.CacheDomain;
 import com.vdi.dao.PageRequest;
-import com.vdi.dao.Request;
 
 /**
  * ClassName: Role

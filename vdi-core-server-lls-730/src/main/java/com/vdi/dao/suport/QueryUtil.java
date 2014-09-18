@@ -1,7 +1,6 @@
 package com.vdi.dao.suport;
 
 import java.beans.PropertyDescriptor;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -207,9 +206,5 @@ public class QueryUtil {
 		return ParseJSON.toJson(this.values);
 	}
 
-	public static void main(String[] args) {
-		System.out.println(boolean.class.isPrimitive());
-		int i = 5;
-	}
 
 }

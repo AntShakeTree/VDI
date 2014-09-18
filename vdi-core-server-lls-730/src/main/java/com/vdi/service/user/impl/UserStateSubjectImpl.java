@@ -10,16 +10,16 @@ import org.springframework.stereotype.Service;
 
 import com.vdi.common.ExcecutorUtil;
 import com.vdi.dao.user.domain.UserMapBridge;
-import com.vdi.service.user.UsreStateObserver;
 import com.vdi.service.user.UserStateSubject;
+import com.vdi.service.user.UserStateObserver;
 
 @Service
 public class UserStateSubjectImpl implements UserStateSubject {
-	private static final List<UsreStateObserver> ldapStateObservers = Collections
-			.synchronizedList(new ArrayList<UsreStateObserver>());
+	private static final List<UserStateObserver> ldapStateObservers = Collections
+			.synchronizedList(new ArrayList<UserStateObserver>());
 
 	@Override
-	public void registerUserStateChangeObserver(UsreStateObserver observer,
+	public void registerUserStateChangeObserver(UserStateObserver observer,
 			UserMapBridge ldapConfig) {
 		synchronized (ldapStateObservers) {
 //			while(ldapStateObservers.size()!=0){
@@ -35,7 +35,7 @@ public class UserStateSubjectImpl implements UserStateSubject {
 	}
 
 	@Override
-	public void removeUserStateChangeObserver(UsreStateObserver observer) {
+	public void removeUserStateChangeObserver(UserStateObserver observer) {
 		ldapStateObservers.remove(observer);
 	}
 
@@ -58,7 +58,7 @@ public class UserStateSubjectImpl implements UserStateSubject {
 							}
 						}
 						if (ldapStateObservers.size() != 0) {
-							UsreStateObserver ldapStateObserver = ldapStateObservers
+							UserStateObserver ldapStateObserver = ldapStateObservers
 									.remove(0);
 							
 //							ldapStateObservers.notifyAll();

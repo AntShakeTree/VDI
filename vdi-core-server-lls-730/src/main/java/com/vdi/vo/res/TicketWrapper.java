@@ -2,8 +2,6 @@ package com.vdi.vo.res;
 
 import java.io.Serializable;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
 /**
  * 令牌容器.
  */

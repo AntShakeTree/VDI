@@ -153,11 +153,15 @@ public class UserMapBridge{
 	public static final int NORMAL=0;
 	public static final int DELETING=501;
 	public static final int ERROR=500;
-	public static final int SYNC=2;
-	public static final int SYNCING=3;
+	public static final int SYNC_DN=2;
+	public static final int SYNC_OU=3;
 
 	public static final int CREATEING = 1;
 	public static final int READ_WRITE=636;
 	public static final int READONLY=389;
 	public static final int SYNC_USER=4;
+	public static final int REMOVE_USER = 5;
+	public static final int DIS_ALLOCAT_OU = 6;
+	public static final int DIS_ALLOCAT_USER = 7;
+	public static final int DIS_CONN = 8;
 }

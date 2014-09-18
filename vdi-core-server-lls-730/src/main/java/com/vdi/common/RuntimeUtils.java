@@ -1,11 +1,12 @@
 package com.vdi.common;
 
+import static com.vdi.common.StringUtils.qstrep;
+
 import java.io.InputStream;
 import java.util.Arrays;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import static com.vdi.common.StringUtils.qstrep;
 public abstract class RuntimeUtils {
 	
 	private static final Logger log = LoggerFactory.getLogger(RuntimeUtils.class);

@@ -1,6 +1,5 @@
 package com.vdi.common;
 
-import com.vdi.common.ConfigUtil;
 
 /*
  * mxc

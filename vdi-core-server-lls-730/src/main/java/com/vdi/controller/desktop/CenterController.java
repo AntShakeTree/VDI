@@ -1,5 +1,7 @@
 package com.vdi.controller.desktop;
 
+import static com.vdi.controller.BaseController.CONTEXT_TYPE;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,14 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.vdi.common.ConfigUtil;
 import com.vdi.common.Constants;
 import com.vdi.dao.desktop.domain.CenterEntity;
 import com.vdi.vo.res.Header;
 import com.vdi.vo.res.ListCenter;
 import com.vdi.vo.res.ListCenter.CenterList;
-
-import static com.vdi.controller.BaseController.CONTEXT_TYPE;
 
 @Controller
 public class CenterController {

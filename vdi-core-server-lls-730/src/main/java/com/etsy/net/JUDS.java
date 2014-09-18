@@ -2,8 +2,8 @@ package com.etsy.net;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.net.URLClassLoader;
 import java.net.URL;
+import java.net.URLClassLoader;
 
 
 public class JUDS {

@@ -12,8 +12,8 @@ package com.vdi.dao.user.impl;
 import org.springframework.stereotype.Repository;
 
 import com.vdi.dao.suport.JPADaoSuport;
-import com.vdi.dao.user.domain.Role;
 import com.vdi.dao.user.RoleDao;
+import com.vdi.dao.user.domain.Role;
 
 @Repository("roleDao")
 public class RoleDaoImpl extends JPADaoSuport<Role> implements RoleDao {

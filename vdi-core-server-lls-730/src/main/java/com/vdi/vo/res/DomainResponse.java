@@ -1,6 +1,5 @@
 package com.vdi.vo.res;
 
-import com.vdi.dao.desktop.domain.ComputePoolEntity;
 import com.vdi.dao.user.domain.Domain;
 
 public class DomainResponse {

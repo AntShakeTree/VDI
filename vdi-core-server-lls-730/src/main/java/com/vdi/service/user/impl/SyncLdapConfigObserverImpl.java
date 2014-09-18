@@ -2,18 +2,17 @@ package com.vdi.service.user.impl;
 
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vdi.dao.suport.LdapSupport;
 import com.vdi.dao.user.LdapConfigDao;
 import com.vdi.dao.user.OrganizationDao;
-import com.vdi.dao.user.domain.UserMapBridge;
 import com.vdi.dao.user.domain.Organization;
-import com.vdi.service.user.UserStateSubject;
+import com.vdi.dao.user.domain.UserMapBridge;
 import com.vdi.service.user.SyncLdapConfigObserver;
 import com.vdi.service.user.SyncUserObserver;
+import com.vdi.service.user.UserStateSubject;
 
 @Service
 public class SyncLdapConfigObserverImpl implements SyncLdapConfigObserver {
@@ -28,7 +27,7 @@ public class SyncLdapConfigObserverImpl implements SyncLdapConfigObserver {
 	@Override
 	public void whenUserStateChangeUpdateByLdapconfig(
 			UserStateSubject stateSubject) throws Exception {
-		if (config.getStatus() != UserMapBridge.SYNC) {
+		if (config.getStatus() != UserMapBridge.SYNC_OU) {
 			return;
 		}
 		try {

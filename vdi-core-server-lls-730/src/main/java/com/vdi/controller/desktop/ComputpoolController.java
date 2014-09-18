@@ -1,8 +1,6 @@
 package com.vdi.controller.desktop;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PostAuthorize;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,7 +11,6 @@ import com.vdi.facade.ComputePoolFacade;
 import com.vdi.vo.req.ComputePoolIdReq;
 import com.vdi.vo.req.DeleteComputePool;
 import com.vdi.vo.res.ComputePoolRes;
-import com.vdi.vo.res.Header;
 import com.vdi.vo.res.JobResponse;
 import com.vdi.vo.res.ListComputePool;
 //import com.vdi.vo.res.ListComputerPool;

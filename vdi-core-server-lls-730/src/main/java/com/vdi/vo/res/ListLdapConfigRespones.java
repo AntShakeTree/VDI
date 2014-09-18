@@ -3,7 +3,6 @@ package com.vdi.vo.res;
 import java.util.List;
 
 import com.vdi.dao.PageRequest;
-import com.vdi.dao.user.domain.UserMapBridge;
 import com.vdi.dao.user.domain.LdapConfigEntity;
 
 public class ListLdapConfigRespones {
