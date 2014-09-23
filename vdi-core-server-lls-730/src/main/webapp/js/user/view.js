@@ -23,10 +23,10 @@ rootApp.controller('user.ctrl', function($scope) {
     };
     // 数据模型
     $scope.usermodel = {
-        // 按钮组
-        buttonGroup : [{'id' : 'add', 'cls' : 'button-add', 'val' : '创建', 'click' : add},
-                        {'id' : 'edit', 'cls' : 'button-edit', 'val' : '修改', 'click' : edit},
-                        {'id' : 'delete', 'cls' : 'button-del', 'val' : '删除', 'click' : del}]
+            // 按钮组
+            buttonGroup : [{'id' : 'add', 'cls' : 'glyphicon glyphicon-plus', 'val' : 'Create', 'click' : add},
+                            {'id' : 'edit', 'cls' : 'glyphicon glyphicon-pencil', 'val' : 'Edit', 'click' : edit},
+                            {'id' : 'delete', 'cls' : 'glyphicon glyphicon-trash', 'val' : 'Delete', 'click' : del}]
     };
     // 桌面池列表假数据
     $scope.tableData = [{
@@ -45,7 +45,9 @@ rootApp.controller('user.ctrl', function($scope) {
         "realname": "Admin",
         "notes": "notes",
         "telephone": "13999999999",
-        "groups": []
+        "groups": [],
+        "domain": 1,
+        "ou": 1,
     }
 ];
     $scope.demo = {
@@ -83,20 +85,23 @@ rootApp.controller('user.ctrl', function($scope) {
      					return v == 1 ? "Administrator" :"User";
      				}
                 }, {
-                    field : 'strategyname',
-                    displayName : 'Group',
+                    field : 'domain',
+                    displayName : 'Domain',
                     colWidth : '',
-     				renderer : function(v){
-     					var res = "";
-     					$.each(v, function(idx, g){
-     						if(res == ""){
-     							res = g.groupname;
-     						}else{
-     							res = res + "," + g.groupname;
-     						}
-     					});
-     					return res;
+                    render : function(v){
+     					return v == 1 ? "Local domain" :"";
      				}
+            	}, {
+                    field : 'ou',
+                    displayName : 'OU',
+                    colWidth : '',
+                    render : function(v){
+     					return v == 1 ? "Local OU" :"";
+     				}
+            	}, {
+                    field : 'notes',
+                    displayName : 'Remark',
+                    colWidth : ''
             	}]
         }
 });

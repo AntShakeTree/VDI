@@ -11,10 +11,8 @@
             + path + "/";
 %>
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-<link type="text/css" rel="stylesheet" href="<%=basePath%>lib/bootstrap/css/bootstrap.css" />
-<link type="text/css" rel="stylesheet" href="<%=basePath%>css/reset.css" />
-<link type="text/css" rel="stylesheet" href="<%=basePath%>css/style.css" />
-<link type="text/css" rel="stylesheet" href="<%=basePath%>css/invalid.css" />
+<link type="text/css" rel="stylesheet" href="<%=basePath%>lib/bootstrap/css/bootstrap.min.css" />
+<link type="text/css" rel="stylesheet" href="<%=basePath%>lib/awesome/css/font-awesome.min.css" />
 <link type="text/css" rel="stylesheet" href="<%=basePath%>css/main.css" />
 <script type="text/javascript">
 basePath = '<%=basePath%>';

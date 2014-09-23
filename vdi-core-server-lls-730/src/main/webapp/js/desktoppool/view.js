@@ -23,10 +23,10 @@ rootApp.controller('desktoppool.ctrl', function($scope) {
     };
     // 数据模型
     $scope.desktoppoolmodel = {
-        // 按钮组
-        buttonGroup : [{'id' : 'add', 'cls' : 'button-add', 'val' : '创建', 'click' : add},
-                        {'id' : 'edit', 'cls' : 'button-edit', 'val' : '修改', 'click' : edit},
-                        {'id' : 'delete', 'cls' : 'button-del', 'val' : '删除', 'click' : del}]
+            // 按钮组
+            buttonGroup : [{'id' : 'add', 'cls' : 'glyphicon glyphicon-plus', 'val' : 'Create', 'click' : add},
+                            {'id' : 'edit', 'cls' : 'glyphicon glyphicon-pencil', 'val' : 'Edit', 'click' : edit},
+                            {'id' : 'delete', 'cls' : 'glyphicon glyphicon-trash', 'val' : 'Delete', 'click' : del}]
     };
     // 桌面池列表假数据
     $scope.tableData = [{
