@@ -623,13 +623,14 @@ form input[type="checkbox"],form input[type="radio"] {
     color: #fff !important;
 }
 
-/********************************      Login Page      ********************************/
-
-#login-wrapper {
+body#login {
+    color: #fff;
     background-color: #2C3E50;
-    height: 200px;
 }
-
+#login-wrapper {
+    background-color: #16a085;
+    height: 230px;
+}
 #login-wrapper #login-top {
     width: 100%;
     padding: 140px 0 50px 0;
@@ -683,44 +684,6 @@ form input[type="checkbox"],form input[type="radio"] {
     height: 0;
     opacity: 0;
 }
-.today-cost-ul {
-	padding: 10px 2px 8px 18px;
-	list-style-type: none;
-	line-height: 1;
-}
-
-.today-cost-ul li {
-	padding: 0 15px 10px 15px;
-	text-align: right;
-}
-
-.today-cost-ul li .today-cost-green {
-	color: #76B700;
-	font-size: 18px;
-}
-
-.today-cost-ul li .today-cost-darkOrange {
-	color: #F7713B;
-	font-size: 18px;
-}
-
-/************** new style************************/
-body#login {
-	color: #fff;
-	background-color: #2C3E50;
-}
-
-#login-wrapper {
-	background-color: #16a085;
-	height: 230px;
-}
-
-#login-wrapper #login-top {
-	width: 100%;
-	padding: 140px 0 50px 0;
-	text-align: center;
-}
-
 .vdi-btn-group {
 	float: left;
 	padding-right: 10px;
